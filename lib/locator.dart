@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 
 import 'db/database_service.dart';
 import 'db/master_database_service.dart';
+import 'ui/view/home/homepage_view_model.dart';
 
 
 GetIt locator = GetIt.instance;
@@ -26,5 +27,6 @@ void setupLocator() {
   locator.registerLazySingleton(() => DatabaseService());
   locator.registerLazySingleton(() => MasterDatabaseService());
 
+  locator.registerLazySingleton(() => HomePageViewModel());
 
 }

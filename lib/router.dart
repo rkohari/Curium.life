@@ -26,7 +26,7 @@ class AppRouter {
 
     case Routes.dashboard:
       return MaterialPageRoute(
-        builder: (_) => DashboardPage(),
+        builder: (_) => DashboardPage(),//settings.arguments to pass arguments
         settings: RouteSettings(name: settings.name),
       );
 

@@ -294,7 +294,9 @@ class _EditTextFieldState extends State<EditTextField> {
 
   Widget _buildPasswordEyeIcon(){
     return GestureDetector(
-      child: Icon(isVisible ? Icons.visibility_off : Icons.visibility, color: Colors.black,),
+      child: Padding(
+          padding: EdgeInsets.only(right: 10, ),
+          child: Icon(isVisible ? Icons.visibility_off : Icons.visibility, color: Colors.black,)),
       onTap: () {
         isVisible = !isVisible;
         setState(() {});
@@ -308,7 +310,7 @@ class _EditTextFieldState extends State<EditTextField> {
 
   InputBorder _focusedInputBorder = OutlineInputBorder(
     borderRadius: _borderRadius,
-    borderSide: BorderSide(color: Color(0xff104BFC), width: 1.2),
+    borderSide: BorderSide(color: AppColor.textOnBackground, width: 1.2),
   );
 
   InputBorder _errorInputBorder = OutlineInputBorder(

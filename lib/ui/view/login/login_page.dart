@@ -21,61 +21,56 @@ class LogInPage extends ViewModelBuilderWidget<LogInViewModel>{
         child: TapOutsideUnFocus(
           child: Form(
             key: viewModel.logInFormKey,
-            child: SingleChildScrollView(
-              controller: viewModel.scrollController,
-              child: Container(
-                margin: const EdgeInsets.only(left: 16.0,right: 16.0, top: 20, bottom: 20.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
+            child: Center(
+              child: SingleChildScrollView(
+                child: Container(
+                  margin: const EdgeInsets.only(left: 16.0,right: 16.0, top: 20, bottom: 20.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
 
-                    Image.asset(Images.appLogo, width: MediaQuery.of(context).size.width,),
+                      Image.asset(Images.appLogo, width: MediaQuery.of(context).size.width,),
 
-                    EditTextField(
-                      "Login Id",
-                      viewModel.loginIdController,
-                      placeholder: "Enter your Login Id",
-                      onChanged: (value){},
-                      onSubmitted: (val){
-                        viewModel.passwordController.focusNode.requestFocus();
-                      },
-                    ),
-
-                    VerticalSpacing.custom(value: 15.0),
-
-                    EditTextField.password(
-                      "Password ",
-                      viewModel.passwordController,
-                      placeholder: "Enter your password",
-                      onChanged: (value){},
-                      onSubmitted: (val){
-                        FocusNode().requestFocus();
-                      },
-                    ),
-                    VerticalSpacing.custom(value: 20.0),
-
-                    Button(
-                        "LOGIN",
-                        key: const ValueKey("btnLogin"),
-                        width: double.infinity,
-                        isLoading: viewModel.state == ViewState.Busy,
-                        onPressed: (){
-                          viewModel.login();
+                      EditTextField(
+                        "Login Id",
+                        viewModel.loginIdController,
+                        placeholder: "Enter your Login Id",
+                        onChanged: (value){},
+                        onSubmitted: (val){
+                          viewModel.passwordController.focusNode.requestFocus();
                         },
-                    ),
-                    VerticalSpacing.custom(value: 20.0),
-                    Button(
-                      "Get",
-                      key: const ValueKey("g"),
-                      width: double.infinity,
-                      isLoading: viewModel.state == ViewState.Busy,
-                      onPressed: (){
-                        viewModel.get();
-                      },
-                    )
+                      ),
 
-                  ],
+                      VerticalSpacing.custom(value: 15.0),
+
+                      EditTextField.password(
+                        "Password ",
+                        viewModel.passwordController,
+                        placeholder: "Enter your password",
+                        onChanged: (value){},
+                        onSubmitted: (val){
+                          FocusNode().requestFocus();
+                        },
+                      ),
+                      VerticalSpacing.custom(value: 20.0),
+
+                      Button(
+                          "LOGIN",
+                          key: const ValueKey("btnLogin"),
+                          width: double.infinity,
+                          isLoading: viewModel.state == ViewState.Busy,
+                          onPressed: (){
+                            if(viewModel.logInFormKey.currentState!.validate()){
+                             viewModel.login();
+                            }
+                          }
+                      ),
+
+
+                    ],
+                  ),
                 ),
               ),
             ),

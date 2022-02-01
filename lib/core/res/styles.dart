@@ -7,7 +7,7 @@ import 'fontsize.dart';
 
 class AppStyle {
 
-  static const String fontFamily = "SFCompact";
+  static const String fontFamily = "Inter";
 
   static final ThemeData appTheme = ThemeData(
     primaryColor: AppColor.primary,

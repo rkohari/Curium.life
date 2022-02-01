@@ -6,6 +6,8 @@ import '../vgts_base_view_model.dart';
 class DashboardViewModel extends VGTSBaseViewModel {
   TextEditingController searchController= new TextEditingController();
 
+  PageController pageController = PageController();
+
   List<String> pageNames = ['/dashboard/home','/dashboard/report','/dashboard/outstanding','/dashboard/settings',];
 
 
@@ -13,6 +15,8 @@ class DashboardViewModel extends VGTSBaseViewModel {
   int get selectedIndex => _selectedIndex;
 
   int marketAlertBadge = 0;
+
+  List<bool> activeIndicators = [true,false];
 
   set selectedIndex(int value) {
     _selectedIndex = value;
@@ -23,5 +27,27 @@ class DashboardViewModel extends VGTSBaseViewModel {
   Future onInit() {
     return super.onInit();
   }
+
+
+  updateIconIndicator(int value)
+  {
+  print("called");
+    if(value == 0)
+      {
+        activeIndicators[0]=true;
+        activeIndicators[1]=false;
+        pageController.animateToPage(0, duration: Duration(milliseconds: 1), curve: Curves.elasticIn);
+
+      }
+    else
+      {
+        activeIndicators[0]=false;
+        activeIndicators[1]=true;
+        pageController.animateToPage(1, duration: Duration(milliseconds: 1), curve: Curves.elasticOut);
+
+      }
+       notifyListeners();
+  }
+
 
 }
