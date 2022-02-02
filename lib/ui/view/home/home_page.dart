@@ -51,7 +51,7 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
                             fontStyle: FontStyle.italic),
                       ),
                       GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           viewModel.logout();
                         },
                         child: Container(
@@ -60,7 +60,7 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
                           decoration: const BoxDecoration(
                               shape: BoxShape.circle, color: Color(0xFFCCF5E1)),
                           alignment: Alignment.center,
-                          child: Image(
+                          child: const Image(
                             image: AssetImage(Images.ic_logout),
                             width: 14,
                             height: 16.73,
@@ -110,7 +110,7 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
                 padding: const EdgeInsets.all(8.0),
                 crossAxisCount: 2,
                 children: List.generate(
-                  50,
+                  25,
                   (int index) {
                     return AnimationConfiguration.staggeredGrid(
                       columnCount: 2,
