@@ -52,7 +52,7 @@ class Button extends StatelessWidget {
       child: isLoading ? const SizedBox(
         width: 15,
         height: 15,
-        child: CircularProgressIndicator(strokeWidth:2,  valueColor: AlwaysStoppedAnimation(AppColor.surface),),
+        child: CircularProgressIndicator(strokeWidth:2,  valueColor: AlwaysStoppedAnimation(AppColor.textOnPrimary),),
       ) :
       Row(
         crossAxisAlignment: CrossAxisAlignment.center,

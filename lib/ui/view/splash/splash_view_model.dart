@@ -18,8 +18,20 @@ class SplashViewModel extends VGTSBaseViewModel {
 
     await preferenceService.init();
     try {
-      Future.delayed(const Duration(seconds: 1), () {
-        navigationService.popAllAndPushNamed(Routes.dashboard);
+
+
+      Future.delayed(const Duration(seconds: 2), () {
+
+        if(preferenceService.getPassCode() != null || preferenceService.getPassCode() == ""){
+
+          navigationService.popAllAndPushNamed(Routes.dashboard);
+
+        }
+        else
+          {
+            navigationService.popAllAndPushNamed(Routes.login);
+
+          }
         // if (preferenceService.getBearerToken().isNotEmpty) {
         //   navigationService.popAllAndPushNamed(Routes.dashboard);
         // } else {
@@ -30,7 +42,7 @@ class SplashViewModel extends VGTSBaseViewModel {
     } catch (ex) {
       debugPrint("EXCEPTION $ex");
     }
-
+     notifyListeners();
     return super.onInit();
   }
 

@@ -25,34 +25,25 @@ class LogInViewModel extends VGTSBaseViewModel {
   LoginDatabase _loginDatabase = LoginDatabase();
 
   login() async {
-   // try {
-      setState(ViewState.Busy);
-      Future.delayed(Duration(seconds: 1));
+    // try {
+    setState(ViewState.Busy);
+    Future.delayed(Duration(seconds: 3), () {
       ResponseData data = _loginDatabase.validateLoginDetails(
-          loginIdController.text.toLowerCase().trim(), passwordController.text.trim());
+          loginIdController.text.toLowerCase().trim(),
+          passwordController.text.trim());
       setState(ViewState.Idle);
-      print("***************");
-      print(data.status);
+
       if (data.status == ResponceStatus.COMPLETED) {
-        navigationService.pushNamed(
+        preferenceService.setPassCode(data.data!.token);
+        navigationService.popAllAndPushNamed(
           Routes.dashboard,
         );
       } else {
         print("login failure");
       }
-    // } catch (e) {
-    //   print(e.toString());
-    // }
-    notifyListeners();
+    });
 
-    // int a = await BaseTable<CVModel>().insert(CVModel(userUniqID:123456,patientUniqID:007,c1:"hi",c2:"hello",c3: "world"));
-    // print("the a is ${a}");
-    // if(logInFormKey.currentState?.validate() != true) {
-    //   return;
-    // }
-    // setState(ViewState.Busy);
-    // setState(ViewState.Idle);
-    // notifyListeners();
+    notifyListeners();
   }
 
   get() async {
@@ -71,3 +62,12 @@ class LogInViewModel extends VGTSBaseViewModel {
     // notifyListeners();
   }
 }
+
+// int a = await BaseTable<CVModel>().insert(CVModel(userUniqID:123456,patientUniqID:007,c1:"hi",c2:"hello",c3: "world"));
+// print("the a is ${a}");
+// if(logInFormKey.currentState?.validate() != true) {
+//   return;
+// }
+// setState(ViewState.Busy);
+// setState(ViewState.Idle);
+// notifyListeners();

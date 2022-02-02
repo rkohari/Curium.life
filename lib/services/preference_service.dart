@@ -28,15 +28,23 @@ class PreferenceService {
   static const String estimationNumber = "EstimationNumber";
   static const String companyName= "CompanyName";
 
+
+
+
+
   late SharedPreferences pref;
 
   init() async {
     pref = await SharedPreferences.getInstance();
   }
 
-  setPassCode(String value) {
-    pref.setString(passCode, value);
+  setPassCode(String ? value) {
+    pref.setString(passCode, value!);
     debugPrint("Pass Code stored successfully");
+  }
+
+  getPassCode() {
+  return   pref.getString(passCode);
   }
 
   setUserName(String value) async {

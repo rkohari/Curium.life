@@ -1,5 +1,5 @@
 class LoginDatabase {
-  List<UserDB> _listOfUsers = [UserDB("1", "admin", "123456", "admin")];
+  List<UserDB> _listOfUsers = [UserDB("1", "admin", "123456", "admin","USR_01")];
 
   List<UserDB> get listOfUsers => _listOfUsers;
 
@@ -21,8 +21,9 @@ class UserDB {
   String? loginId;
   String? password;
   String? userType;
+  String ? token;
 
-  UserDB(this.uniqID, this.loginId, this.password, this.userType);
+  UserDB(this.uniqID, this.loginId, this.password, this.userType,this.token);
 
   @override
   String toString() {
