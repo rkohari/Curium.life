@@ -1,4 +1,3 @@
-
 import 'package:curiumlife/core/res/colors.dart';
 import 'package:curiumlife/core/res/images.dart';
 import 'package:curiumlife/core/res/spacing.dart';
@@ -56,9 +55,7 @@ class DashboardPage extends ViewModelBuilderWidget<DashboardViewModel> {
     );
   }
 
-
-  bottomNavigationBar(viewModel)
-  {
+  bottomNavigationBar(viewModel) {
     return Container(
       height: 110,
       alignment: Alignment.center,
@@ -74,14 +71,22 @@ class DashboardPage extends ViewModelBuilderWidget<DashboardViewModel> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  bottomNavigationBarChildWidget(index: 0,imagePath: Images.ic_home,iconName: "SURGERY",onTapFuntion: (){
-                    viewModel.updateIconIndicator(0);
-                  },viewModel:viewModel),
-                  bottomNavigationBarChildWidget(index: 1,imagePath: Images.ic_search,iconName: "SEARCH",onTapFuntion: (){
-                    viewModel.updateIconIndicator(1);
-                  },viewModel:viewModel),
-
-
+                  bottomNavigationBarChildWidget(
+                      index: 0,
+                      imagePath: Images.ic_home,
+                      iconName: "SURGERY",
+                      onTapFuntion: () {
+                        viewModel.updateIconIndicator(0);
+                      },
+                      viewModel: viewModel),
+                  bottomNavigationBarChildWidget(
+                      index: 1,
+                      imagePath: Images.ic_search,
+                      iconName: "SEARCH",
+                      onTapFuntion: () {
+                        viewModel.updateIconIndicator(1);
+                      },
+                      viewModel: viewModel),
                 ],
               ),
             ),
@@ -89,7 +94,7 @@ class DashboardPage extends ViewModelBuilderWidget<DashboardViewModel> {
           Align(
             alignment: Alignment.topCenter,
             child: GestureDetector(
-              onTap: (){
+              onTap: () {
                 viewModel.navigateToImagePickerScreen();
               },
               child: Container(
@@ -120,11 +125,9 @@ class DashboardPage extends ViewModelBuilderWidget<DashboardViewModel> {
       ),
     );
   }
-
 }
 
 class bottomNavigationBarChildWidget extends StatefulWidget {
-
   int index;
   String imagePath;
   String iconName;
@@ -132,23 +135,29 @@ class bottomNavigationBarChildWidget extends StatefulWidget {
   DashboardViewModel viewModel;
 
   bottomNavigationBarChildWidget(
-  {required this.index, required this.imagePath, required this.iconName, required this.onTapFuntion,required this.viewModel});
+      {required this.index,
+      required this.imagePath,
+      required this.iconName,
+      required this.onTapFuntion,
+      required this.viewModel});
 
   @override
-  State<bottomNavigationBarChildWidget> createState() => _bottomNavigationBarChildWidgetState();
-
-
+  State<bottomNavigationBarChildWidget> createState() =>
+      _bottomNavigationBarChildWidgetState();
 }
 
-class _bottomNavigationBarChildWidgetState extends State<bottomNavigationBarChildWidget> {
+class _bottomNavigationBarChildWidgetState
+    extends State<bottomNavigationBarChildWidget> {
   @override
   Widget build(BuildContext context) {
-    return  GestureDetector(
+    return GestureDetector(
       onTap: widget.onTapFuntion,
       child: Container(
         alignment: Alignment.center,
         width: MediaQuery.of(context).size.width / 2,
-        padding: widget.index ==0 ?  EdgeInsets.only(right: 30) :  EdgeInsets.only(left: 30),
+        padding: widget.index == 0
+            ? EdgeInsets.only(right: 30)
+            : EdgeInsets.only(left: 30),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -165,6 +174,7 @@ class _bottomNavigationBarChildWidgetState extends State<bottomNavigationBarChil
             Text(
               widget.iconName,
               style: AppTextStyle.bodyText1.copyWith(
+                fontSize: 12,
                 color: widget.viewModel.activeIndicators[widget.index]
                     ? AppColor.textOnSecondary
                     : AppColor.surfaceVariant,
@@ -176,9 +186,6 @@ class _bottomNavigationBarChildWidgetState extends State<bottomNavigationBarChil
     );
   }
 }
-
-
-
 
 /*  GestureDetector(
                         onTap: () {
