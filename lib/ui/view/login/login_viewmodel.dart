@@ -1,6 +1,6 @@
 import 'package:curiumlife/core/enum/view_state.dart';
-import 'package:curiumlife/core/model/table_model/cv_model.dart';
-import 'package:curiumlife/db/base_table.dart';
+import 'package:curiumlife/core/model/responce_wrapper.dart';
+import 'package:curiumlife/core/model/user_model.dart';
 import 'package:curiumlife/db/logins.dart';
 import 'package:curiumlife/locator.dart';
 import 'package:flutter/cupertino.dart';
@@ -35,6 +35,7 @@ class LogInViewModel extends VGTSBaseViewModel {
 
       if (data.status == ResponceStatus.COMPLETED) {
         preferenceService.setPassCode(data.data!.token);
+        updateUserModel(data.data as UserModel);
         navigationService.popAllAndPushNamed(
           Routes.dashboard,
         );
@@ -45,29 +46,4 @@ class LogInViewModel extends VGTSBaseViewModel {
 
     notifyListeners();
   }
-
-  get() async {
-    print("get called");
-
-    List<CVModel> a = await BaseTable<CVModel>().getAll();
-
-    a.forEach((element) {
-      print(element.userUniqID);
-    });
-    // if(logInFormKey.currentState?.validate() != true) {
-    //   return;
-    // }
-    // setState(ViewState.Busy);
-    // setState(ViewState.Idle);
-    // notifyListeners();
-  }
 }
-
-// int a = await BaseTable<CVModel>().insert(CVModel(userUniqID:123456,patientUniqID:007,c1:"hi",c2:"hello",c3: "world"));
-// print("the a is ${a}");
-// if(logInFormKey.currentState?.validate() != true) {
-//   return;
-// }
-// setState(ViewState.Busy);
-// setState(ViewState.Idle);
-// notifyListeners();

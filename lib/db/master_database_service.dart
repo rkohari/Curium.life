@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:curiumlife/db/cvc_constant.dart';
+import 'package:curiumlife/db/patient_info_constant.dart';
 import 'package:sqflite/sqflite.dart';
 import '../locator.dart';
 import 'base_database_service.dart';

@@ -14,6 +14,7 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
   @override
   void onViewModelReady(HomePageViewModel viewModel) {
     super.onViewModelReady(viewModel);
+    viewModel.init();
   }
 
   @override
@@ -44,7 +45,7 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Hellow David",
+                        "Surgery Details",
                         style: AppTextStyle.headline5.copyWith(
                             color: Colors.white,
                             fontWeight: FontWeight.normal,
@@ -98,28 +99,29 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
             ),
           ),
           VerticalSpacing.custom(value: 12),
-          Padding(
+
+          viewModel.patientsList.isEmpty? Center(child: Text("No Patients data found "),) :Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: AnimationLimiter(
               child: GridView.count(
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
-                childAspectRatio: .9,
+                childAspectRatio: .85,
                 primary: false,
                 shrinkWrap: true,
                 padding: const EdgeInsets.all(8.0),
                 crossAxisCount: 2,
                 children: List.generate(
-                  25,
+                  viewModel.patientsList.length,
                   (int index) {
                     return AnimationConfiguration.staggeredGrid(
                       columnCount: 2,
                       position: index,
-                      duration: const Duration(milliseconds: 500),
-                      child: const ScaleAnimation(
+                      duration:  Duration(milliseconds: 500),
+                      child:  ScaleAnimation(
                         scale: 0.5,
                         child: FadeInAnimation(
-                          child: PatientInfoWidget(),
+                          child: PatientInfoWidget(viewModel.patientsList[index]),
                         ),
                       ),
                     );

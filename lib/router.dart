@@ -1,8 +1,18 @@
 
 import 'package:curiumlife/ui/view/dashboard/dashboard_page.dart';
+import 'package:curiumlife/ui/view/image_picker/image_info_screen.dart';
+import 'package:curiumlife/ui/view/image_picker/image_picker_option_screen.dart';
+import 'package:curiumlife/ui/view/image_picker/image_preview_screen.dart';
+import 'package:curiumlife/ui/view/image_picker/image_process.dart';
 import 'package:curiumlife/ui/view/login/login_page.dart';
+import 'package:curiumlife/ui/view/patient_info_get/patient_info_screen.dart';
 import 'package:curiumlife/ui/view/splash/splash_page.dart';
+import 'package:curiumlife/ui/view/status/200_screen.dart';
+import 'package:curiumlife/ui/view/status/501_screen.dart';
+import 'package:curiumlife/ui/view/view_patient_details/patient_details_screen.dart';
 import 'package:flutter/material.dart';
+
+import 'core/model/table_model/patient_info_model.dart';
 
 const String initialRoute = "login";
 
@@ -10,6 +20,16 @@ class Routes {
   static const String splash = "/";
   static const String dashboard = "/dashboard";
   static const String login = "/auth/login";
+  static const String imagePicker = "/imagePicker";
+  static const String imagePreview = "/imagePreview";
+  static const String imageProcess = "/imageProcess";
+  static const String imageInfo = "/imageInfo";
+  static const String patientInfo = "/patientInfo";
+  static const String success = "/success";
+  static const String failure = "/failure";
+  static const String patientDetails = "/patientDetails";
+
+  //ErrorScreen
 
 }
 
@@ -24,18 +44,62 @@ class AppRouter {
         settings: RouteSettings(name: settings.name),
       );
 
+      case Routes.login:
+        return MaterialPageRoute(
+          builder: (_) => LogInPage(),
+          settings: RouteSettings(name: settings.name),
+        );
+
     case Routes.dashboard:
       return MaterialPageRoute(
         builder: (_) => DashboardPage(),//settings.arguments to pass arguments
         settings: RouteSettings(name: settings.name),
       );
 
-    case Routes.login:
-      return MaterialPageRoute(
-        builder: (_) => LogInPage(),
-        settings: RouteSettings(name: settings.name),
-      );
+      case Routes.imagePicker:
+        return MaterialPageRoute(
+          builder: (_) => ImagePickerChoices(),//settings.arguments to pass arguments
+          settings: RouteSettings(name: settings.name),
+        );
+      case Routes.imagePreview:
+        return MaterialPageRoute(
+          builder: (_) => ImagePreviewScreen(settings.arguments),//settings.arguments to pass arguments
+          settings: RouteSettings(name: settings.name),
+        );
 
+      case Routes.imageProcess:
+        return MaterialPageRoute(
+          builder: (_) => ImageProcessScreen(settings.arguments),//settings.arguments to pass arguments
+          settings: RouteSettings(name: settings.name),
+        );
+      case Routes.imageInfo:
+        return MaterialPageRoute(
+          builder: (_) => ImageInfoScreen(settings.arguments),//settings.arguments to pass arguments
+          settings: RouteSettings(name: settings.name),
+        );
+
+      case Routes.patientInfo:
+        return MaterialPageRoute(
+          builder: (_) => PatientInfo(settings.arguments),//settings.arguments to pass arguments
+          settings: RouteSettings(name: settings.name),
+        );
+
+      case Routes.success:
+        return MaterialPageRoute(
+          builder: (_) => SuccessScreen(),//settings.arguments to pass arguments
+          settings: RouteSettings(name: settings.name),
+        );
+      case Routes.failure:
+        return MaterialPageRoute(
+          builder: (_) => FailureScreen(),//settings.arguments to pass arguments
+          settings: RouteSettings(name: settings.name),
+        );
+
+      case Routes.patientDetails:
+        return MaterialPageRoute(
+          builder: (_) => PatientDetails(settings.arguments as PatientModel),//settings.arguments to pass arguments
+          settings: RouteSettings(name: settings.name),
+        );
 
       default:
       return MaterialPageRoute(

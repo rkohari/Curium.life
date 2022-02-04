@@ -1,5 +1,5 @@
-import 'package:curiumlife/core/model/table_model/cv_model.dart';
-import 'package:curiumlife/db/cvc_constant.dart';
+import 'package:curiumlife/core/model/table_model/patient_info_model.dart';
+import 'package:curiumlife/db/patient_info_constant.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:vgts_plugin/form/base_object.dart';
 
@@ -9,7 +9,7 @@ import 'database_service.dart';
 import 'master_database_service.dart';
 
 
- class BaseTable<T extends BaseModel> {
+ class BaseTable<T extends BaseDBModel> {
 
   final PreferenceService _preferenceService = locator<PreferenceService>();
 
@@ -20,12 +20,12 @@ import 'master_database_service.dart';
 
   Database get _masterDatabase => locator<MasterDatabaseService>().database;
 
-  T get object => BaseModel.object<T>();
+  T get object => BaseDBModel.object<T>();
 
 
 
 
-  Future<List<P>> rawQuery<P extends BaseModel>(String query) async {
+  Future<List<P>> rawQuery<P extends BaseDBModel>(String query) async {
     List<Map> list = [];
 
     Database database = _masterDatabase  ;
@@ -33,7 +33,7 @@ import 'master_database_service.dart';
     print(database.toString());
 
     list = await database.rawQuery(query);
-   // List<P> dataList = await Future.wait(list.map((e) => BaseModel.createFromMap<P>(e)).toList());
+   // List<P> dataList = await Future.wait(list.map((e) => BaseDBModel.createFromMap<P>(e)).toList());
     //return dataList;
     return [];
   }
@@ -45,16 +45,13 @@ import 'master_database_service.dart';
 
     Database database =  _masterDatabase;
 
-
-
-
-
-
     list = await database.query(object.tableName,);
+    print("the list is ${list}");
 
-    List<T> dataList = await Future.wait(list.map((e) => BaseModel.createFromMap<T>(e)).toList());
+    List<T> dataList = await Future.wait(list.map((e) => BaseDBModel.createFromMap<T>(e)).toList());
+    print("the dataList is ${dataList.length}");
 
-    return dataList.where((element) => element.toDatabaseMap()[BaseConstant().col_deleted] == false).toList();
+    return dataList;
   }
 
   Future<T?> getById(int id ,) async {
@@ -111,7 +108,7 @@ import 'master_database_service.dart';
 
 
 
-class BaseConstant extends BaseModel {
+class BaseConstant extends BaseDBModel {
 
   final String col_organization_id ='organization_id';
   final String col_status ='status';
@@ -122,7 +119,7 @@ class BaseConstant extends BaseModel {
 
 }
 
-class BaseModel extends BaseObject {
+class BaseDBModel extends BaseObject {
 
   String? _tableName;
   String? _primaryKey;
@@ -150,15 +147,15 @@ class BaseModel extends BaseObject {
     _primaryKey = value;
   }
 
-  static T object<T extends BaseModel>() {
+  static T object<T extends BaseDBModel>() {
     switch (T) {
-       case CVModel:
-         return CVModel() as T;
+       case PatientModel:
+         return PatientModel() as T;
     }
     throw "Requested Model not initialised in Base Model";
   }
 
-  static Future<T> createFromMap<T extends BaseModel>(Map<String, dynamic> data) async {
+  static Future<T> createFromMap<T extends BaseDBModel>(Map<String, dynamic> data) async {
     return await object<T>().fromMap(data);
   }
 

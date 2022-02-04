@@ -8,15 +8,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:provider/provider.dart';
+import 'package:tflite/tflite.dart';
 import 'core/res/styles.dart';
 import 'helper/dialog_manager.dart';
 import 'locator.dart';
 
 Future<Null> main() async {
-  setupLocator();
 
   WidgetsFlutterBinding.ensureInitialized();
-
+  setupLocator();
+  await loadModule();
 
   FlutterError.onError = (FlutterErrorDetails details) {
   };
@@ -95,3 +96,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 }
 
+loadModule() async {
+  print("ML Model loaded");
+  await Tflite.loadModel(
+      model: "assets/ml/model_unquant.tflite",
+      labels: "assets/ml/labels.txt");
+}

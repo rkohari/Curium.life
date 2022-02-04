@@ -1,42 +1,32 @@
-class LoginDatabase {
-  List<UserDB> _listOfUsers = [UserDB("1", "admin", "123456", "admin","USR_01")];
+import 'package:curiumlife/core/model/responce_wrapper.dart';
+import 'package:curiumlife/core/model/user_model.dart';
 
-  List<UserDB> get listOfUsers => _listOfUsers;
+List<UserModel> listOfUsers = [
+  UserModel("1", "admin", "123456", "admin", "USR_01")
+];
+
+class LoginDatabase {
+  List<UserModel> get getListOfUsers => listOfUsers;
 
   ResponseData validateLoginDetails(String loginId, String password) {
+    print("validateLoginDetails called");
     try {
-      UserDB userDB = _listOfUsers.firstWhere((element) =>
+
+      UserModel userDB = listOfUsers.firstWhere((element) =>
           element.loginId == loginId && element.password == password);
+   //   print(userDB.userType);
       return ResponseData(status: ResponceStatus.COMPLETED, data: userDB);
     } catch (e) {
+       print("error gettings");
+       print(e.toString());
       return ResponseData(
         status: ResponceStatus.ERROR,
       );
     }
   }
+
+
+
+
+
 }
-
-class UserDB {
-  String? uniqID;
-  String? loginId;
-  String? password;
-  String? userType;
-  String ? token;
-
-  UserDB(this.uniqID, this.loginId, this.password, this.userType,this.token);
-
-  @override
-  String toString() {
-//
-    return "$password $uniqID";
-  }
-}
-
-class ResponseData {
-  ResponceStatus? status;
-  UserDB? data;
-
-  ResponseData({this.status, this.data});
-}
-
-enum ResponceStatus { COMPLETED, ERROR }

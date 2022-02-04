@@ -5,6 +5,7 @@ import 'package:curiumlife/core/res/spacing.dart';
 import 'package:curiumlife/core/res/styles.dart';
 import 'package:curiumlife/ui/view/home/home_page.dart';
 import 'package:curiumlife/ui/view/login/login_page.dart';
+import 'package:curiumlife/ui/view/search/search_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -48,7 +49,7 @@ class DashboardPage extends ViewModelBuilderWidget<DashboardViewModel> {
         body: PageView(
           controller: viewModel.pageController,
           physics: NeverScrollableScrollPhysics(),
-          children: [HomePage(), LogInPage()],
+          children: [HomePage(), SearchScreen()],
         ),
         bottomNavigationBar: bottomNavigationBar(viewModel),
       ),
@@ -87,25 +88,30 @@ class DashboardPage extends ViewModelBuilderWidget<DashboardViewModel> {
           ),
           Align(
             alignment: Alignment.topCenter,
-            child: Container(
-              height: 80,
-              width: 80,
-              decoration: BoxDecoration(
-                  border: Border.all(color: AppColor.borderColor, width: 2),
-                  color: Colors.white,
-                  shape: BoxShape.circle),
-              padding: EdgeInsets.all(2),
+            child: GestureDetector(
+              onTap: (){
+                viewModel.navigateToImagePickerScreen();
+              },
               child: Container(
-                decoration: const BoxDecoration(
-                    color: AppColor.secondary, shape: BoxShape.circle),
-                alignment: Alignment.center,
-                child: const Image(
-                  image: AssetImage(
-                    Images.ic_camera,
+                height: 80,
+                width: 80,
+                decoration: BoxDecoration(
+                    border: Border.all(color: AppColor.borderColor, width: 2),
+                    color: Colors.white,
+                    shape: BoxShape.circle),
+                padding: EdgeInsets.all(2),
+                child: Container(
+                  decoration: const BoxDecoration(
+                      color: AppColor.secondary, shape: BoxShape.circle),
+                  alignment: Alignment.center,
+                  child: const Image(
+                    image: AssetImage(
+                      Images.ic_camera,
+                    ),
+                    color: Colors.white,
+                    width: 25,
+                    height: 25,
                   ),
-                  color: Colors.white,
-                  width: 25,
-                  height: 25,
                 ),
               ),
             ),
