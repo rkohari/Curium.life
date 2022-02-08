@@ -40,7 +40,7 @@ class LogInViewModel extends VGTSBaseViewModel {
           Routes.dashboard,
         );
       } else {
-        print("login failure");
+        dialogService.showDialog(description: "Enter Correct Login Details");
       }
     });
 

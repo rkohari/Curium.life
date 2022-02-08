@@ -18,7 +18,7 @@ class CuriumLife {
     "Bottom 1/3 of gallbladder is clearly demonstrated and cystic plate is shown"
   ];
 
-  ImageInfo getImageInfo(String name) => listOFImageInfo[0];
+  ImageInfo getImageInfo(String name) => listOFImageInfo.firstWhere((element) => element.imageName==name);
 }
 
 class ImageInfo {

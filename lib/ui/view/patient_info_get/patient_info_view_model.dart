@@ -29,7 +29,10 @@ class PatientInfoViewModel extends VGTSBaseViewModel {
   TextFormFieldController patientAgeController = TextFormFieldController(
       const ValueKey("Age"),
       requiredText: "Enter Age",
-      required: true);
+      required: true,
+    inputType: TextInputType.number
+
+  );
 
   TextFormFieldController patientDiagonisisController = TextFormFieldController(
       const ValueKey("diagonisis"),

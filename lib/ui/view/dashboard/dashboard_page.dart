@@ -153,6 +153,7 @@ class _bottomNavigationBarChildWidgetState
     return GestureDetector(
       onTap: widget.onTapFuntion,
       child: Container(
+        color: Colors.white,
         alignment: Alignment.center,
         width: MediaQuery.of(context).size.width / 2,
         padding: widget.index == 0
@@ -187,69 +188,3 @@ class _bottomNavigationBarChildWidgetState
   }
 }
 
-/*  GestureDetector(
-                        onTap: () {
-                          viewModel.updateIconIndicator(0);
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          width: MediaQuery.of(context).size.width / 2,
-                          padding: EdgeInsets.only(right: 30),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Image(
-                                image: AssetImage(Images.ic_home),
-                                width: 24,
-                                height: 24,
-                                color: viewModel.activeIndicators[0]
-                                    ? AppColor.primary
-                                    : AppColor.surfaceVariant,
-                              ),
-                              VerticalSpacing.custom(value: 8),
-                              Text(
-                                "SURGERY",
-                                style: AppTextStyle.bodyText1.copyWith(
-                                  color: viewModel.activeIndicators[0]
-                                      ? AppColor.textOnSecondary
-                                      : AppColor.surfaceVariant,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),*/
-/*  GestureDetector(
-                        onTap: () {
-                          viewModel.updateIconIndicator(1);
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          padding: EdgeInsets.only(left: 30),
-                          width: MediaQuery.of(context).size.width / 2,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Image(
-                                image: AssetImage(Images.ic_search),
-                                width: 24,
-                                height: 24,
-                                color: viewModel.activeIndicators[1]
-                                    ? AppColor.primary
-                                    : AppColor.surfaceVariant,
-                              ),
-                              VerticalSpacing.custom(value: 8),
-                              Text(
-                                "SEARCH",
-                                style: AppTextStyle.bodyText1.copyWith(
-                                  color: viewModel.activeIndicators[1]
-                                      ? AppColor.textOnSecondary
-                                      : AppColor.surfaceVariant,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      )*/
