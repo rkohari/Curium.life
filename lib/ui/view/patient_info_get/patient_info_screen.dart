@@ -218,7 +218,7 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
               onTap:viewModel.buttonLoading? null : () {
                 viewModel.controlButtonLoading(true);
                 if (viewModel.patientInfoKey.currentState!.validate()) {
-                  viewModel.storeIntoDB(data);
+                //  viewModel.storeIntoDB(data);
                 }else
                   {
                     viewModel.controlButtonLoading(false);

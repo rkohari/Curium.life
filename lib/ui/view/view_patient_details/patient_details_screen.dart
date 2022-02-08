@@ -26,7 +26,6 @@ class PatientDetails extends ViewModelBuilderWidget<PatientDetailsViewModel> {
       BuildContext context, PatientDetailsViewModel viewModel, Widget? child) {
     return WillPopScope(
       onWillPop: () async{
-
         return true;
       },
       child: Scaffold(
@@ -95,6 +94,18 @@ class PatientDetails extends ViewModelBuilderWidget<PatientDetailsViewModel> {
                           color: Color(0xFF6B779A))),
                   VerticalSpacing.custom(value: 10),
                   Text(patientModel.surgeryDetails ?? "",
+                      style: AppTextStyle.overline.copyWith(
+                          fontSize: 12,
+                          fontStyle: FontStyle.italic,
+                          color: Color(0xFF6B779A))),
+                  VerticalSpacing.custom(value: 15),
+                  Text("Additional Notes",
+                      style: AppTextStyle.headline5.copyWith(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF6B779A))),
+                  VerticalSpacing.custom(value: 10),
+                  Text(patientModel.additionalNotes ?? "",
                       style: AppTextStyle.overline.copyWith(
                           fontSize: 12,
                           fontStyle: FontStyle.italic,

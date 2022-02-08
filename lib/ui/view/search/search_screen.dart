@@ -1,3 +1,4 @@
+import 'package:curiumlife/core/enum/view_state.dart';
 import 'package:curiumlife/core/res/colors.dart';
 import 'package:curiumlife/core/res/images.dart';
 import 'package:curiumlife/core/res/styles.dart';
@@ -21,7 +22,7 @@ class SearchScreen extends ViewModelBuilderWidget<SearchViewModel> {
   Widget builder(
       BuildContext context, SearchViewModel viewModel, Widget? child) {
     return Scaffold(
-      backgroundColor: AppColor.background,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: false,
@@ -63,7 +64,7 @@ class SearchScreen extends ViewModelBuilderWidget<SearchViewModel> {
           )
         ],
       ),
-      body: viewModel.searchResults.isEmpty
+      body:viewModel.state ==ViewState.Busy ?Container(): viewModel.searchResults.isEmpty
           ? Center(
               child: Text("No Patients data found",style: AppTextStyle.subtitle2.copyWith(color: Colors.black.withOpacity(.5))),
             )

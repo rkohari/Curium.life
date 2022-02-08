@@ -1,3 +1,4 @@
+import 'package:curiumlife/core/enum/view_state.dart';
 import 'package:curiumlife/core/model/table_model/patient_info_model.dart';
 import 'package:curiumlife/db/base_table.dart';
 import 'package:curiumlife/db/logins.dart';
@@ -18,6 +19,7 @@ class SearchViewModel extends VGTSBaseViewModel {
 
   getSearchResults() async{
 
+    setState(ViewState.Busy);
     searchResults.clear();
     List<PatientModel> a = await BaseTable<PatientModel>().getAll();
 
@@ -26,8 +28,8 @@ class SearchViewModel extends VGTSBaseViewModel {
         .where((element) => element.userUnique_id == LoginDatabase().getListOfUsers.firstWhere((element) => element.token == preferenceService.getPassCode()).uniqID)
         .toList();
 
-    searchResults =   b.where((element) => element.patientName == searchController.text || element.diagoonsis == searchController.textEditingController).toList();
-
+    searchResults =   b.where((element) => element.patientName!.contains(searchController.text)  || element.diagoonsis!.contains(searchController.text)).toList();
+    setState(ViewState.Idle);
     notifyListeners();
   }
 

@@ -27,7 +27,10 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
   @override
   Widget builder(
       BuildContext context, HomePageViewModel viewModel, Widget? child) {
-    return Scaffold(body:viewModel.state== ViewState.Busy? Container() : getBody(context, viewModel));
+    return Scaffold(
+        body: viewModel.state == ViewState.Busy
+            ? Container()
+            : getBody(context, viewModel));
   }
 
   getBody(context, viewModel) {
@@ -88,183 +91,211 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
                       color: Colors.white,
                     ),
                     alignment: Alignment.center,
-                    child: viewModel.patientsList.length ==0 ? Text("No Data Found"): Container(
-                      alignment: Alignment.topCenter,
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: AspectRatio(
-                              aspectRatio: 2,
-                              child: PieChart(
-                                PieChartData(
-                                    pieTouchData: PieTouchData(
-                                        touchCallback: (FlTouchEvent event,
-                                            pieTouchResponse) {}),
-                                    borderData: FlBorderData(
-                                      show: false,
+                    child: viewModel.patientsList.length == 0
+                        ? Text("No Data Found")
+                        : Container(
+                            alignment: Alignment.topCenter,
+                            child: Column(
+                              children: [
+                                Expanded(
+                                  child: AspectRatio(
+                                    aspectRatio: 2,
+                                    child: PieChart(
+                                      PieChartData(
+                                          pieTouchData: PieTouchData(
+                                              touchCallback:
+                                                  (FlTouchEvent event,
+                                                      pieTouchResponse) {}),
+                                          borderData: FlBorderData(
+                                            show: false,
+                                          ),
+                                          sectionsSpace: 0,
+                                          centerSpaceRadius: 40,
+                                          sections: [
+                                            pieChartSectionDataWidget(
+                                              viewModel.oneCVCPercentage,
+                                              Color(0xFF4485FD),
+                                            ),
+                                            pieChartSectionDataWidget(
+                                              viewModel.secondCVCPercentage,
+                                              Color(0xFFA584FF),
+                                            ),
+                                            pieChartSectionDataWidget(
+                                              viewModel.thirdCVCPercentage,
+                                              Color(0xFFFF7854),
+                                            ),
+                                            pieChartSectionDataWidget(
+                                              viewModel.fourCVCPercentage,
+                                              Color(0xFFFEA725),
+                                            ),
+                                            pieChartSectionDataWidget(
+                                              viewModel.fiveCVCPercentage,
+                                              Color(0xFF00CC6A),
+                                            ),
+                                            pieChartSectionDataWidget(
+                                              viewModel.sixCVCPercentage,
+                                              Color(0xFF00C9E4),
+                                            ),
+                                          ]),
                                     ),
-                                    sectionsSpace: 0,
-                                    centerSpaceRadius: 40,
-                                    sections: [
-
-                                      pieChartSectionDataWidget(viewModel.oneCVCPercentage,Color(0xFF4485FD),),
-                                      pieChartSectionDataWidget(viewModel.secondCVCPercentage,Color(0xFFA584FF),),
-                                      pieChartSectionDataWidget(viewModel.thirdCVCPercentage,Color(0xFFFF7854),),
-                                      pieChartSectionDataWidget(viewModel.fourCVCPercentage,Color(0xFFFEA725),),
-                                      pieChartSectionDataWidget(viewModel.fiveCVCPercentage,Color(0xFF00CC6A),),
-                                      pieChartSectionDataWidget(viewModel.sixCVCPercentage,Color(0xFF00C9E4),),
-
-
-
-
-
-                                    ]),
-                              ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          height: 6,
+                                          width: 6,
+                                          decoration: const BoxDecoration(
+                                            color: Color(0xFF4485FD),
+                                            shape: BoxShape.circle,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 3,
+                                        ),
+                                        Text(
+                                          "value-01",
+                                          style: TextStyle(fontSize: 10),
+                                        )
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          height: 6,
+                                          width: 6,
+                                          decoration: const BoxDecoration(
+                                            color: Color(0xFFA584FF),
+                                            shape: BoxShape.circle,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 3,
+                                        ),
+                                        Text(
+                                          "value-02",
+                                          style: TextStyle(fontSize: 10),
+                                        )
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          height: 6,
+                                          width: 6,
+                                          decoration: const BoxDecoration(
+                                            color: Color(0xFFFF7854),
+                                            shape: BoxShape.circle,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 3,
+                                        ),
+                                        Text(
+                                          "value-03",
+                                          style: TextStyle(fontSize: 10),
+                                        )
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          height: 6,
+                                          width: 6,
+                                          decoration: const BoxDecoration(
+                                            color: Color(0xFFFEA725),
+                                            shape: BoxShape.circle,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 3,
+                                        ),
+                                        Text(
+                                          "value-04",
+                                          style: TextStyle(fontSize: 10),
+                                        )
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          height: 6,
+                                          width: 6,
+                                          decoration: const BoxDecoration(
+                                            color: Color(0xFF00CC6A),
+                                            shape: BoxShape.circle,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 3,
+                                        ),
+                                        Text(
+                                          "value-05",
+                                          style: TextStyle(fontSize: 10),
+                                        )
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          height: 6,
+                                          width: 6,
+                                          decoration: const BoxDecoration(
+                                            color: Color(0xFF00C9E4),
+                                            shape: BoxShape.circle,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 3,
+                                        ),
+                                        Text(
+                                          "value-06",
+                                          style: TextStyle(fontSize: 10),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    height: 6,
-                                    width: 6,
-                                    decoration: const BoxDecoration(
-                                      color: Color(0xFF4485FD),
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 3,
-                                  ),
-                                  Text(
-                                    "value-01",
-                                    style: TextStyle(fontSize: 10),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    height: 6,
-                                    width: 6,
-                                    decoration: const BoxDecoration(
-                                      color: Color(0xFFA584FF),
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 3,
-                                  ),
-                                  Text(
-                                    "value-02",
-                                    style: TextStyle(fontSize: 10),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    height: 6,
-                                    width: 6,
-                                    decoration: const BoxDecoration(
-                                      color: Color(0xFFFF7854),
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 3,
-                                  ),
-                                  Text(
-                                    "value-03",
-                                    style: TextStyle(fontSize: 10),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    height: 6,
-                                    width: 6,
-                                    decoration: const BoxDecoration(
-                                      color: Color(0xFFFEA725),
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 3,
-                                  ),
-                                  Text(
-                                    "value-04",
-                                    style: TextStyle(fontSize: 10),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    height: 6,
-                                    width: 6,
-                                    decoration: const BoxDecoration(
-                                      color: Color(0xFF00CC6A),
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 3,
-                                  ),
-                                  Text(
-                                    "value-05",
-                                    style: TextStyle(fontSize: 10),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    height: 6,
-                                    width: 6,
-                                    decoration: const BoxDecoration(
-                                      color: Color(0xFF00C9E4),
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 3,
-                                  ),
-                                  Text(
-                                    "value-06",
-                                    style: TextStyle(fontSize: 10),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
                   ),
                 ),
               ],
@@ -320,13 +351,11 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
     );
   }
 
-  PieChartSectionData pieChartSectionDataWidget(double value,Color color)
-  {
-    return  PieChartSectionData(
-      color:  color,
+  PieChartSectionData pieChartSectionDataWidget(double value, Color color) {
+    return PieChartSectionData(
+      color: color,
       value: value,
-      title:
-      '${value ?? 0}%',
+      title: '${value ?? 0}%',
       radius: 40,
       titleStyle: const TextStyle(
           fontSize: 10,

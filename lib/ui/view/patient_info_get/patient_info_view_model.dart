@@ -6,6 +6,7 @@ import 'package:curiumlife/core/model/base_model.dart';
 import 'package:curiumlife/core/model/table_model/patient_info_model.dart';
 import 'package:curiumlife/db/base_table.dart';
 import 'package:curiumlife/db/logins.dart';
+// import 'package:curiumlife/helper/input_formatter.dart';
 import 'package:curiumlife/router.dart';
 import 'package:curiumlife/ui/view/vgts_base_view_model.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:vgts_plugin/form/utils/form_field_controller.dart';
 import 'package:uuid/uuid.dart';
+import 'package:vgts_plugin/form/utils/input_formatter.dart';
 
 import '../../../locator.dart';
 class PatientInfoViewModel extends VGTSBaseViewModel {
@@ -25,9 +27,11 @@ class PatientInfoViewModel extends VGTSBaseViewModel {
   FormFieldController patientNameController = FormFieldController(
       const ValueKey("PatientName"),
       required: true,
+      maxLength:50,
+    inputFormatter: InputFormatter.nameFormatter,
 
 
-   );
+  );
 
   FormFieldController patientAgeController = FormFieldController(
       const ValueKey("Age"),
@@ -35,13 +39,16 @@ class PatientInfoViewModel extends VGTSBaseViewModel {
       inputFormatter:[
         FilteringTextInputFormatter.digitsOnly,
       ],
-     textInputType: TextInputType.number,maxLength: 3
+     textInputType: TextInputType.number,maxLength: 2
 
   );
 
   FormFieldController patientDiagonisisController = FormFieldController(
       const ValueKey("diagonisis"),
       required: true,
+      maxLength:150,
+inputFormatter: InputFormatter.nameFormatter,
+
 
 
   );
@@ -49,8 +56,9 @@ class PatientInfoViewModel extends VGTSBaseViewModel {
   FormFieldController surgeryDetailsController = FormFieldController(
       ValueKey("surgeryDetails"),
       required: true,
-      textCapitalization: TextCapitalization.characters,
-      maxLength: 100,
+      textCapitalization: TextCapitalization.words,
+    maxLength:250,
+    inputFormatter: InputFormatter.nameFormatter,
 
       minLines: 5,
 
@@ -58,8 +66,9 @@ class PatientInfoViewModel extends VGTSBaseViewModel {
   FormFieldController additionalNotesController = FormFieldController(
       ValueKey("additionalNotes"),
       required: true,
-      textCapitalization: TextCapitalization.characters,
-    maxLength: 100,
+      textCapitalization: TextCapitalization.words,
+    maxLength:250,
+    inputFormatter: InputFormatter.nameFormatter,
 
     minLines: 5,
 
