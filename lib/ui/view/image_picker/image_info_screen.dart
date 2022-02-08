@@ -143,7 +143,7 @@ class ImageInfoScreen extends ViewModelBuilderWidget<ImagePickerViewModel> {
             GestureDetector(
               onTap: (){
 
-
+                navigationService.popUntil(Routes.imagePicker);
 
 
               },
@@ -160,8 +160,13 @@ class ImageInfoScreen extends ViewModelBuilderWidget<ImagePickerViewModel> {
               ),
             ),
             GestureDetector(
-              onTap: (){
-                viewModel.gotoPatientInfoScreen(data);
+              onTap: viewModel.buttonLoading ? null :(){
+
+                viewModel.controlButtonLoading(true);
+                 viewModel.gotoPatientInfoScreen(data);
+
+
+
               },
               child: Container(
                 width: 180,
@@ -172,7 +177,10 @@ class ImageInfoScreen extends ViewModelBuilderWidget<ImagePickerViewModel> {
                   // border: Border.all(color:AppColor.background,width: 1)
                 ),
                 alignment: Alignment.center,
-                child: Text("Next",style: AppTextStyle.bodyText2.copyWith(fontSize: 16,color: AppColor.background,fontWeight: FontWeight.w400),),
+                child:viewModel.buttonLoading ? SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(color: Colors.black,strokeWidth: 2,)): Text("Next",style: AppTextStyle.bodyText2.copyWith(fontSize: 16,color: AppColor.background,fontWeight: FontWeight.w400),),
               ),
             )
           ],

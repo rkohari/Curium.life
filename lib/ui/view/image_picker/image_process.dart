@@ -31,7 +31,7 @@ class ImageProcessScreen extends ViewModelBuilderWidget<ImagePickerViewModel> {
         return false;
       },
       child: Scaffold(
-
+          backgroundColor: Colors.black,
           body: Stack(
             children: [
               Container(

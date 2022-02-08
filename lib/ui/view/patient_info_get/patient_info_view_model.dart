@@ -10,6 +10,7 @@ import 'package:curiumlife/router.dart';
 import 'package:curiumlife/ui/view/vgts_base_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:vgts_plugin/form/utils/form_field_controller.dart';
 import 'package:uuid/uuid.dart';
 
@@ -21,36 +22,57 @@ class PatientInfoViewModel extends VGTSBaseViewModel {
       DropdownFieldController<SexType>(ValueKey("dIndustry"),
           keyId: "id", valueId: "sexType", required: true);
 
-  TextFormFieldController patientNameController = TextFormFieldController(
+  FormFieldController patientNameController = FormFieldController(
       const ValueKey("PatientName"),
-      requiredText: "Enter Patient Name",
-      required: true);
-
-  TextFormFieldController patientAgeController = TextFormFieldController(
-      const ValueKey("Age"),
-      requiredText: "Enter Age",
       required: true,
-    inputType: TextInputType.number
+
+
+   );
+
+  FormFieldController patientAgeController = FormFieldController(
+      const ValueKey("Age"),
+      required: true,
+      inputFormatter:[
+        FilteringTextInputFormatter.digitsOnly,
+      ],
+     textInputType: TextInputType.number,maxLength: 3
 
   );
 
-  TextFormFieldController patientDiagonisisController = TextFormFieldController(
+  FormFieldController patientDiagonisisController = FormFieldController(
       const ValueKey("diagonisis"),
-      requiredText: "Enter Diagonisis",
-      required: true);
+      required: true,
+
+
+  );
 
   FormFieldController surgeryDetailsController = FormFieldController(
       ValueKey("surgeryDetails"),
       required: true,
       textCapitalization: TextCapitalization.characters,
-      maxLines: 10,
-      minLines: 5);
+      maxLength: 100,
+
+      minLines: 5,
+
+  );
   FormFieldController additionalNotesController = FormFieldController(
       ValueKey("additionalNotes"),
       required: true,
       textCapitalization: TextCapitalization.characters,
-      maxLines: 10,
-      minLines: 5);
+    maxLength: 100,
+
+    minLines: 5,
+
+  );
+
+
+  bool buttonLoading =false;
+
+  controlButtonLoading(bool value)
+  {
+    buttonLoading = value;
+    notifyListeners();
+  }
 
   late SexType sexType ;
 
@@ -69,8 +91,8 @@ class PatientInfoViewModel extends VGTSBaseViewModel {
   storeIntoDB(data) async {
 
     try {
-      Uint8List image = await convertFileToUint8List(data["file"]);
-
+     // Uint8List image = await convertFileToUint8List(data["file"]);
+      Uint8List ? image = await testCompressFile(data["file"]);
 
       await BaseTable<PatientModel>().insert(PatientModel(
 
@@ -92,7 +114,9 @@ class PatientInfoViewModel extends VGTSBaseViewModel {
           c3Description: data["c3_des"]
       ));
       //
-       navigationService.pushNamed(Routes.success);
+      controlButtonLoading(false);
+
+      navigationService.pushNamed(Routes.success);
     }
     catch (e) {
       // failure screen
@@ -109,6 +133,26 @@ class PatientInfoViewModel extends VGTSBaseViewModel {
     Uint8List uint8list = base64.decode(imageAsString);
     return uint8list;
   }
+
+
+
+  Future<Uint8List?> testCompressFile(File file) async {
+    var result = await FlutterImageCompress.compressWithFile(
+      file.absolute.path,
+      minWidth: 2300,
+      minHeight: 1500,
+      quality: 40,
+      rotate: 90,
+    );
+
+    return result;
+  }
+
+
+
+
+
+
 
 }
 

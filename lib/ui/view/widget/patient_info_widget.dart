@@ -30,7 +30,7 @@ class PatientInfoWidget extends StatelessWidget {
             Container(
               height: 105,
               decoration: BoxDecoration(
-                color: Colors.red,
+
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(8),topRight:Radius.circular(8) ),
                  image: DecorationImage(
                    image: MemoryImage(patientModel!.picture!),

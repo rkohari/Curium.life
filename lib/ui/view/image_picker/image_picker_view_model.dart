@@ -123,10 +123,21 @@ class ImagePickerViewModel extends VGTSBaseViewModel with TensorFlowService
    gotoPatientInfoScreen(data)
    {
 
-     navigationService.pushNamed(Routes.patientInfo,arguments: data);
+     navigationService.pushNamed(Routes.patientInfo,arguments: data).then((value)  {
+       controlButtonLoading(false);
 
+     });
 
    }
 
+
+
+  bool buttonLoading =false;
+
+  controlButtonLoading(bool value)
+  {
+    buttonLoading = value;
+    notifyListeners();
+  }
 
 }

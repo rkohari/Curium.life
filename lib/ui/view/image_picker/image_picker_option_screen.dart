@@ -21,6 +21,7 @@ class ImagePickerChoices extends ViewModelBuilderWidget<ImagePickerViewModel> {
       BuildContext context, ImagePickerViewModel viewModel, Widget? child) {
     return Scaffold(
         backgroundColor: AppColor.background,
+        appBar: AppBar(),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 53),

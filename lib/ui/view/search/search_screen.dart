@@ -29,10 +29,11 @@ class SearchScreen extends ViewModelBuilderWidget<SearchViewModel> {
           "",
           viewModel.searchController,
           placeholder: "Seach Patient",
-          prefixIcon: Padding(
-            padding: const EdgeInsets.only(left: 13, right: 8),
-            child: Image(
-              image: AssetImage(Images.ic_search),
+
+          prefixIcon:const   Padding(
+            padding:  EdgeInsets.only(left: 13, right: 8),
+            child:  Image(
+              image:  AssetImage(Images.ic_search),
               width: 18,
               height: 18,
             ),
@@ -58,13 +59,13 @@ class SearchScreen extends ViewModelBuilderWidget<SearchViewModel> {
                 )),
           ),
           SizedBox(
-            width: 10,
+            width: 20,
           )
         ],
       ),
       body: viewModel.searchResults.isEmpty
           ? Center(
-              child: Text("No Patients data found "),
+              child: Text("No Patients data found",style: AppTextStyle.subtitle2.copyWith(color: Colors.black.withOpacity(.5))),
             )
           : Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),

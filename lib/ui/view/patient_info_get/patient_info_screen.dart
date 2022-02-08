@@ -5,6 +5,7 @@ import 'package:curiumlife/core/res/styles.dart';
 import 'package:curiumlife/locator.dart';
 import 'package:curiumlife/router.dart';
 import 'package:curiumlife/ui/view/patient_info_get/patient_info_view_model.dart';
+import 'package:curiumlife/ui/widgets/button.dart';
 import 'package:curiumlife/ui/widgets/dropdown.dart';
 import 'package:curiumlife/ui/widgets/edit_text_field.dart';
 import 'package:curiumlife/ui/widgets/tap_outside_unfocus.dart';
@@ -124,6 +125,7 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
                           onSubmitted: (val) {
                             //  viewModel.passwordController.focusNode.requestFocus();
                           },
+
                           prefixIcon: Padding(
                             padding: EdgeInsets.only(left: 18, right: 8),
                             child: Image(
@@ -183,8 +185,9 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
           ),
         ),
       ),
+      extendBody: true,
       bottomNavigationBar: Container(
-        height: 100,
+        height: 70,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -209,11 +212,18 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
                 ),
               ),
             ),
-            GestureDetector(
-              onTap: () {
+
+
+           GestureDetector(
+              onTap:viewModel.buttonLoading? null : () {
+                viewModel.controlButtonLoading(true);
                 if (viewModel.patientInfoKey.currentState!.validate()) {
                   viewModel.storeIntoDB(data);
-                }
+                }else
+                  {
+                    viewModel.controlButtonLoading(false);
+
+                  }
               },
               child: Container(
                 width: 180,
@@ -224,7 +234,10 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
                   // border: Border.all(color:AppColor.background,width: 1)
                 ),
                 alignment: Alignment.center,
-                child: Text(
+                child: viewModel.buttonLoading ? SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(color: Colors.black,strokeWidth: 2,)):Text(
                   "Save",
                   style: AppTextStyle.bodyText2.copyWith(
                       fontSize: 16,
