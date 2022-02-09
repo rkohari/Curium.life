@@ -101,6 +101,11 @@ flutter:
         - asset: assets/fonts/custom_font/Inter-Black.ttf
           weight: 900
 
+    - family: Lato
+      fonts:
+        - asset: assets/fonts/lato/Lato-Regular.ttf
+          weight: 400
+
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/

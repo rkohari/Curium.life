@@ -125,7 +125,6 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
                           onSubmitted: (val) {
                             //  viewModel.passwordController.focusNode.requestFocus();
                           },
-
                           prefixIcon: Padding(
                             padding: EdgeInsets.only(left: 18, right: 8),
                             child: Image(
@@ -139,7 +138,7 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
                       Expanded(
                         child: DropdownField(
                           "",
-                          viewModel.sexController,
+                          viewModel.genderTypeController,
                           placeholder: "Sex",
                           onChange: (value) {},
                         ),
@@ -173,7 +172,6 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
                     placeholder: "Additional Notes",
                     onChanged: (value) {
                       print(value);
-
                     },
                     onSubmitted: (val) {
                       //  viewModel.passwordController.focusNode.requestFocus();
@@ -194,7 +192,6 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
             GestureDetector(
               onTap: () {
                 navigationService.pushNamed(Routes.dashboard);
-
               },
               child: Container(
                 width: 140,
@@ -212,19 +209,42 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
                 ),
               ),
             ),
+            GestureDetector(
+              onTap: viewModel.buttonLoading
+                  ? null
+                  : () {
+                      viewModel.controlButtonLoading(true);
+                      if (viewModel.patientInfoKey.currentState!.validate()) {
 
+                        if(viewModel.patientNameController.text.trim().isEmpty || viewModel.patientNameController.text.length <= 3)
+                          {
 
-           GestureDetector(
-              onTap:viewModel.buttonLoading? null : () {
-                viewModel.controlButtonLoading(true);
-                if (viewModel.patientInfoKey.currentState!.validate()) {
-                //  viewModel.storeIntoDB(data);
-                }else
-                  {
-                    viewModel.controlButtonLoading(false);
+                            viewModel.showDialogBox("Enter Valid Name");
 
-                  }
-              },
+                            return ;
+
+                          }else
+                         if(viewModel.patientDiagonisisController.text.trim().isEmpty)
+                        {
+
+                          viewModel.showDialogBox("Enter Diagonisis Content");
+
+                          return ;
+
+                        }else
+                         if(viewModel.surgeryDetailsController.text.trim().isEmpty)
+                         {
+                           viewModel.showDialogBox("Enter Surgery Details");
+
+                           return ;
+
+                         }
+
+                         viewModel.storeIntoDB(data);
+                      } else {
+                        viewModel.controlButtonLoading(false);
+                      }
+                    },
               child: Container(
                 width: 180,
                 height: 50,
@@ -234,16 +254,21 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
                   // border: Border.all(color:AppColor.background,width: 1)
                 ),
                 alignment: Alignment.center,
-                child: viewModel.buttonLoading ? SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(color: Colors.black,strokeWidth: 2,)):Text(
-                  "Save",
-                  style: AppTextStyle.bodyText2.copyWith(
-                      fontSize: 16,
-                      color: AppColor.background,
-                      fontWeight: FontWeight.w400),
-                ),
+                child: viewModel.buttonLoading
+                    ? SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          color: Colors.black,
+                          strokeWidth: 2,
+                        ))
+                    : Text(
+                        "Save",
+                        style: AppTextStyle.bodyText2.copyWith(
+                            fontSize: 16,
+                            color: AppColor.background,
+                            fontWeight: FontWeight.w400),
+                      ),
               ),
             )
           ],

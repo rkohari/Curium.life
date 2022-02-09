@@ -146,11 +146,11 @@ class _EditTextFieldState extends State<EditTextField> {
         initialValue: widget.controller.text,
         validator: (value) {
 
-          if (!widget.controller.required && widget.controller.text.isEmpty) {
+          if (!widget.controller.required && widget.controller.text.trim().isEmpty) {
             return null;
           }
 
-          if ((widget.controller.required || widget.controller.text.isNotEmpty) && widget.controller.validator != null) {
+          if ((widget.controller.required || widget.controller.text.trim().isNotEmpty) && widget.controller.validator != null) {
             return widget.controller.validator!(value);
           }
 

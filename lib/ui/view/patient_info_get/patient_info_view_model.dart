@@ -20,18 +20,18 @@ import '../../../locator.dart';
 class PatientInfoViewModel extends VGTSBaseViewModel {
   final GlobalKey<FormState> patientInfoKey = GlobalKey<FormState>();
 
-  DropdownFieldController<SexType> sexController =
-      DropdownFieldController<SexType>(ValueKey("dIndustry"),
+  DropdownFieldController<GenderType> genderTypeController =
+      DropdownFieldController<GenderType>(ValueKey("dIndustry"),
           keyId: "id", valueId: "sexType", required: true);
+
 
   FormFieldController patientNameController = FormFieldController(
       const ValueKey("PatientName"),
       required: true,
       maxLength:50,
     inputFormatter: InputFormatter.nameFormatter,
-
-
   );
+
 
   FormFieldController patientAgeController = FormFieldController(
       const ValueKey("Age"),
@@ -43,15 +43,15 @@ class PatientInfoViewModel extends VGTSBaseViewModel {
 
   );
 
+
   FormFieldController patientDiagonisisController = FormFieldController(
       const ValueKey("diagonisis"),
       required: true,
       maxLength:150,
 inputFormatter: InputFormatter.nameFormatter,
 
-
-
   );
+
 
   FormFieldController surgeryDetailsController = FormFieldController(
       ValueKey("surgeryDetails"),
@@ -83,16 +83,16 @@ inputFormatter: InputFormatter.nameFormatter,
     notifyListeners();
   }
 
-  late SexType sexType ;
+  late GenderType sexType ;
 
 
 
   onInIt() {
-    sexController.list = sexTypeList;
+    genderTypeController.list = sexTypeList;
     notifyListeners();
   }
 
-  SetDropDownValue(SexType type) {
+  SetDropDownValue(GenderType type) {
     this.sexType = type;
     notifyListeners();
   }
@@ -110,7 +110,7 @@ inputFormatter: InputFormatter.nameFormatter,
           patientName: patientNameController.text,
           patientAge: int.parse(patientAgeController.text.trim()),
           cvscScore: data["total"],
-          sexType: sexController.value!.sexType,
+          sexType: genderTypeController.value!.sexType,
           diagoonsis: patientDiagonisisController.text,
           surgeryDetails: surgeryDetailsController.text,
           additionalNotes: additionalNotesController.textEditingController.text,
@@ -157,7 +157,13 @@ inputFormatter: InputFormatter.nameFormatter,
     return result;
   }
 
+ showDialogBox(String text)
+ {
+   controlButtonLoading(false);
 
+   dialogService.showDialog(title: "Alert Message",description: "$text");
+
+ }
 
 
 
@@ -165,22 +171,22 @@ inputFormatter: InputFormatter.nameFormatter,
 
 }
 
-class SexType extends BaseModel {
+class GenderType extends BaseModel {
   int? id;
   String? sexType;
 
-  SexType({this.id, this.sexType});
+  GenderType({this.id, this.sexType});
 
-  SexType.fromJson(Map<String, dynamic> json) {
+  GenderType.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     sexType = json['sexType'];
   }
 
-  SexType fromJson(Map<String, dynamic> json) => SexType.fromJson(json);
+  GenderType fromJson(Map<String, dynamic> json) => GenderType.fromJson(json);
 
   @override
   bool operator ==(Object other) {
-    return other is SexType && other.id == id;
+    return other is GenderType && other.id == id;
   }
 
   Map<String, dynamic> toJson() {
@@ -191,8 +197,8 @@ class SexType extends BaseModel {
   }
 }
 
-List<SexType> sexTypeList = [
-  SexType(id: 1, sexType: "Male"),
-  SexType(id: 2, sexType: "Female"),
-  SexType(id: 3, sexType: "Other"),
+List<GenderType> sexTypeList = [
+  GenderType(id: 1, sexType: "Male"),
+  GenderType(id: 2, sexType: "Female"),
+  GenderType(id: 3, sexType: "Other"),
 ];

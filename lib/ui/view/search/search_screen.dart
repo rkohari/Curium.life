@@ -22,8 +22,8 @@ class SearchScreen extends ViewModelBuilderWidget<SearchViewModel> {
   Widget builder(
       BuildContext context, SearchViewModel viewModel, Widget? child) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
+      extendBody: true,
+       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: EditTextField(
@@ -43,6 +43,7 @@ class SearchScreen extends ViewModelBuilderWidget<SearchViewModel> {
           onSubmitted: (val) {
               viewModel.getSearchResults();
           },
+
         ),
         actions: [
           InkWell(
@@ -68,7 +69,8 @@ class SearchScreen extends ViewModelBuilderWidget<SearchViewModel> {
           ? Center(
               child: Text("No Patients data found",style: AppTextStyle.subtitle2.copyWith(color: Colors.black.withOpacity(.5))),
             )
-          : Padding(
+          : SingleChildScrollView(
+            child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: AnimationLimiter(
                 child: GridView.count(
@@ -81,11 +83,11 @@ class SearchScreen extends ViewModelBuilderWidget<SearchViewModel> {
                   crossAxisCount: 2,
                   children: List.generate(
                     viewModel.searchResults.length,
-                    (int index) {
+                        (int index) {
                       return AnimationConfiguration.staggeredGrid(
                         columnCount: 2,
                         position: index,
-                        duration: Duration(milliseconds: 500),
+                        duration: const Duration(milliseconds: 500),
                         child: ScaleAnimation(
                           scale: 0.5,
                           child: FadeInAnimation(
@@ -99,6 +101,7 @@ class SearchScreen extends ViewModelBuilderWidget<SearchViewModel> {
                 ),
               ),
             ),
+          ),
     );
   }
 }

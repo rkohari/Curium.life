@@ -28,8 +28,9 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
   Widget builder(
       BuildContext context, HomePageViewModel viewModel, Widget? child) {
     return Scaffold(
+
         body: viewModel.state == ViewState.Busy
-            ? Container()
+            ? Container( child: SizedBox(width: 20,height: 20,child: CircularProgressIndicator(color:AppColor.primary ,),),)
             : getBody(context, viewModel));
   }
 
@@ -38,8 +39,7 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
       child: Column(
         children: [
           Container(
-            height: MediaQuery.of(context).size.height * .4,
-            //  color: Colors.red,
+            height: MediaQuery.of(context).size.height * .35,
             child: Stack(
               children: [
                 Container(
@@ -49,7 +49,7 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
                       image: DecorationImage(
                           image: AssetImage(Images.background),
                           fit: BoxFit.cover)),
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 50),
+                  padding: EdgeInsets.only(left: 20, right: 20,top: 50),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -58,7 +58,7 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
                         style: AppTextStyle.headline5.copyWith(
                             color: Colors.white,
                             fontWeight: FontWeight.normal,
-                            fontStyle: FontStyle.italic),
+                            fontStyle: FontStyle.italic,fontFamily: "Lato-Regular"),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -81,18 +81,22 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
                   ),
                 ),
                 Align(
-                  alignment: Alignment.bottomCenter,
+                  alignment: Alignment.topCenter,
                   child: Container(
-                    margin: EdgeInsets.only(left: 16, right: 16),
+                    margin: EdgeInsets.only(left: 16, right: 16,top: 100),
                     padding: EdgeInsets.all(10),
-                    height: MediaQuery.of(context).size.height * .25,
+                    height: MediaQuery.of(context).size.height * .30,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.white,
                     ),
                     alignment: Alignment.center,
                     child: viewModel.patientsList.length == 0
-                        ? Text("No Data Found")
+                        ? Text(
+                            "No Anaytics Data Found",
+                            style: AppTextStyle.subtitle2
+                                .copyWith(color: Colors.black.withOpacity(.5)),
+                          )
                         : Container(
                             alignment: Alignment.topCenter,
                             child: Column(
@@ -314,37 +318,40 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
                     ),
                   ),
                 )
-              : Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: AnimationLimiter(
-                    child: GridView.count(
-                      crossAxisSpacing: 12,
-                      mainAxisSpacing: 12,
-                      childAspectRatio: .85,
-                      primary: false,
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.all(8.0),
-                      crossAxisCount: 2,
-                      children: List.generate(
-                        viewModel.patientsList.length,
-                        (int index) {
-                          return AnimationConfiguration.staggeredGrid(
-                            columnCount: 2,
-                            position: index,
-                            duration: Duration(milliseconds: 500),
-                            child: ScaleAnimation(
-                              scale: 0.5,
-                              child: FadeInAnimation(
-                                child: PatientInfoWidget(
-                                    viewModel.patientsList[index]),
+              : Container(
+
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: AnimationLimiter(
+                      child: GridView.count(
+                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 12,
+                        childAspectRatio: .9,
+                        primary: false,
+                        shrinkWrap: true,
+                        padding: const EdgeInsets.all(8.0),
+                        crossAxisCount: 2,
+                        children: List.generate(
+                          viewModel.patientsList.length,
+                          (int index) {
+                            return AnimationConfiguration.staggeredGrid(
+                              columnCount: 2,
+                              position: index,
+                              duration: Duration(milliseconds: 500),
+                              child: ScaleAnimation(
+                                scale: 0.5,
+                                child: FadeInAnimation(
+                                  child: PatientInfoWidget(
+                                      viewModel.patientsList[index]),
+                                ),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),
-                ),
+              ),
           VerticalSpacing.custom(value: 100),
         ],
       ),

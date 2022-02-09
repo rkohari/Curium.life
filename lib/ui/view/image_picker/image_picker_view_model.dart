@@ -57,6 +57,8 @@ class ImagePickerViewModel extends VGTSBaseViewModel with TensorFlowService
   }
 
   pickImageFromCamera () async{
+    controlButtonLoading(false);
+
     final XFile? photo = await picker.pickImage(source: ImageSource.camera);
     File file =File(photo!.path);
     Map<String,dynamic>  params={
@@ -67,6 +69,8 @@ class ImagePickerViewModel extends VGTSBaseViewModel with TensorFlowService
   }
 
   pickImageFromGallary () async {
+    controlButtonLoading(false);
+
     final XFile? photo = await picker.pickImage(source: ImageSource.gallery);
     File file =File(photo!.path);
     Map<String,dynamic>  params={
