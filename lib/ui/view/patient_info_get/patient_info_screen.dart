@@ -41,7 +41,7 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
         centerTitle: false,
         title: Text(
           "Patient Information",
-          style: AppTextStyle.subtitle1.copyWith(
+          style: AppTextStyle.subText.copyWith(
             color: AppColor.textOnBackground,
             fontWeight: FontWeight.w500,
             fontSize: 18,
@@ -84,11 +84,11 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
                             text: TextSpan(children: <TextSpan>[
                           TextSpan(
                               text: 'CVSC Score :',
-                              style: AppTextStyle.headline5.copyWith(
+                              style: AppTextStyle.headLine2.copyWith(
                                   fontSize: 18, fontWeight: FontWeight.bold)),
                           TextSpan(
                               text: " ${data["total"].toString()}",
-                              style: AppTextStyle.headline5.copyWith(
+                              style: AppTextStyle.headLine2.copyWith(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                   color: AppColor.primary)),
@@ -174,9 +174,11 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
                       print(value);
                     },
                     onSubmitted: (val) {
-                      //  viewModel.passwordController.focusNode.requestFocus();
+                        FocusScope.of(context).requestFocus(FocusNode());
                     },
                   ),
+                  VerticalSpacing.custom(value: 100),
+
                 ],
               ),
             ),
@@ -186,6 +188,7 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
       extendBody: true,
       bottomNavigationBar: Container(
         height: 70,
+        color: Colors.white,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -202,7 +205,7 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
                 alignment: Alignment.center,
                 child: Text(
                   "Cancel",
-                  style: AppTextStyle.bodyText2.copyWith(
+                  style: AppTextStyle.subText.copyWith(
                       fontSize: 16,
                       color: AppColor.textOnPrimary,
                       fontWeight: FontWeight.w400),
@@ -215,32 +218,33 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
                   : () {
                       viewModel.controlButtonLoading(true);
                       if (viewModel.patientInfoKey.currentState!.validate()) {
+                        if (viewModel.patientNameController.text
+                                .trim()
+                                .isEmpty ||
+                            viewModel.patientNameController.text.length < 3) {
+                          viewModel.showDialogBox("Enter Atleast 3 letters in name field");
+                          return;
+                        } else if (viewModel.patientNameController.text[0]  == " "){
 
-                        if(viewModel.patientNameController.text.trim().isEmpty || viewModel.patientNameController.text.length <= 3)
-                          {
-
-                            viewModel.showDialogBox("Enter Valid Name");
-
-                            return ;
-
-                          }else
-                         if(viewModel.patientDiagonisisController.text.trim().isEmpty)
-                        {
-
-                          viewModel.showDialogBox("Enter Diagonisis Content");
-
+                          viewModel.showDialogBox("Remove Space in name field");
                           return ;
 
-                        }else
-                         if(viewModel.surgeryDetailsController.text.trim().isEmpty)
-                         {
-                           viewModel.showDialogBox("Enter Surgery Details");
+                        }else if (viewModel.patientDiagonisisController.text
+                            .trim()
+                            .isEmpty) {
+                          viewModel.showDialogBox("Enter Diagonisis Content");
 
-                           return ;
+                          return;
+                        } else if (viewModel.surgeryDetailsController.text
+                                .trim()
+                                .isEmpty || viewModel.surgeryDetailsController.text.length<3) {
+                          viewModel.showDialogBox(
+                              "Enter Atleast 3 letters in surgery field");
 
-                         }
+                          return;
+                        }
 
-                         viewModel.storeIntoDB(data);
+                        viewModel.storeIntoDB(data);
                       } else {
                         viewModel.controlButtonLoading(false);
                       }
@@ -259,12 +263,12 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
                         width: 20,
                         height: 20,
                         child: CircularProgressIndicator(
-                          color: Colors.black,
+                          color: Colors.white,
                           strokeWidth: 2,
                         ))
                     : Text(
                         "Save",
-                        style: AppTextStyle.bodyText2.copyWith(
+                        style: AppTextStyle.subText.copyWith(
                             fontSize: 16,
                             color: AppColor.background,
                             fontWeight: FontWeight.w400),

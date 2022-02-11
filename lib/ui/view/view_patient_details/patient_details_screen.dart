@@ -1,7 +1,6 @@
-
-
 import 'package:curiumlife/core/model/table_model/patient_info_model.dart';
 import 'package:curiumlife/core/res/colors.dart';
+import 'package:curiumlife/core/res/images.dart';
 import 'package:curiumlife/core/res/spacing.dart';
 import 'package:curiumlife/core/res/styles.dart';
 import 'package:curiumlife/locator.dart';
@@ -25,21 +24,36 @@ class PatientDetails extends ViewModelBuilderWidget<PatientDetailsViewModel> {
   Widget builder(
       BuildContext context, PatientDetailsViewModel viewModel, Widget? child) {
     return WillPopScope(
-      onWillPop: () async{
+      onWillPop: () async {
         return true;
       },
       child: Scaffold(
         backgroundColor: AppColor.background,
         appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
+          // leading: IconButton(
+          //   icon: Icon(Icons.arrow_back),
+          //   onPressed: () {
+          //     navigationService.pop();
+          //   },
+          //   color: AppColor.textOnPrimary,
+          // ),
+          leading: GestureDetector(
+            onTap: (){
               navigationService.pop();
             },
-            color: AppColor.textOnPrimary,
+            child: Container(
+              width: 28,
+              height: 28,
+              alignment: Alignment.center,
+              child: Image(
+                width: 28,
+                height: 28,
+                fit: BoxFit.cover,
+                image: AssetImage(Images.ic_back),
+              ),
+            ),
           ),
           centerTitle: false,
-
         ),
         body: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
@@ -47,16 +61,32 @@ class PatientDetails extends ViewModelBuilderWidget<PatientDetailsViewModel> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text(
+                    patientModel.patientName ?? "",
+                    style: AppTextStyle.headLine2.copyWith(
+                        fontSize: 26,
 
-
-                  Text(patientModel.patientName ?? "",style: AppTextStyle.headline5.copyWith(fontSize: 26,fontWeight: FontWeight.bold,color: AppColor.textOnBackground),),
+                        fontWeight: FontWeight.bold,
+                        color: AppColor.textOnBackground),
+                  ),
                   VerticalSpacing.custom(value: 10),
-                  Text("${patientModel.patientAge.toString()} / ${patientModel.sexType}",style: AppTextStyle.headline5.copyWith(fontSize: 16,fontWeight: FontWeight.w500,color: Color(0xFF6B779A)),),
-                  VerticalSpacing.custom(value: 10),
-                  Text("${patientModel.diagoonsis}",style: AppTextStyle.headline5.copyWith(fontSize: 16,fontWeight: FontWeight.w500,color: Color(0xFF6B779A)),),
+                  Text(
+                    "${patientModel.patientAge.toString()} / ${patientModel.sexType}",
+                    style: AppTextStyle.headLine2.copyWith(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xFF6B779A)),
 
+                  ),
+                  VerticalSpacing.custom(value: 10),
+                  Text(
+                    "${patientModel.diagoonsis}",
+                    style: AppTextStyle.headLine2.copyWith(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xFF6B779A)),
+                  ),
                   VerticalSpacing.custom(value: 18),
-
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: Container(
@@ -66,7 +96,6 @@ class PatientDetails extends ViewModelBuilderWidget<PatientDetailsViewModel> {
                       child: Image(
                         width: double.infinity,
                         height: 230,
-
                         image: MemoryImage(patientModel!.picture!),
                         fit: BoxFit.cover,
                       ),
@@ -75,20 +104,20 @@ class PatientDetails extends ViewModelBuilderWidget<PatientDetailsViewModel> {
                   VerticalSpacing.custom(value: 14),
                   RichText(
                       text: TextSpan(children: <TextSpan>[
-                        TextSpan(
-                            text: 'CVSC SCORE :',
-                            style: AppTextStyle.headline5.copyWith(
-                                fontSize: 26, fontWeight: FontWeight.bold)),
-                        TextSpan(
-                            text: " ${patientModel.cvscScore.toString()}",
-                            style: AppTextStyle.headline5.copyWith(
-                                fontSize: 26,
-                                fontWeight: FontWeight.bold,
-                                color: AppColor.primary)),
-                      ])),
+                    TextSpan(
+                        text: 'CVSC SCORE :',
+                        style: AppTextStyle.headLine2.copyWith(
+                            fontSize: 26, fontWeight: FontWeight.bold)),
+                    TextSpan(
+                        text: " ${patientModel.cvscScore.toString()}",
+                        style: AppTextStyle.headLine2.copyWith(
+                            fontSize: 26,
+                            fontWeight: FontWeight.bold,
+                            color: AppColor.primary)),
+                  ])),
                   VerticalSpacing.custom(value: 12),
                   Text("Surgery Details",
-                      style: AppTextStyle.headline5.copyWith(
+                      style: AppTextStyle.headLine2.copyWith(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF6B779A))),
@@ -100,7 +129,7 @@ class PatientDetails extends ViewModelBuilderWidget<PatientDetailsViewModel> {
                           color: Color(0xFF6B779A))),
                   VerticalSpacing.custom(value: 15),
                   Text("Additional Notes",
-                      style: AppTextStyle.headline5.copyWith(
+                      style: AppTextStyle.headLine2.copyWith(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF6B779A))),
@@ -116,19 +145,17 @@ class PatientDetails extends ViewModelBuilderWidget<PatientDetailsViewModel> {
                     width: double.infinity,
                     color: Color(0xFFDDDDDD),
                   ),
-                  VerticalSpacing.custom(value: 15),
-
-
+                  VerticalSpacing.custom(value: 12),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("C1",
-                          style: AppTextStyle.headline5.copyWith(
+                          style: AppTextStyle.headLine2.copyWith(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                               color: Color(0xFF6B779A))),
-                      Text("${patientModel.c1Score.toString()} / 3",
-                          style: AppTextStyle.headline5.copyWith(
+                      Text("${patientModel.c1Score.toString()} / 2",
+                          style: AppTextStyle.headLine2.copyWith(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                               color: Color(0xFF6B779A))),
@@ -140,8 +167,7 @@ class PatientDetails extends ViewModelBuilderWidget<PatientDetailsViewModel> {
                           fontSize: 12,
                           fontStyle: FontStyle.italic,
                           color: Color(0xFF6B779A))),
-                  VerticalSpacing.custom(value: 12),
-
+                  VerticalSpacing.custom(value: 16),
                   Container(
                     height: .6,
                     width: double.infinity,
@@ -150,20 +176,18 @@ class PatientDetails extends ViewModelBuilderWidget<PatientDetailsViewModel> {
                   VerticalSpacing.custom(value: 12),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                     children: [
                       Text("C2",
-                          style: AppTextStyle.headline5.copyWith(
+                          style: AppTextStyle.headLine2.copyWith(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                               color: Color(0xFF6B779A))),
-                      Text("${patientModel.c2Score.toString()} / 3",
-                          style: AppTextStyle.headline5.copyWith(
+                      Text("${patientModel.c2Score.toString()} / 2",
+                          style: AppTextStyle.headLine2.copyWith(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                               color: Color(0xFF6B779A))),
                     ],
-
                   ),
                   VerticalSpacing.custom(value: 8),
                   Text(patientModel.c2Description.toString(),
@@ -171,35 +195,40 @@ class PatientDetails extends ViewModelBuilderWidget<PatientDetailsViewModel> {
                           fontSize: 12,
                           fontStyle: FontStyle.italic,
                           color: Color(0xFF6B779A))),
-                  VerticalSpacing.custom(value: 12),
+                  VerticalSpacing.custom(value: 16),
                   Container(
                     height: .6,
                     width: double.infinity,
                     color: Color(0xFFDDDDDD),
                   ),
                   VerticalSpacing.custom(value: 12),
-
-                  Text("C3",
-                      style: AppTextStyle.headline5.copyWith(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF6B779A))),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("C3",
+                          style: AppTextStyle.headline1.copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF6B779A))),
+                      Text("${patientModel.c3Score.toString()} / 2",
+                          style: AppTextStyle.headline1.copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF6B779A))),
+                    ],
+                  ),
                   VerticalSpacing.custom(value: 8),
                   Text(patientModel.c3Description!,
                       style: AppTextStyle.overline.copyWith(
                           fontSize: 12,
                           fontStyle: FontStyle.italic,
                           color: Color(0xFF6B779A))),
-                  VerticalSpacing.custom(value: 12),
-
+                  VerticalSpacing.custom(value: 16),
                 ],
               ),
             )),
-
-
       ),
     );
-
   }
 
   PatientDetails(this.patientModel);

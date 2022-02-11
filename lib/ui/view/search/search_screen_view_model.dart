@@ -6,31 +6,41 @@ import 'package:flutter/material.dart';
 import 'package:vgts_plugin/form/utils/form_field_controller.dart';
 
 class SearchViewModel extends VGTSBaseViewModel {
-
-
   TextFormFieldController searchController = TextFormFieldController(
       const ValueKey("searchController"),
       requiredText: "Search patient",
       required: true);
 
+   List<PatientModel> searchResults = [];
 
-  List<PatientModel> searchResults = [];
-
-  getSearchResults() async{
-
-    searchResults.clear();
+  getSearchResults() async {
+    print("called get results");
+    searchResults!.clear();
     List<PatientModel> a = await BaseTable<PatientModel>().getAll();
 
-
     List<PatientModel> b = a
-        .where((element) => element.userUnique_id == LoginDatabase().getListOfUsers.firstWhere((element) => element.token == preferenceService.getPassCode()).uniqID)
+        .where((element) =>
+            element.userUnique_id ==
+            LoginDatabase()
+                .getListOfUsers
+                .firstWhere((element) =>
+                    element.token == preferenceService.getPassCode())
+                .uniqID)
+        .toList();
+    print("the b length is ${b.length}");
+
+    print(searchController.text);
+    b.forEach((element) {
+      print("the patient name is ${element.patientName}");
+    });
+
+    searchResults = b
+        .where((element) => element.patientName!
+            .toLowerCase()
+            .contains(searchController.text.toLowerCase()))
         .toList();
 
-    searchResults =   b.where((element) => element.patientName!.toLowerCase() == searchController.text.toLowerCase() || element.diagoonsis!.toLowerCase() == searchController.text.toLowerCase()).toList();
-
+    print(searchResults!.length);
     notifyListeners();
   }
-
-
-
 }

@@ -5,7 +5,7 @@ import 'package:curiumlife/core/res/styles.dart';
 import 'package:flutter/material.dart';
 
 
-TextStyle _buttonTextStyle = AppTextStyle.button;
+TextStyle _buttonTextStyle = AppTextStyle.button.copyWith(color: Colors.white);
 TextStyle _outlineTextStyle = const TextStyle(fontSize: 15, fontFamily: AppStyle.fontFamily, fontWeight: FontWeight.w500, color: AppColor.primary, letterSpacing: 1.5);
 
 class Button extends StatelessWidget {

@@ -97,7 +97,7 @@ class ImagePickerViewModel extends VGTSBaseViewModel with TensorFlowService
 
 
 
-    Future.delayed(Duration(seconds: 3),(){
+    Future.delayed(Duration(seconds: 1),(){
       CuriumLife curiumLife =  CuriumLife();
       print("image object called 1");
      final imageObject =curiumLife.getImageInfo(predictiedImage);

@@ -11,6 +11,9 @@ class Images {
   static const String ic_tick = "assets/images/ic_tick.png";
   static const String ic_error = "assets/images/ic_error.png";
 
+  static const String no_search_data_found = "assets/images/no_search_data_found.png";
+  static const String ic_back = "assets/images/ic_back.png";
+  static const String ic_down_arrow = "assets/images/ic_down_arrow.png";
 
 
 }

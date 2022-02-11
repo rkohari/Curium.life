@@ -57,9 +57,10 @@ class LogInPage extends ViewModelBuilderWidget<LogInViewModel>{
                       VerticalSpacing.custom(value: 20.0),
 
                       Button(
-                          "LOGIN",
+                          "Login",
                           key: const ValueKey("btnLogin"),
                           width: double.infinity,
+
                           isLoading: viewModel.state == ViewState.Busy,
                           onPressed: (){
                             if(viewModel.logInFormKey.currentState!.validate()){

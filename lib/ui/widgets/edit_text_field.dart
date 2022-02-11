@@ -15,7 +15,7 @@ TextStyle _labelTextStyle = TextStyle(fontSize: 14, fontWeight: FontWeight.w500,
 TextStyle _disableLabelTextStyle = TextStyle(fontSize: 14, fontWeight: FontWeight.w500, height: 20 / 14, letterSpacing: 0.5, color: AppColor.textOnBackground.withOpacity(0.50));
 TextStyle _bodyTextStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w400, height: 24 / 16, letterSpacing: 0.15, color: AppColor.textOnBackground);
 TextStyle _disableBodyTextStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w400, height: 24 / 16, letterSpacing: 0.15, color: AppColor.textOnBackground.withOpacity(0.50));
-TextStyle _hintTextStyle = AppTextStyle.bodyText1.copyWith(color : Color(0xffbdc1c6));
+TextStyle _hintTextStyle = AppTextStyle.button.copyWith(color : Color(0xffbdc1c6),fontSize: 17);
 TextStyle _optionalTextStyle = TextStyle(fontSize: 12, fontWeight: FontWeight.w400, height: 18 / 12, letterSpacing: 0.5, color: AppColor.textOnBackground.withOpacity(0.60));
 
 BorderRadius _borderRadius = BorderRadius.circular(4);

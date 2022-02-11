@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:curiumlife/core/enum/view_state.dart';
 import 'package:curiumlife/core/res/colors.dart';
 import 'package:curiumlife/core/res/images.dart';
@@ -9,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:stacked/stacked.dart';
-
 import 'homepage_view_model.dart';
 
 class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
@@ -28,9 +29,17 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
   Widget builder(
       BuildContext context, HomePageViewModel viewModel, Widget? child) {
     return Scaffold(
-
+        backgroundColor: Colors.white,
         body: viewModel.state == ViewState.Busy
-            ? Container( child: SizedBox(width: 20,height: 20,child: CircularProgressIndicator(color:AppColor.primary ,),),)
+            ? Container(
+                child: SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(
+                    color: AppColor.primary,
+                  ),
+                ),
+              )
             : getBody(context, viewModel));
   }
 
@@ -49,16 +58,17 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
                       image: DecorationImage(
                           image: AssetImage(Images.background),
                           fit: BoxFit.cover)),
-                  padding: EdgeInsets.only(left: 20, right: 20,top: 50),
+                  padding: EdgeInsets.only(left: 20, right: 20, top: 55),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         "Surgery Details",
-                        style: AppTextStyle.headline5.copyWith(
+                        style: AppTextStyle.headline1.copyWith(
                             color: Colors.white,
                             fontWeight: FontWeight.normal,
-                            fontStyle: FontStyle.italic,fontFamily: "Lato-Regular"),
+                            fontStyle: FontStyle.italic,
+                            fontFamily: "Lato-Regular"),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -83,23 +93,30 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
                 Align(
                   alignment: Alignment.topCenter,
                   child: Container(
-                    margin: EdgeInsets.only(left: 16, right: 16,top: 100),
+                    margin: EdgeInsets.only(left: 16, right: 16, top: 100),
                     padding: EdgeInsets.all(10),
                     height: MediaQuery.of(context).size.height * .30,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(0x3fa6aeaa),
+                          blurRadius: 8,
+                          offset: Offset(0, 0),
+                        ),
+                      ],
                     ),
                     alignment: Alignment.center,
                     child: viewModel.patientsList.length == 0
                         ? Text(
-                            "No Anaytics Data Found",
-                            style: AppTextStyle.subtitle2
+                            "No Anaytics Data Added",
+                            style: AppTextStyle.button
                                 .copyWith(color: Colors.black.withOpacity(.5)),
                           )
                         : Container(
                             alignment: Alignment.topCenter,
-                            child: Column(
+                            child: Row(
                               children: [
                                 Expanded(
                                   child: AspectRatio(
@@ -144,10 +161,7 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
                                     ),
                                   ),
                                 ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
+                                Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                   children: [
@@ -159,8 +173,9 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
                                           CrossAxisAlignment.center,
                                       children: [
                                         Container(
-                                          height: 6,
-                                          width: 6,
+                                          height: 7.5,
+                                          width: 7.5,
+                                          margin: EdgeInsets.only(top: 2.2),
                                           decoration: const BoxDecoration(
                                             color: Color(0xFF4485FD),
                                             shape: BoxShape.circle,
@@ -169,10 +184,12 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
                                         const SizedBox(
                                           width: 3,
                                         ),
-                                        Text(
-                                          "value-01",
-                                          style: TextStyle(fontSize: 10),
-                                        )
+                                        Text("value-01",
+                                            style: AppTextStyle.overline
+                                                .copyWith(
+                                                    color: Colors.black
+                                                        .withOpacity(.50),
+                                                    fontSize: 11))
                                       ],
                                     ),
                                     Row(
@@ -193,10 +210,12 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
                                         const SizedBox(
                                           width: 3,
                                         ),
-                                        Text(
-                                          "value-02",
-                                          style: TextStyle(fontSize: 10),
-                                        )
+                                        Text("value-02",
+                                            style: AppTextStyle.overline
+                                                .copyWith(
+                                                    color: Colors.black
+                                                        .withOpacity(.50),
+                                                    fontSize: 11))
                                       ],
                                     ),
                                     Row(
@@ -217,10 +236,12 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
                                         const SizedBox(
                                           width: 3,
                                         ),
-                                        Text(
-                                          "value-03",
-                                          style: TextStyle(fontSize: 10),
-                                        )
+                                        Text("value-03",
+                                            style: AppTextStyle.overline
+                                                .copyWith(
+                                                    color: Colors.black
+                                                        .withOpacity(.50),
+                                                    fontSize: 11))
                                       ],
                                     ),
                                     Row(
@@ -241,10 +262,12 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
                                         const SizedBox(
                                           width: 3,
                                         ),
-                                        Text(
-                                          "value-04",
-                                          style: TextStyle(fontSize: 10),
-                                        )
+                                        Text("value-04",
+                                            style: AppTextStyle.overline
+                                                .copyWith(
+                                                    color: Colors.black
+                                                        .withOpacity(.50),
+                                                    fontSize: 11))
                                       ],
                                     ),
                                     Row(
@@ -265,10 +288,12 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
                                         const SizedBox(
                                           width: 3,
                                         ),
-                                        Text(
-                                          "value-05",
-                                          style: TextStyle(fontSize: 10),
-                                        )
+                                        Text("value-05",
+                                            style: AppTextStyle.overline
+                                                .copyWith(
+                                                    color: Colors.black
+                                                        .withOpacity(.50),
+                                                    fontSize: 11))
                                       ],
                                     ),
                                     Row(
@@ -289,14 +314,17 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
                                         const SizedBox(
                                           width: 3,
                                         ),
-                                        Text(
-                                          "value-06",
-                                          style: TextStyle(fontSize: 10),
-                                        )
+                                        Text("value-06",
+                                            style: AppTextStyle.overline
+                                                .copyWith(
+                                                    color: Colors.black
+                                                        .withOpacity(.50),
+                                                    fontSize: 11))
                                       ],
                                     )
                                   ],
                                 ),
+                                HorizontalSpacing.custom(value: 20),
                               ],
                             ),
                           ),
@@ -309,24 +337,55 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
           viewModel.patientsList.isEmpty
               ? Center(
                   child: Container(
-                    height: 300,
-                    alignment: Alignment.center,
-                    child: Text(
-                      "No Patients data found ",
-                      style: AppTextStyle.subtitle2
-                          .copyWith(color: Colors.black.withOpacity(.5)),
+                    height: MediaQuery.of(context).size.height * .55,
+                    alignment: Alignment.bottomCenter,
+                    margin: EdgeInsets.only(left: 20,right:20 ,top: 10),
+                    padding: EdgeInsets.only(bottom: 30),
+                    decoration:const  BoxDecoration(
+                      color: Color(0xFFF8F8F8),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(10)),
+                      border: Border(
+                        top: BorderSide(color: Color(0xFFEEEEEE), width: 2),
+                        left: BorderSide(color: Color(0xFFEEEEEE), width: 2),
+                        right: BorderSide(color: Color(0xFFEEEEEE), width: 2),
+                        bottom: BorderSide(color: Color(0xFFEEEEEE), width: 2),
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          '"Start by\nclicking on the\ncamera icon"',
+                          style: AppTextStyle.headline1.copyWith(
+                              color: Color(0xFFC6C6C6),
+                              fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
+                        VerticalSpacing.custom(value: 12),
+                        Container(
+                          height: 41,
+                          alignment: Alignment.center,
+                          child: Image(
+                            height: 41,
+                            fit: BoxFit.cover,
+                            image: AssetImage(Images.ic_down_arrow),
+                          ),
+                        ),
+                        VerticalSpacing.custom(value: 26),
+                      ],
                     ),
                   ),
                 )
               : Container(
-
-                child: Padding(
+                  child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: AnimationLimiter(
                       child: GridView.count(
                         crossAxisSpacing: 12,
                         mainAxisSpacing: 12,
-                        childAspectRatio: .9,
+                        childAspectRatio: .85,
                         primary: false,
                         shrinkWrap: true,
                         padding: const EdgeInsets.all(8.0),
@@ -351,7 +410,7 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
                       ),
                     ),
                   ),
-              ),
+                ),
           VerticalSpacing.custom(value: 100),
         ],
       ),
@@ -362,7 +421,7 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
     return PieChartSectionData(
       color: color,
       value: value,
-      title: '${value ?? 0}%',
+      title: '${value?.toInt() ?? 0}%',
       radius: 40,
       titleStyle: const TextStyle(
           fontSize: 10,

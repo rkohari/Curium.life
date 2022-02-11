@@ -31,6 +31,7 @@ class AppColor {
   static const Color textOnSurfaceVariant = Color(0xFF000000);
 
   // Additional
+
   static const Color error = Color(0xFFB4251E);
   static const Color textOnError = Color(0xFFFFFFFF);
   static const Color errorContainer = Color(0x4DB4251E);

@@ -25,89 +25,97 @@ class ImagePreviewScreen extends ViewModelBuilderWidget<ImagePickerViewModel> {
 
   @override
   Widget builder(BuildContext context, ImagePickerViewModel viewModel, Widget? child) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-        appBar: AppBar(
-          backgroundColor:Colors.black ,
-          leading: IconButton(icon: Icon(Icons.arrow_back),onPressed: (){
+    return WillPopScope(
+      onWillPop: () async{
+        navigationService.popUntil(Routes.imagePicker);
 
-          navigationService.popUntil(Routes.imagePicker);
-          },),
-        ),
-        body: Stack(
-          children: [
-            Container(
-              width: double.infinity,
-              height: double.infinity,
-              alignment: Alignment.center,
-              child: Image(
-                image: FileImage(data["file"]),
-                fit: BoxFit.contain,
-              ),
-            )
-          ],
-        ),
-      bottomNavigationBar: Container(
-        height: 100,
-        color: Colors.black,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            GestureDetector(
-              onTap: (){
+        return true;
+      },
+      child: Scaffold(
+        backgroundColor: Colors.black,
+          appBar: AppBar(
+            backgroundColor:Colors.black ,
+            leading: IconButton(icon: Icon(Icons.arrow_back),onPressed: (){
 
-
-                if(data["source"]==CameraType.GALLARY)
-                {
-                  viewModel.pickImageFromGallary();
-
-                }else
-                {
-
-                  viewModel.pickImageFromCamera();
-
-                }
-
-              },
-              child: Container(
-                width: 140,
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color:AppColor.background,width: 1)
-                ),
+            navigationService.popUntil(Routes.imagePicker);
+            },),
+          ),
+          body: Stack(
+            children: [
+              Container(
+                width: double.infinity,
+                height: double.infinity,
                 alignment: Alignment.center,
-                child: Text(data["source"]==CameraType.GALLARY ? "Pick Again" :"Retake",style: AppTextStyle.bodyText2.copyWith(fontSize: 16,color: AppColor.background,fontWeight: FontWeight.w400),),
-              ),
-            ),
-            GestureDetector(
-              onTap:viewModel.buttonLoading? null : () {
-                viewModel.controlButtonLoading(true);
+                child: Image(
+                  image: FileImage(data["file"]),
+                  fit: BoxFit.contain,
+                ),
+              )
+            ],
+          ),
+        bottomNavigationBar: Container(
+          height: 100,
+          color: Colors.black,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              GestureDetector(
+                onTap: (){
 
-                  viewModel.gotoImageProcessScreen(data);
-                viewModel.controlButtonLoading(true);
-              },
 
-              child: Container(
-                width: 180,
-                height: 50,
-                decoration: BoxDecoration(
+                  if(data["source"]==CameraType.GALLARY)
+                  {
+                    viewModel.pickImageFromGallary();
+
+                  }else
+                  {
+
+                    viewModel.pickImageFromCamera();
+
+                  }
+
+                },
+                child: Container(
+                  width: 140,
+                  height: 50,
+                  decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                   color: AppColor.primary,
-                   // border: Border.all(color:AppColor.background,width: 1)
+                    border: Border.all(color:AppColor.background,width: 1)
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(data["source"]==CameraType.GALLARY ? "Pick Again" :"Retake",style: AppTextStyle.button.copyWith(fontSize: 16,color: AppColor.background,fontWeight: FontWeight.w400),),
                 ),
-                alignment: Alignment.center,
-                child: viewModel.buttonLoading ? SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(color: Colors.black,strokeWidth: 2,)):Text("Use This",style: AppTextStyle.bodyText2.copyWith(fontSize: 16,color: AppColor.background,fontWeight: FontWeight.w400),),
               ),
-            ),
+              GestureDetector(
+                onTap:viewModel.buttonLoading? null : () {
+                  viewModel.controlButtonLoading(true);
+
+                    viewModel.gotoImageProcessScreen(data);
+                  viewModel.controlButtonLoading(true);
+                },
+
+                child: Container(
+                  width: 180,
+                  height: 50,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                     color: AppColor.primary,
+                     // border: Border.all(color:AppColor.background,width: 1)
+                  ),
+                  alignment: Alignment.center,
+                  child: viewModel.buttonLoading ? SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(                            color: Colors.white,
+                        strokeWidth: 2,)):Text("Use This",style: AppTextStyle.button.copyWith(fontSize: 16,color: AppColor.background,fontWeight: FontWeight.w400),),
+                ),
+              ),
 
 
 
 
-          ],
+            ],
+          ),
         ),
       ),
     );

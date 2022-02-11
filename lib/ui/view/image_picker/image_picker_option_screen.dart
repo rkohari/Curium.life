@@ -73,7 +73,7 @@ class ImagePickerChoices extends ViewModelBuilderWidget<ImagePickerViewModel> {
                               )),
                           VerticalSpacing.custom(value: 6),
 
-                         Text("CAPTURE",style: AppTextStyle.subtitle1.copyWith(
+                         Text("CAPTURE",style: AppTextStyle.subText.copyWith(
                              color: AppColor.background,
                              fontWeight: FontWeight.w600,
                              fontSize: 18),)
@@ -119,7 +119,7 @@ class ImagePickerChoices extends ViewModelBuilderWidget<ImagePickerViewModel> {
                          ),
                           VerticalSpacing.custom(value: 6),
 
-                          Text("UPLOAD",style: AppTextStyle.subtitle1.copyWith(
+                          Text("UPLOAD",style: AppTextStyle.subText.copyWith(
                               color: AppColor.background,
                               fontWeight: FontWeight.w600,
                               fontSize: 18),)

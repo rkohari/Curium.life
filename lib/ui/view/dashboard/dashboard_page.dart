@@ -2,14 +2,13 @@ import 'package:curiumlife/core/res/colors.dart';
 import 'package:curiumlife/core/res/images.dart';
 import 'package:curiumlife/core/res/spacing.dart';
 import 'package:curiumlife/core/res/styles.dart';
+import 'package:curiumlife/ui/view/dashboard/dashboard_view_model.dart';
 import 'package:curiumlife/ui/view/home/home_page.dart';
 import 'package:curiumlife/ui/view/login/login_page.dart';
 import 'package:curiumlife/ui/view/search/search_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import '../../../locator.dart';
-import 'dashboard_view_model.dart';
 
 class DashboardPage extends ViewModelBuilderWidget<DashboardViewModel> {
   DateTime? currentBackPressTime;
@@ -43,12 +42,15 @@ class DashboardPage extends ViewModelBuilderWidget<DashboardViewModel> {
         return Future.value(true);
       },
       child: Scaffold(
-        backgroundColor: Colors.white.withOpacity(.2),
+        backgroundColor: Colors.white,
         extendBody: true,
         body: PageView(
           controller: viewModel.pageController,
           physics: NeverScrollableScrollPhysics(),
-          children: [HomePage(), SearchScreen()],
+          children: [
+            HomePage(),
+            SearchScreen(),
+          ],
         ),
         bottomNavigationBar: bottomNavigationBar(viewModel),
       ),
@@ -170,15 +172,16 @@ class _bottomNavigationBarChildWidgetState
               color: widget.viewModel.activeIndicators[widget.index]
                   ? AppColor.primary
                   : AppColor.surfaceVariant,
+
             ),
             VerticalSpacing.custom(value: 8),
             Text(
               widget.iconName,
-              style: AppTextStyle.bodyText1.copyWith(
-                fontSize: 12,
+              style: AppTextStyle.subText.copyWith(
                 color: widget.viewModel.activeIndicators[widget.index]
                     ? AppColor.textOnSecondary
                     : AppColor.surfaceVariant,
+                fontWeight: widget.viewModel.activeIndicators[widget.index] ?FontWeight.w500:FontWeight.w400
               ),
             )
           ],
@@ -187,4 +190,3 @@ class _bottomNavigationBarChildWidgetState
     );
   }
 }
-
