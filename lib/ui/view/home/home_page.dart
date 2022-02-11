@@ -5,6 +5,7 @@ import 'package:curiumlife/core/res/colors.dart';
 import 'package:curiumlife/core/res/images.dart';
 import 'package:curiumlife/core/res/spacing.dart';
 import 'package:curiumlife/core/res/styles.dart';
+import 'package:curiumlife/db/logins.dart';
 import 'package:curiumlife/ui/view/widget/patient_info_widget.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +68,6 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
                         style: AppTextStyle.headline1.copyWith(
                             color: Colors.white,
                             fontWeight: FontWeight.normal,
-                            fontStyle: FontStyle.italic,
                             fontFamily: "Lato-Regular"),
                       ),
                       GestureDetector(
@@ -95,7 +95,7 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
                   child: Container(
                     margin: EdgeInsets.only(left: 16, right: 16, top: 100),
                     padding: EdgeInsets.all(10),
-                    height: MediaQuery.of(context).size.height * .30,
+                    height: MediaQuery.of(context).size.height * .35,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.white,
@@ -162,166 +162,216 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
                                   ),
                                 ),
                                 Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                 mainAxisAlignment: MainAxisAlignment.spaceAround ,
                                   children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                    Column(
                                       children: [
-                                        Container(
-                                          height: 7.5,
-                                          width: 7.5,
-                                          margin: EdgeInsets.only(top: 2.2),
-                                          decoration: const BoxDecoration(
-                                            color: Color(0xFF4485FD),
-                                            shape: BoxShape.circle,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 3,
-                                        ),
-                                        Text("value-01",
-                                            style: AppTextStyle.overline
-                                                .copyWith(
+                                        Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              height: 7.5,
+                                              width: 7.5,
+                                              margin: EdgeInsets.only(top: 2.2),
+                                              decoration: const BoxDecoration(
+                                                color: Color(0xFF4485FD),
+                                                shape: BoxShape.circle,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 3,
+                                            ),
+                                            Text("value-01",
+                                                style: AppTextStyle.overline
+                                                    .copyWith(
                                                     color: Colors.black
                                                         .withOpacity(.50),
                                                     fontSize: 11))
+                                          ],
+                                        ),
+                                        VerticalSpacing.custom(value: 3),
+                                        Text("${viewModel.listofCounts[0]}",style: AppTextStyle.subText2.copyWith(color: Colors.black,fontSize: 10),),
                                       ],
                                     ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+
+                                    Column(
                                       children: [
-                                        Container(
-                                          height: 6,
-                                          width: 6,
-                                          decoration: const BoxDecoration(
-                                            color: Color(0xFFA584FF),
-                                            shape: BoxShape.circle,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 3,
-                                        ),
-                                        Text("value-02",
-                                            style: AppTextStyle.overline
-                                                .copyWith(
+                                        Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              height: 6,
+                                              width: 6,
+                                              decoration: const BoxDecoration(
+                                                color: Color(0xFFA584FF),
+                                                shape: BoxShape.circle,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 3,
+                                            ),
+                                            Text("value-02",
+                                                style: AppTextStyle.overline
+                                                    .copyWith(
                                                     color: Colors.black
                                                         .withOpacity(.50),
                                                     fontSize: 11))
+                                          ],
+                                        ),
+                                        VerticalSpacing.custom(value: 3),
+
+                                        Text("${viewModel.listofCounts[1]}",style: AppTextStyle.subText2.copyWith(color: Colors.black,fontSize: 10),),
+
                                       ],
                                     ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+
+                                    Column(
+                                     children: [
+                                       Row(
+                                         mainAxisSize: MainAxisSize.min,
+                                         mainAxisAlignment:
+                                         MainAxisAlignment.center,
+                                         crossAxisAlignment:
+                                         CrossAxisAlignment.center,
+                                         children: [
+                                           Container(
+                                             height: 6,
+                                             width: 6,
+                                             decoration: const BoxDecoration(
+                                               color: Color(0xFFFF7854),
+                                               shape: BoxShape.circle,
+                                             ),
+                                           ),
+                                           const SizedBox(
+                                             width: 3,
+                                           ),
+                                           Text("value-03",
+                                               style: AppTextStyle.overline
+                                                   .copyWith(
+                                                   color: Colors.black
+                                                       .withOpacity(.50),
+                                                   fontSize: 11))
+                                         ],
+                                       ),
+                                       VerticalSpacing.custom(value: 3),
+                                       Text("${viewModel.listofCounts[2]}",style: AppTextStyle.subText2.copyWith(color: Colors.black,fontSize: 10),),
+
+                                     ],
+                                   ),
+
+                                 Column(
+                                   children: [
+                                     Row(
+                                       mainAxisSize: MainAxisSize.min,
+                                       mainAxisAlignment:
+                                       MainAxisAlignment.center,
+                                       crossAxisAlignment:
+                                       CrossAxisAlignment.center,
+                                       children: [
+                                         Container(
+                                           height: 6,
+                                           width: 6,
+                                           decoration: const BoxDecoration(
+                                             color: Color(0xFFFEA725),
+                                             shape: BoxShape.circle,
+                                           ),
+                                         ),
+                                         const SizedBox(
+                                           width: 3,
+                                         ),
+                                         Text("value-04",
+                                             style: AppTextStyle.overline
+                                                 .copyWith(
+                                                 color: Colors.black
+                                                     .withOpacity(.50),
+                                                 fontSize: 11))
+                                       ],
+                                     ),
+                                     VerticalSpacing.custom(value: 3),
+
+                                     Text("${viewModel.listofCounts[3]}",style: AppTextStyle.subText2.copyWith(color: Colors.black,fontSize: 10),),
+
+                                   ],
+                                 )   ,
+
+                                    Column(
                                       children: [
-                                        Container(
-                                          height: 6,
-                                          width: 6,
-                                          decoration: const BoxDecoration(
-                                            color: Color(0xFFFF7854),
-                                            shape: BoxShape.circle,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 3,
-                                        ),
-                                        Text("value-03",
-                                            style: AppTextStyle.overline
-                                                .copyWith(
+                                        Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              height: 6,
+                                              width: 6,
+                                              decoration: const BoxDecoration(
+                                                color: Color(0xFF00CC6A),
+                                                shape: BoxShape.circle,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 3,
+                                            ),
+                                            Text("value-05",
+                                                style: AppTextStyle.overline
+                                                    .copyWith(
                                                     color: Colors.black
                                                         .withOpacity(.50),
                                                     fontSize: 11))
+                                          ],
+                                        ),
+                                        VerticalSpacing.custom(value: 3),
+                                        Text("${viewModel.listofCounts[4]}",style: AppTextStyle.subText2.copyWith(color: Colors.black,fontSize: 10),),
+
                                       ],
                                     ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+
+                                    Column(
                                       children: [
-                                        Container(
-                                          height: 6,
-                                          width: 6,
-                                          decoration: const BoxDecoration(
-                                            color: Color(0xFFFEA725),
-                                            shape: BoxShape.circle,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 3,
-                                        ),
-                                        Text("value-04",
-                                            style: AppTextStyle.overline
-                                                .copyWith(
+                                        Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              height: 6,
+                                              width: 6,
+                                              decoration: const BoxDecoration(
+                                                color: Color(0xFF00C9E4),
+                                                shape: BoxShape.circle,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 3,
+                                            ),
+                                            Text("value-06",
+                                                style: AppTextStyle.overline
+                                                    .copyWith(
                                                     color: Colors.black
                                                         .withOpacity(.50),
-                                                    fontSize: 11))
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          height: 6,
-                                          width: 6,
-                                          decoration: const BoxDecoration(
-                                            color: Color(0xFF00CC6A),
-                                            shape: BoxShape.circle,
-                                          ),
+                                                    fontSize: 10))
+                                          ],
                                         ),
-                                        const SizedBox(
-                                          width: 3,
-                                        ),
-                                        Text("value-05",
-                                            style: AppTextStyle.overline
-                                                .copyWith(
-                                                    color: Colors.black
-                                                        .withOpacity(.50),
-                                                    fontSize: 11))
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          height: 6,
-                                          width: 6,
-                                          decoration: const BoxDecoration(
-                                            color: Color(0xFF00C9E4),
-                                            shape: BoxShape.circle,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 3,
-                                        ),
-                                        Text("value-06",
-                                            style: AppTextStyle.overline
-                                                .copyWith(
-                                                    color: Colors.black
-                                                        .withOpacity(.50),
-                                                    fontSize: 11))
+                                        VerticalSpacing.custom(value: 3),
+
+                                        Text("${viewModel.listofCounts[5]}",style: AppTextStyle.subText2.copyWith(color: Colors.black,fontSize: 10),),
+
                                       ],
                                     )
+
+
                                   ],
                                 ),
                                 HorizontalSpacing.custom(value: 20),

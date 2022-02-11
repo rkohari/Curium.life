@@ -28,6 +28,7 @@ class SearchScreen extends ViewModelBuilderWidget<SearchViewModel> {
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: EditTextField(
+
           "",
           viewModel.searchController,
           placeholder: "Seach Patients",
@@ -40,7 +41,12 @@ class SearchScreen extends ViewModelBuilderWidget<SearchViewModel> {
               fit: BoxFit.cover,
             ),
           ),
-          onChanged: (value) {},
+          autoFocus: true,
+          onChanged: (value) {
+
+            viewModel.getSearchResults();
+
+          },
           onSubmitted: (val) {
             viewModel.getSearchResults();
           },
@@ -48,6 +54,7 @@ class SearchScreen extends ViewModelBuilderWidget<SearchViewModel> {
         actions: [
           InkWell(
             onTap: () {
+              FocusManager.instance.primaryFocus?.unfocus();
               viewModel.searchController.clear();
             },
             child: Container(
@@ -84,7 +91,7 @@ class SearchScreen extends ViewModelBuilderWidget<SearchViewModel> {
                   ),
                 ))
               : Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.only(left: 15,right: 15,top: 10,bottom: 15),
                   child: AnimationLimiter(
                     child: GridView.count(
                       crossAxisSpacing: 12,

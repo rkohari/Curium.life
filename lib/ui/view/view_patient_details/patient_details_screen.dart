@@ -165,7 +165,6 @@ class PatientDetails extends ViewModelBuilderWidget<PatientDetailsViewModel> {
                   Text(patientModel.c1Description.toString(),
                       style: AppTextStyle.overline.copyWith(
                           fontSize: 12,
-                          fontStyle: FontStyle.italic,
                           color: Color(0xFF6B779A))),
                   VerticalSpacing.custom(value: 16),
                   Container(
@@ -193,7 +192,6 @@ class PatientDetails extends ViewModelBuilderWidget<PatientDetailsViewModel> {
                   Text(patientModel.c2Description.toString(),
                       style: AppTextStyle.overline.copyWith(
                           fontSize: 12,
-                          fontStyle: FontStyle.italic,
                           color: Color(0xFF6B779A))),
                   VerticalSpacing.custom(value: 16),
                   Container(
@@ -221,7 +219,6 @@ class PatientDetails extends ViewModelBuilderWidget<PatientDetailsViewModel> {
                   Text(patientModel.c3Description!,
                       style: AppTextStyle.overline.copyWith(
                           fontSize: 12,
-                          fontStyle: FontStyle.italic,
                           color: Color(0xFF6B779A))),
                   VerticalSpacing.custom(value: 16),
                 ],

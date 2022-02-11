@@ -96,7 +96,12 @@ class DashboardPage extends ViewModelBuilderWidget<DashboardViewModel> {
           Align(
             alignment: Alignment.topCenter,
             child: GestureDetector(
-              onTap: () {
+              onTap:viewModel.buttonLoading ? null : () {
+                if(viewModel.buttonLoading)
+                  {
+                    return;
+                  }
+                viewModel.controlButtonLoading(true);
                 viewModel.navigateToImagePickerScreen();
               },
               child: Container(

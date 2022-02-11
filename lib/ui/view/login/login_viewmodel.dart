@@ -27,7 +27,7 @@ class LogInViewModel extends VGTSBaseViewModel {
   login() async {
     // try {
     setState(ViewState.Busy);
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(Duration(seconds: 1), () {
       ResponseData data = _loginDatabase.validateLoginDetails(
           loginIdController.text.toLowerCase().trim(),
           passwordController.text.trim());

@@ -54,9 +54,22 @@ class DashboardViewModel extends VGTSBaseViewModel {
 
   navigateToImagePickerScreen()
   {
+    controlButtonLoading(false);
 
     navigationService.pushNamed(Routes.imagePicker);
 
   }
+
+
+  bool buttonLoading =false;
+
+  controlButtonLoading(bool value)
+  {
+    buttonLoading = value;
+    notifyListeners();
+  }
+
+
+
 
 }

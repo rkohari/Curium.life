@@ -16,6 +16,7 @@ class HomePageViewModel extends VGTSBaseViewModel {
    double ? fourCVCPercentage;
    double ? fiveCVCPercentage;
    double ? sixCVCPercentage;
+   List<int> listofCounts = [];
 
   init() async{
     setState(ViewState.Busy);
@@ -52,13 +53,20 @@ class HomePageViewModel extends VGTSBaseViewModel {
 
 
   double getPercentage(List<PatientModel> a, int value) {
-
+    getCount(value,a);
     double b = (a.where((element) => element.cvscScore == value)
         .toList()
         .length /
         a.length )*
         100;
     return b.roundToDouble();
+  }
+  getCount(int count,a )
+  {
+    listofCounts.add(a.where((element) => element.cvscScore == count)
+        .toList()
+        .length);
+    notifyListeners();
   }
 
 

@@ -5,7 +5,6 @@ import 'package:curiumlife/core/res/styles.dart';
 import 'package:curiumlife/locator.dart';
 import 'package:curiumlife/router.dart';
 import 'package:curiumlife/ui/view/patient_info_get/patient_info_view_model.dart';
-import 'package:curiumlife/ui/widgets/button.dart';
 import 'package:curiumlife/ui/widgets/dropdown.dart';
 import 'package:curiumlife/ui/widgets/edit_text_field.dart';
 import 'package:curiumlife/ui/widgets/tap_outside_unfocus.dart';
@@ -31,14 +30,24 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
     return Scaffold(
       backgroundColor: AppColor.background,
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
+        leading: GestureDetector(
+          onTap: () {
             navigationService.pop();
           },
-          color: AppColor.textOnPrimary,
+          child: Container(
+            width: 28,
+            height: 28,
+            alignment: Alignment.center,
+            child: Image(
+              width: 28,
+              height: 28,
+              fit: BoxFit.cover,
+              image: AssetImage(Images.ic_back),
+            ),
+          ),
         ),
         centerTitle: false,
+        titleSpacing: 0,
         title: Text(
           "Patient Information",
           style: AppTextStyle.subText.copyWith(
@@ -101,11 +110,12 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
                     "",
                     viewModel.patientNameController,
                     placeholder: "Patient Name",
+                    autoFocus: true,
                     onChanged: (value) {},
                     onSubmitted: (val) {
                       //  viewModel.passwordController.focusNode.requestFocus();
                     },
-                    prefixIcon: Padding(
+                    prefixIcon: const Padding(
                       padding: EdgeInsets.only(left: 18, right: 8),
                       child: Image(
                         image: AssetImage(Images.ic_user),
@@ -174,11 +184,10 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
                       print(value);
                     },
                     onSubmitted: (val) {
-                        FocusScope.of(context).requestFocus(FocusNode());
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                   ),
                   VerticalSpacing.custom(value: 100),
-
                 ],
               ),
             ),
@@ -191,90 +200,101 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
         color: Colors.white,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            GestureDetector(
-              onTap: () {
-                navigationService.pushNamed(Routes.dashboard);
-              },
-              child: Container(
-                width: 140,
-                height: 50,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: AppColor.primary, width: 1)),
-                alignment: Alignment.center,
-                child: Text(
-                  "Cancel",
-                  style: AppTextStyle.subText.copyWith(
-                      fontSize: 16,
-                      color: AppColor.textOnPrimary,
-                      fontWeight: FontWeight.w400),
+            HorizontalSpacing.custom(value: 20),
+            Expanded(
+              flex: 2,
+              child: GestureDetector(
+                onTap: () {
+                  navigationService.pushNamed(Routes.dashboard);
+                },
+                child: Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: AppColor.primary, width: 1)),
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Cancel",
+                    style: AppTextStyle.subText.copyWith(
+                        fontSize: 16,
+                        color: AppColor.textOnPrimary,
+                        fontWeight: FontWeight.w400),
+                  ),
                 ),
               ),
             ),
-            GestureDetector(
-              onTap: viewModel.buttonLoading
-                  ? null
-                  : () {
-                      viewModel.controlButtonLoading(true);
-                      if (viewModel.patientInfoKey.currentState!.validate()) {
-                        if (viewModel.patientNameController.text
-                                .trim()
-                                .isEmpty ||
-                            viewModel.patientNameController.text.length < 3) {
-                          viewModel.showDialogBox("Enter Atleast 3 letters in name field");
-                          return;
-                        } else if (viewModel.patientNameController.text[0]  == " "){
+            HorizontalSpacing.custom(value: 20),
+            Expanded(
+              flex: 2,
+              child: GestureDetector(
+                onTap: viewModel.buttonLoading
+                    ? null
+                    : () {
+                        viewModel.controlButtonLoading(true);
+                        if (viewModel.patientInfoKey.currentState!.validate()) {
+                          if (viewModel.patientNameController.text
+                                  .trim()
+                                  .isEmpty ||
+                              viewModel.patientNameController.text.length < 3) {
+                            viewModel.showDialogBox(
+                                "Enter Atleast 3 letters in name field");
+                            return;
+                          } else if (viewModel.patientNameController.text[0] ==
+                              " ") {
+                            viewModel
+                                .showDialogBox("Remove Space in name field");
+                            return;
+                          } else if (viewModel.patientDiagonisisController.text
+                              .trim()
+                              .isEmpty) {
+                            viewModel.showDialogBox("Enter Diagonisis Content");
 
-                          viewModel.showDialogBox("Remove Space in name field");
-                          return ;
+                            return;
+                          } else if (viewModel.surgeryDetailsController.text
+                                  .trim()
+                                  .isEmpty ||
+                              viewModel.surgeryDetailsController.text.length <
+                                  3) {
+                            viewModel.showDialogBox(
+                                "Enter Atleast 3 letters in surgery field");
 
-                        }else if (viewModel.patientDiagonisisController.text
-                            .trim()
-                            .isEmpty) {
-                          viewModel.showDialogBox("Enter Diagonisis Content");
+                            return;
+                          }
 
-                          return;
-                        } else if (viewModel.surgeryDetailsController.text
-                                .trim()
-                                .isEmpty || viewModel.surgeryDetailsController.text.length<3) {
-                          viewModel.showDialogBox(
-                              "Enter Atleast 3 letters in surgery field");
-
-                          return;
+                          viewModel.storeIntoDB(data);
+                        } else {
+                          viewModel.controlButtonLoading(false);
                         }
-
-                        viewModel.storeIntoDB(data);
-                      } else {
-                        viewModel.controlButtonLoading(false);
-                      }
-                    },
-              child: Container(
-                width: 180,
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: AppColor.primary,
-                  // border: Border.all(color:AppColor.background,width: 1)
+                      },
+                child: Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: AppColor.primary,
+                    // border: Border.all(color:AppColor.background,width: 1)
+                  ),
+                  alignment: Alignment.center,
+                  child: viewModel.buttonLoading
+                      ? SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ))
+                      : Text(
+                          "Save",
+                          style: AppTextStyle.subText.copyWith(
+                              fontSize: 16,
+                              color: AppColor.background,
+                              fontWeight: FontWeight.w400),
+                        ),
                 ),
-                alignment: Alignment.center,
-                child: viewModel.buttonLoading
-                    ? SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
-                          strokeWidth: 2,
-                        ))
-                    : Text(
-                        "Save",
-                        style: AppTextStyle.subText.copyWith(
-                            fontSize: 16,
-                            color: AppColor.background,
-                            fontWeight: FontWeight.w400),
-                      ),
               ),
-            )
+            ),
+            HorizontalSpacing.custom(value: 20),
           ],
         ),
       ),

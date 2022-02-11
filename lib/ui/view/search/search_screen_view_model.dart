@@ -11,7 +11,7 @@ class SearchViewModel extends VGTSBaseViewModel {
       requiredText: "Search patient",
       required: true);
 
-   List<PatientModel> searchResults = [];
+  List<PatientModel> searchResults = [];
 
   getSearchResults() async {
     print("called get results");
@@ -27,17 +27,15 @@ class SearchViewModel extends VGTSBaseViewModel {
                     element.token == preferenceService.getPassCode())
                 .uniqID)
         .toList();
-    print("the b length is ${b.length}");
-
-    print(searchController.text);
-    b.forEach((element) {
-      print("the patient name is ${element.patientName}");
-    });
 
     searchResults = b
-        .where((element) => element.patientName!
-            .toLowerCase()
-            .contains(searchController.text.toLowerCase()))
+        .where((element) =>
+            element.patientName!
+                .toLowerCase()
+                .contains(searchController.text.toLowerCase()) ||
+            element.diagoonsis!
+                .toLowerCase()
+                .contains(searchController.text.toLowerCase()))
         .toList();
 
     print(searchResults!.length);

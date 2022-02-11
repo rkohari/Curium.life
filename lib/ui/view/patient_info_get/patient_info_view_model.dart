@@ -56,7 +56,6 @@ inputFormatter: InputFormatter.nameFormatter,
   FormFieldController surgeryDetailsController = FormFieldController(
       ValueKey("surgeryDetails"),
       required: true,
-      textCapitalization: TextCapitalization.words,
     maxLength:250,
     inputFormatter: InputFormatter.nameFormatter,
 
@@ -66,7 +65,6 @@ inputFormatter: InputFormatter.nameFormatter,
   FormFieldController additionalNotesController = FormFieldController(
       ValueKey("additionalNotes"),
       required: true,
-      textCapitalization: TextCapitalization.words,
     maxLength:250,
     inputFormatter: InputFormatter.nameFormatter,
 
