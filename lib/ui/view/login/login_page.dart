@@ -69,7 +69,7 @@ class LogInPage extends ViewModelBuilderWidget<LogInViewModel>{
                           }
                       ),
 
-
+                      VerticalSpacing.custom(value: 25.0),
                     ],
                   ),
                 ),

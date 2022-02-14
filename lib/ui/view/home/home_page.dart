@@ -30,7 +30,7 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
   Widget builder(
       BuildContext context, HomePageViewModel viewModel, Widget? child) {
     return Scaffold(
-        backgroundColor: Colors.white,
+
         body: viewModel.state == ViewState.Busy
             ? Container(
                 child: SizedBox(
@@ -49,7 +49,7 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
       child: Column(
         children: [
           Container(
-            height: MediaQuery.of(context).size.height * .35,
+            height: MediaQuery.of(context).size.height * .38,
             child: Stack(
               children: [
                 Container(
@@ -95,7 +95,7 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
                   child: Container(
                     margin: EdgeInsets.only(left: 16, right: 16, top: 100),
                     padding: EdgeInsets.all(10),
-                    height: MediaQuery.of(context).size.height * .35,
+                    height: MediaQuery.of(context).size.height * .37,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.white,
