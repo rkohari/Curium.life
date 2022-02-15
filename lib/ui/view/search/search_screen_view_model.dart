@@ -41,4 +41,6 @@ class SearchViewModel extends VGTSBaseViewModel {
     print(searchResults!.length);
     notifyListeners();
   }
+
+
 }
