@@ -6,6 +6,7 @@ import 'package:curiumlife/db/logins.dart';
 import 'package:curiumlife/locator.dart';
 import 'package:curiumlife/router.dart';
 import 'package:curiumlife/ui/view/vgts_base_view_model.dart';
+import 'package:image_picker/image_picker.dart';
 
 class HomePageViewModel extends VGTSBaseViewModel {
   List<PatientModel> patientsList = [];
@@ -17,6 +18,9 @@ class HomePageViewModel extends VGTSBaseViewModel {
    double ? fiveCVCPercentage;
    double ? sixCVCPercentage;
    List<int> listofCounts = [];
+
+
+
 
   init() async{
     setState(ViewState.Busy);
@@ -84,6 +88,12 @@ class HomePageViewModel extends VGTSBaseViewModel {
 
 
   }
+
+
+
+
+
+
 
 
 }

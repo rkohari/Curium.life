@@ -1,7 +1,11 @@
+import 'dart:io';
+
+import 'package:curiumlife/core/enum/camera_type.dart';
 import 'package:curiumlife/locator.dart';
 import 'package:curiumlife/router.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../vgts_base_view_model.dart';
 
@@ -54,9 +58,9 @@ class DashboardViewModel extends VGTSBaseViewModel {
 
   navigateToImagePickerScreen()
   {
-    controlButtonLoading(false);
 
-    navigationService.pushNamed(Routes.imagePicker);
+
+    pickImageFromCamera ();
 
   }
 
@@ -69,7 +73,20 @@ class DashboardViewModel extends VGTSBaseViewModel {
     notifyListeners();
   }
 
+  ImagePicker picker = ImagePicker();
 
+
+  pickImageFromCamera () async{
+    controlButtonLoading(false);
+
+    final XFile? photo = await picker.pickImage(source: ImageSource.camera,);
+    File file =File(photo!.path);
+    Map<String,dynamic>  params={
+      "source" : CameraType.CAMERA,
+      "file" : file,
+    };
+    navigationService.pushNamed(Routes.imagePreview,arguments: params);
+  }
 
 
 }

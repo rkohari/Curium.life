@@ -27,7 +27,7 @@ class ImagePreviewScreen extends ViewModelBuilderWidget<ImagePickerViewModel> {
   Widget builder(BuildContext context, ImagePickerViewModel viewModel, Widget? child) {
     return WillPopScope(
       onWillPop: () async{
-        navigationService.popUntil(Routes.imagePicker);
+        navigationService.popUntil(Routes.dashboard);
 
         return true;
       },
@@ -37,7 +37,7 @@ class ImagePreviewScreen extends ViewModelBuilderWidget<ImagePickerViewModel> {
             backgroundColor:Colors.black ,
             leading: IconButton(icon: Icon(Icons.arrow_back),onPressed: (){
 
-            navigationService.popUntil(Routes.imagePicker);
+            navigationService.popUntil(Routes.dashboard);
             },),
           ),
           body: Stack(

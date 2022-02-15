@@ -25,7 +25,7 @@ class ImageInfoScreen extends ViewModelBuilderWidget<ImagePickerViewModel> {
       BuildContext context, ImagePickerViewModel viewModel, Widget? child) {
     return WillPopScope(
       onWillPop: () async {
-        navigationService.popUntil(Routes.imagePicker);
+        navigationService.popUntil(Routes.dashboard);
 
         return true;
       },
@@ -34,7 +34,7 @@ class ImageInfoScreen extends ViewModelBuilderWidget<ImagePickerViewModel> {
         appBar: AppBar(
           leading: GestureDetector(
             onTap: (){
-              navigationService.popUntil(Routes.imagePicker);
+              navigationService.popUntil(Routes.dashboard);
             },
             child: Container(
               width: 28,
