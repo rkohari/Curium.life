@@ -53,63 +53,13 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
   {
     return Stack(
       children: [
-      /*  Positioned(
-          top: 0,
-          left: 0,
-          child: Column(
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height * .30,
 
-                child: Image(
-                  image:  AssetImage(Images.background),
-                  fit: BoxFit.contain,
-                  height: MediaQuery.of(context).size.height * .35,
-                ),
-              ),
-              Container(),
-            ],
-          ),
-        ),*/
         Scaffold(
           backgroundColor: Colors.transparent,
-        /*  appBar: AppBar(
 
-            titleSpacing: 16,
-            centerTitle: false,
-            actions: [
-
-              GestureDetector(
-                onTap: () {
-                  viewModel.logout();
-                },
-                child: Container(
-                  width: 32,
-                  height: 32,
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle, color: Color(0xFFCCF5E1)),
-                  alignment: Alignment.center,
-                  child: const Image(
-                    image: AssetImage(Images.ic_logout),
-                    width: 14,
-                    height: 16.73,
-                  ),
-                ),
-              ),
-              HorizontalSpacing.custom(value: 16),
-            ],
-            title:      Text(
-              "Surgery Details",
-              style: AppTextStyle.headline1.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.normal,
-                  fontFamily: "Lato-Regular"),
-            ),
-
-            backgroundColor: Colors.transparent
-
-            ,),*/
           body:CustomScrollView(
+            scrollBehavior: ScrollBehavior(),
+            physics: BouncingScrollPhysics(),
             slivers: [
              SliverPersistentHeader(
 
@@ -1040,7 +990,7 @@ class CustomAppBar extends SliverPersistentHeaderDelegate
       child: Stack(
         children: [
           Container(
-            height: MediaQuery.of(context).size.height * .3,
+            height: MediaQuery.of(context).size.height * .28,
             alignment: Alignment.topCenter,
             decoration: const BoxDecoration(
                 image: DecorationImage(
@@ -1104,14 +1054,15 @@ class CustomAppBar extends SliverPersistentHeaderDelegate
                       .copyWith(color: Colors.black.withOpacity(.5)),
                 )
                     : Container(
-                  alignment: Alignment.topCenter,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      FittedBox(
-                        child: Container(
+                 // alignment: Alignment.topCenter,
+                  child: FittedBox(
+                    alignment: Alignment.center,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
                           width :200,
                           height: 200,
                           child: PieChart(
@@ -1153,12 +1104,12 @@ class CustomAppBar extends SliverPersistentHeaderDelegate
                                 ]),
                           ),
                         ),
-                      ),
-                      FittedBox(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround ,
+                        HorizontalSpacing.custom(value: 20),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Column(
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -1191,8 +1142,9 @@ class CustomAppBar extends SliverPersistentHeaderDelegate
                                 Text("${viewModel.listofCounts[0]}",style: AppTextStyle.subText2.copyWith(color: Colors.black,fontSize: 10),),
                               ],
                             ),
-
+                            VerticalSpacing.custom(value: 5),
                             Column(
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -1226,8 +1178,9 @@ class CustomAppBar extends SliverPersistentHeaderDelegate
 
                               ],
                             ),
-
+                            VerticalSpacing.custom(value: 5),
                             Column(
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -1260,8 +1213,9 @@ class CustomAppBar extends SliverPersistentHeaderDelegate
 
                               ],
                             ),
-
+                            VerticalSpacing.custom(value: 5),
                             Column(
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -1295,8 +1249,9 @@ class CustomAppBar extends SliverPersistentHeaderDelegate
 
                               ],
                             )   ,
-
+                            VerticalSpacing.custom(value: 5),
                             Column(
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -1329,8 +1284,9 @@ class CustomAppBar extends SliverPersistentHeaderDelegate
 
                               ],
                             ),
-
+                            VerticalSpacing.custom(value: 5),
                             Column(
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -1368,9 +1324,9 @@ class CustomAppBar extends SliverPersistentHeaderDelegate
 
                           ],
                         ),
-                      ),
-                      HorizontalSpacing.custom(value: 20),
-                    ],
+                        HorizontalSpacing.custom(value: 20),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -1383,7 +1339,7 @@ class CustomAppBar extends SliverPersistentHeaderDelegate
 
   @override
   // TODO: implement maxExtent
-  double get maxExtent =>  370;
+  double get maxExtent =>  335;
 
   @override
   // TODO: implement minExtent
