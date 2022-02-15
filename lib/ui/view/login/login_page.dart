@@ -34,9 +34,9 @@ class LogInPage extends ViewModelBuilderWidget<LogInViewModel>{
                       Image.asset(Images.appLogo, width: MediaQuery.of(context).size.width,),
 
                       EditTextField(
-                        "Login Id",
+                        "Enter e-mail",
                         viewModel.loginIdController,
-                        placeholder: "Enter your Login Id",
+                        placeholder: "Enter your e-mail",
                         onChanged: (value){},
                         onSubmitted: (val){
                           viewModel.passwordController.focusNode.requestFocus();

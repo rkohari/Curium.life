@@ -230,3 +230,5 @@ class PatientDetails extends ViewModelBuilderWidget<PatientDetailsViewModel> {
 
   PatientDetails(this.patientModel);
 }
+
+
