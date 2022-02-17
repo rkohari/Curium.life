@@ -8,10 +8,17 @@ import 'package:curiumlife/ui/widgets/tap_outside_unfocus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:stacked/stacked.dart';
-
+import 'package:email_validator/email_validator.dart';
 import 'login_viewmodel.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class LogInPage extends ViewModelBuilderWidget<LogInViewModel>{
+
+  @override
+  void onViewModelReady(LogInViewModel viewModel) {
+    super.onViewModelReady(viewModel);
+    viewModel.checkCameraPermission();
+  }
 
   @override
   Widget builder(BuildContext context, LogInViewModel viewModel, Widget? child) {
@@ -64,7 +71,19 @@ class LogInPage extends ViewModelBuilderWidget<LogInViewModel>{
                           isLoading: viewModel.state == ViewState.Busy,
                           onPressed: (){
                             if(viewModel.logInFormKey.currentState!.validate()){
-                             viewModel.login();
+
+                              if(!EmailValidator.validate(viewModel.loginIdController.text))
+                                {
+                                  viewModel.showDialogBox(
+                                      "Enter valid e-mail");
+                                  return ;
+                                }
+                              viewModel.login();
+                              // if entered string is name
+                              // code
+                              // else return;
+
+
                             }
                           }
                       ),

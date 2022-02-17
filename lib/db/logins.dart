@@ -12,14 +12,11 @@ class LoginDatabase {
   ResponseData validateLoginDetails(String loginId, String password) {
     print("validateLoginDetails called");
     try {
-
       UserModel userDB = listOfUsers.firstWhere((element) =>
           element.loginId == loginId && element.password == password);
-   //   print(userDB.userType);
       return ResponseData(status: ResponceStatus.COMPLETED, data: userDB);
     } catch (e) {
-       print("error gettings");
-       print(e.toString());
+
       return ResponseData(
         status: ResponceStatus.ERROR,
       );

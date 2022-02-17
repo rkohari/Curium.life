@@ -58,7 +58,6 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
           backgroundColor: Colors.transparent,
 
           body:CustomScrollView(
-            scrollBehavior: ScrollBehavior(),
             physics: BouncingScrollPhysics(),
             slivers: [
              SliverPersistentHeader(
@@ -66,15 +65,15 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
                delegate: CustomAppBar(viewModel),
               pinned: true,
              ),
-
+                SliverToBoxAdapter(child: SizedBox(height: 5,),),
               SliverToBoxAdapter(
                 child:Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 11),
                   child: AnimationLimiter(
                     child: GridView.count(
                       crossAxisSpacing: 12,
                       mainAxisSpacing: 12,
-                      childAspectRatio: .85,
+                      childAspectRatio: .90,
                       primary: false,
                       shrinkWrap: true,
                       padding: const EdgeInsets.all(8.0),
@@ -99,7 +98,8 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
                     ),
                   ),
                 ) ,
-              )
+              ),
+
             ],
           )
         )
@@ -934,34 +934,31 @@ class HomePage extends ViewModelBuilderWidget<HomePageViewModel> {
                   ),
                 )
               : Container(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: AnimationLimiter(
-                      child: GridView.count(
-                        crossAxisSpacing: 12,
-                        mainAxisSpacing: 12,
-                        childAspectRatio: .85,
-                        primary: false,
-                        shrinkWrap: true,
-                        padding: const EdgeInsets.all(8.0),
-                        crossAxisCount: 2,
-                        children: List.generate(
-                          viewModel.patientsList.length,
-                          (int index) {
-                            return AnimationConfiguration.staggeredGrid(
-                              columnCount: 2,
-                              position: index,
-                              duration: Duration(milliseconds: 500),
-                              child: ScaleAnimation(
-                                scale: 0.5,
-                                child: FadeInAnimation(
-                                  child: PatientInfoWidget(
-                                      viewModel.patientsList[index]),
-                                ),
+                  child: AnimationLimiter(
+                    child: GridView.count(
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 12,
+                      childAspectRatio: .85,
+                      primary: false,
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.all(8.0),
+                      crossAxisCount: 2,
+                      children: List.generate(
+                        viewModel.patientsList.length,
+                        (int index) {
+                          return AnimationConfiguration.staggeredGrid(
+                            columnCount: 2,
+                            position: index,
+                            duration: Duration(milliseconds: 500),
+                            child: ScaleAnimation(
+                              scale: 0.5,
+                              child: FadeInAnimation(
+                                child: PatientInfoWidget(
+                                    viewModel.patientsList[index]),
                               ),
-                            );
-                          },
-                        ),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -1009,7 +1006,7 @@ class CustomAppBar extends SliverPersistentHeaderDelegate
                 ),
                 GestureDetector(
                   onTap: () {
-                   // viewModel.logout();
+                    viewModel.logout();
                   },
                   child: Container(
                     width: 32,
@@ -1142,7 +1139,7 @@ class CustomAppBar extends SliverPersistentHeaderDelegate
                                 Text("${viewModel.listofCounts[0]}",style: AppTextStyle.subText2.copyWith(color: Colors.black,fontSize: 10),),
                               ],
                             ),
-                            VerticalSpacing.custom(value: 5),
+                            VerticalSpacing.custom(value: 7),
                             Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -1178,7 +1175,7 @@ class CustomAppBar extends SliverPersistentHeaderDelegate
 
                               ],
                             ),
-                            VerticalSpacing.custom(value: 5),
+                            VerticalSpacing.custom(value: 7),
                             Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -1213,7 +1210,7 @@ class CustomAppBar extends SliverPersistentHeaderDelegate
 
                               ],
                             ),
-                            VerticalSpacing.custom(value: 5),
+                            VerticalSpacing.custom(value: 7),
                             Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -1249,7 +1246,7 @@ class CustomAppBar extends SliverPersistentHeaderDelegate
 
                               ],
                             )   ,
-                            VerticalSpacing.custom(value: 5),
+                            VerticalSpacing.custom(value: 7),
                             Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -1284,7 +1281,7 @@ class CustomAppBar extends SliverPersistentHeaderDelegate
 
                               ],
                             ),
-                            VerticalSpacing.custom(value: 5),
+                            VerticalSpacing.custom(value: 7),
                             Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -1339,7 +1336,7 @@ class CustomAppBar extends SliverPersistentHeaderDelegate
 
   @override
   // TODO: implement maxExtent
-  double get maxExtent =>  335;
+  double get maxExtent =>  310;
 
   @override
   // TODO: implement minExtent
