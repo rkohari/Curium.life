@@ -21,6 +21,7 @@ mixin TensorFlowService
         // defaults to 0.1
 
         asynch: true);
+    print("the predicted image is ${preditions![0]["label"]}");
     return preditions![0]["label"];
   }
 

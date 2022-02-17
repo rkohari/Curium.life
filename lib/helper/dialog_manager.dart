@@ -175,11 +175,11 @@ class _DialogManagerState extends State<DialogManager> {
 
                     VerticalSpacing.custom(value: 30),
 
-                    Text(request.title  ?? '', textScaleFactor: 1, style: AppTextStyle.headline6,),
+                    Text(request.title  ?? '', textScaleFactor: 1, style: AppTextStyle.headLine2,),
 
                     VerticalSpacing.d20px(),
 
-                    Text(request.description  ?? '', textAlign: TextAlign.center, textScaleFactor: 1, style: AppTextStyle.subtitle1,),
+                    Text(request.description  ?? '', textAlign: TextAlign.center, textScaleFactor: 1, style: AppTextStyle.button,),
 
                     VerticalSpacing.d20px(),
 
@@ -248,7 +248,7 @@ class _DialogManagerState extends State<DialogManager> {
                           child: request.title == null ? Container() : Padding(
                             padding: const EdgeInsets.only(top: 10, bottom: 10),
                             child: Text(request.title ?? '', textScaleFactor: 1,
-                              style: AppTextStyle.subtitle1.copyWith(fontSize: 17,),
+                              style: AppTextStyle.button.copyWith(fontSize: 17,),
                             ),
                           )
                       ),

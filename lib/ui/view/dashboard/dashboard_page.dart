@@ -1,16 +1,14 @@
-
 import 'package:curiumlife/core/res/colors.dart';
 import 'package:curiumlife/core/res/images.dart';
 import 'package:curiumlife/core/res/spacing.dart';
 import 'package:curiumlife/core/res/styles.dart';
+import 'package:curiumlife/ui/view/dashboard/dashboard_view_model.dart';
 import 'package:curiumlife/ui/view/home/home_page.dart';
 import 'package:curiumlife/ui/view/login/login_page.dart';
 import 'package:curiumlife/ui/view/search/search_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import '../../../locator.dart';
-import 'dashboard_view_model.dart';
 
 class DashboardPage extends ViewModelBuilderWidget<DashboardViewModel> {
   DateTime? currentBackPressTime;
@@ -44,21 +42,22 @@ class DashboardPage extends ViewModelBuilderWidget<DashboardViewModel> {
         return Future.value(true);
       },
       child: Scaffold(
-        backgroundColor: Colors.white.withOpacity(.2),
+        backgroundColor: Colors.white,
         extendBody: true,
         body: PageView(
           controller: viewModel.pageController,
           physics: NeverScrollableScrollPhysics(),
-          children: [HomePage(), SearchScreen()],
+          children: [
+            HomePage(),
+            SearchScreen(),
+          ],
         ),
         bottomNavigationBar: bottomNavigationBar(viewModel),
       ),
     );
   }
 
-
-  bottomNavigationBar(viewModel)
-  {
+  bottomNavigationBar(viewModel) {
     return Container(
       height: 110,
       alignment: Alignment.center,
@@ -74,14 +73,22 @@ class DashboardPage extends ViewModelBuilderWidget<DashboardViewModel> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  bottomNavigationBarChildWidget(index: 0,imagePath: Images.ic_home,iconName: "SURGERY",onTapFuntion: (){
-                    viewModel.updateIconIndicator(0);
-                  },viewModel:viewModel),
-                  bottomNavigationBarChildWidget(index: 1,imagePath: Images.ic_search,iconName: "SEARCH",onTapFuntion: (){
-                    viewModel.updateIconIndicator(1);
-                  },viewModel:viewModel),
-
-
+                  bottomNavigationBarChildWidget(
+                      index: 0,
+                      imagePath: Images.ic_home,
+                      iconName: "SURGERY",
+                      onTapFuntion: () {
+                        viewModel.updateIconIndicator(0);
+                      },
+                      viewModel: viewModel),
+                  bottomNavigationBarChildWidget(
+                      index: 1,
+                      imagePath: Images.ic_search,
+                      iconName: "SEARCH",
+                      onTapFuntion: () {
+                        viewModel.updateIconIndicator(1);
+                      },
+                      viewModel: viewModel),
                 ],
               ),
             ),
@@ -89,7 +96,12 @@ class DashboardPage extends ViewModelBuilderWidget<DashboardViewModel> {
           Align(
             alignment: Alignment.topCenter,
             child: GestureDetector(
-              onTap: (){
+              onTap:viewModel.buttonLoading ? null : () {
+                if(viewModel.buttonLoading)
+                  {
+                    return;
+                  }
+                viewModel.controlButtonLoading(true);
                 viewModel.navigateToImagePickerScreen();
               },
               child: Container(
@@ -120,11 +132,9 @@ class DashboardPage extends ViewModelBuilderWidget<DashboardViewModel> {
       ),
     );
   }
-
 }
 
 class bottomNavigationBarChildWidget extends StatefulWidget {
-
   int index;
   String imagePath;
   String iconName;
@@ -132,23 +142,30 @@ class bottomNavigationBarChildWidget extends StatefulWidget {
   DashboardViewModel viewModel;
 
   bottomNavigationBarChildWidget(
-  {required this.index, required this.imagePath, required this.iconName, required this.onTapFuntion,required this.viewModel});
+      {required this.index,
+      required this.imagePath,
+      required this.iconName,
+      required this.onTapFuntion,
+      required this.viewModel});
 
   @override
-  State<bottomNavigationBarChildWidget> createState() => _bottomNavigationBarChildWidgetState();
-
-
+  State<bottomNavigationBarChildWidget> createState() =>
+      _bottomNavigationBarChildWidgetState();
 }
 
-class _bottomNavigationBarChildWidgetState extends State<bottomNavigationBarChildWidget> {
+class _bottomNavigationBarChildWidgetState
+    extends State<bottomNavigationBarChildWidget> {
   @override
   Widget build(BuildContext context) {
-    return  GestureDetector(
+    return GestureDetector(
       onTap: widget.onTapFuntion,
       child: Container(
+        color: Colors.white,
         alignment: Alignment.center,
         width: MediaQuery.of(context).size.width / 2,
-        padding: widget.index ==0 ?  EdgeInsets.only(right: 30) :  EdgeInsets.only(left: 30),
+        padding: widget.index == 0
+            ? EdgeInsets.only(right: 30)
+            : EdgeInsets.only(left: 30),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -160,14 +177,16 @@ class _bottomNavigationBarChildWidgetState extends State<bottomNavigationBarChil
               color: widget.viewModel.activeIndicators[widget.index]
                   ? AppColor.primary
                   : AppColor.surfaceVariant,
+
             ),
             VerticalSpacing.custom(value: 8),
             Text(
               widget.iconName,
-              style: AppTextStyle.bodyText1.copyWith(
+              style: AppTextStyle.subText.copyWith(
                 color: widget.viewModel.activeIndicators[widget.index]
                     ? AppColor.textOnSecondary
                     : AppColor.surfaceVariant,
+                fontWeight: widget.viewModel.activeIndicators[widget.index] ?FontWeight.w500:FontWeight.w400
               ),
             )
           ],
@@ -176,73 +195,3 @@ class _bottomNavigationBarChildWidgetState extends State<bottomNavigationBarChil
     );
   }
 }
-
-
-
-
-/*  GestureDetector(
-                        onTap: () {
-                          viewModel.updateIconIndicator(0);
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          width: MediaQuery.of(context).size.width / 2,
-                          padding: EdgeInsets.only(right: 30),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Image(
-                                image: AssetImage(Images.ic_home),
-                                width: 24,
-                                height: 24,
-                                color: viewModel.activeIndicators[0]
-                                    ? AppColor.primary
-                                    : AppColor.surfaceVariant,
-                              ),
-                              VerticalSpacing.custom(value: 8),
-                              Text(
-                                "SURGERY",
-                                style: AppTextStyle.bodyText1.copyWith(
-                                  color: viewModel.activeIndicators[0]
-                                      ? AppColor.textOnSecondary
-                                      : AppColor.surfaceVariant,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),*/
-/*  GestureDetector(
-                        onTap: () {
-                          viewModel.updateIconIndicator(1);
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          padding: EdgeInsets.only(left: 30),
-                          width: MediaQuery.of(context).size.width / 2,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Image(
-                                image: AssetImage(Images.ic_search),
-                                width: 24,
-                                height: 24,
-                                color: viewModel.activeIndicators[1]
-                                    ? AppColor.primary
-                                    : AppColor.surfaceVariant,
-                              ),
-                              VerticalSpacing.custom(value: 8),
-                              Text(
-                                "SEARCH",
-                                style: AppTextStyle.bodyText1.copyWith(
-                                  color: viewModel.activeIndicators[1]
-                                      ? AppColor.textOnSecondary
-                                      : AppColor.surfaceVariant,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      )*/

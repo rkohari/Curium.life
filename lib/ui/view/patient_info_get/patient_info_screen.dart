@@ -30,17 +30,27 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
     return Scaffold(
       backgroundColor: AppColor.background,
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
+        leading: GestureDetector(
+          onTap: () {
             navigationService.pop();
           },
-          color: AppColor.textOnPrimary,
+          child: Container(
+            width: 28,
+            height: 28,
+            alignment: Alignment.center,
+            child: Image(
+              width: 28,
+              height: 28,
+              fit: BoxFit.cover,
+              image: AssetImage(Images.ic_back),
+            ),
+          ),
         ),
         centerTitle: false,
+        titleSpacing: 0,
         title: Text(
           "Patient Information",
-          style: AppTextStyle.subtitle1.copyWith(
+          style: AppTextStyle.subText.copyWith(
             color: AppColor.textOnBackground,
             fontWeight: FontWeight.w500,
             fontSize: 18,
@@ -83,11 +93,11 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
                             text: TextSpan(children: <TextSpan>[
                           TextSpan(
                               text: 'CVSC Score :',
-                              style: AppTextStyle.headline5.copyWith(
+                              style: AppTextStyle.headLine2.copyWith(
                                   fontSize: 18, fontWeight: FontWeight.bold)),
                           TextSpan(
                               text: " ${data["total"].toString()}",
-                              style: AppTextStyle.headline5.copyWith(
+                              style: AppTextStyle.headLine2.copyWith(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                   color: AppColor.primary)),
@@ -100,11 +110,12 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
                     "",
                     viewModel.patientNameController,
                     placeholder: "Patient Name",
+                    autoFocus: true,
                     onChanged: (value) {},
                     onSubmitted: (val) {
                       //  viewModel.passwordController.focusNode.requestFocus();
                     },
-                    prefixIcon: Padding(
+                    prefixIcon: const Padding(
                       padding: EdgeInsets.only(left: 18, right: 8),
                       child: Image(
                         image: AssetImage(Images.ic_user),
@@ -137,7 +148,7 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
                       Expanded(
                         child: DropdownField(
                           "",
-                          viewModel.sexController,
+                          viewModel.genderTypeController,
                           placeholder: "Sex",
                           onChange: (value) {},
                         ),
@@ -171,68 +182,119 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
                     placeholder: "Additional Notes",
                     onChanged: (value) {
                       print(value);
-
                     },
                     onSubmitted: (val) {
-                      //  viewModel.passwordController.focusNode.requestFocus();
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                   ),
+                  VerticalSpacing.custom(value: 100),
                 ],
               ),
             ),
           ),
         ),
       ),
+      extendBody: true,
       bottomNavigationBar: Container(
-        height: 100,
+        height: 70,
+        color: Colors.white,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            GestureDetector(
-              onTap: () {
-                navigationService.pushNamed(Routes.dashboard);
-
-              },
-              child: Container(
-                width: 140,
-                height: 50,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: AppColor.primary, width: 1)),
-                alignment: Alignment.center,
-                child: Text(
-                  "Cancel",
-                  style: AppTextStyle.bodyText2.copyWith(
-                      fontSize: 16,
-                      color: AppColor.textOnPrimary,
-                      fontWeight: FontWeight.w400),
+            HorizontalSpacing.custom(value: 20),
+            Expanded(
+              flex: 2,
+              child: GestureDetector(
+                onTap: () {
+                  navigationService.pushNamed(Routes.dashboard);
+                },
+                child: Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: AppColor.primary, width: 1)),
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Cancel",
+                    style: AppTextStyle.subText.copyWith(
+                        fontSize: 16,
+                        color: AppColor.textOnPrimary,
+                        fontWeight: FontWeight.w400),
+                  ),
                 ),
               ),
             ),
-            GestureDetector(
-              onTap: () {
-                if (viewModel.patientInfoKey.currentState!.validate()) {
-                  viewModel.storeIntoDB(data);
-                }
-              },
-              child: Container(
-                width: 180,
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: AppColor.primary,
-                  // border: Border.all(color:AppColor.background,width: 1)
-                ),
-                alignment: Alignment.center,
-                child: Text(
-                  "Save",
-                  style: AppTextStyle.bodyText2.copyWith(
-                      fontSize: 16,
-                      color: AppColor.background,
-                      fontWeight: FontWeight.w400),
+            HorizontalSpacing.custom(value: 20),
+            Expanded(
+              flex: 2,
+              child: GestureDetector(
+                onTap: viewModel.buttonLoading
+                    ? null
+                    : () {
+                        viewModel.controlButtonLoading(true);
+                        if (viewModel.patientInfoKey.currentState!.validate()) {
+                          if (viewModel.patientNameController.text
+                                  .trim()
+                                  .isEmpty ||
+                              viewModel.patientNameController.text.length < 3) {
+                            viewModel.showDialogBox(
+                                "Enter Atleast 3 letters in name field");
+                            return;
+                          } else if (viewModel.patientNameController.text[0] ==
+                              " ") {
+                            viewModel
+                                .showDialogBox("Remove Space in name field");
+                            return;
+                          } else if (viewModel.patientDiagonisisController.text
+                              .trim()
+                              .isEmpty) {
+                            viewModel.showDialogBox("Enter Diagonisis Content");
+
+                            return;
+                          } else if (viewModel.surgeryDetailsController.text
+                                  .trim()
+                                  .isEmpty ||
+                              viewModel.surgeryDetailsController.text.length <
+                                  3) {
+                            viewModel.showDialogBox(
+                                "Enter Atleast 3 letters in surgery field");
+
+                            return;
+                          }
+
+                          viewModel.storeIntoDB(data);
+                        } else {
+                          viewModel.controlButtonLoading(false);
+                        }
+                      },
+                child: Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: AppColor.primary,
+                    // border: Border.all(color:AppColor.background,width: 1)
+                  ),
+                  alignment: Alignment.center,
+                  child: viewModel.buttonLoading
+                      ? SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ))
+                      : Text(
+                          "Save",
+                          style: AppTextStyle.subText.copyWith(
+                              fontSize: 16,
+                              color: AppColor.background,
+                              fontWeight: FontWeight.w400),
+                        ),
                 ),
               ),
-            )
+            ),
+            HorizontalSpacing.custom(value: 20),
           ],
         ),
       ),

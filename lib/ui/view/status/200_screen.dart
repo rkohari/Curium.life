@@ -33,7 +33,7 @@ class SuccessScreen extends ViewModelBuilderWidget<StatusViewModel> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text("Saved Successfully",style: AppTextStyle.headline5.copyWith(fontSize: 24,fontWeight: FontWeight.w500,color: AppColor.primary),),
+              Text("Saved Successfully",style: AppTextStyle.headLine2.copyWith(fontSize: 24,fontWeight: FontWeight.w500,color: AppColor.primary),),
               VerticalSpacing.custom(value: 24),
               Container(
                 height: 80,
@@ -78,7 +78,7 @@ class SuccessScreen extends ViewModelBuilderWidget<StatusViewModel> {
                   alignment: Alignment.center,
                   child: Text(
                     "Back to Home",
-                    style: AppTextStyle.bodyText2.copyWith(
+                    style: AppTextStyle.button.copyWith(
                         fontSize: 16,
                         color: AppColor.background,
                         fontWeight: FontWeight.w400),

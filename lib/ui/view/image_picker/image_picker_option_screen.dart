@@ -21,6 +21,7 @@ class ImagePickerChoices extends ViewModelBuilderWidget<ImagePickerViewModel> {
       BuildContext context, ImagePickerViewModel viewModel, Widget? child) {
     return Scaffold(
         backgroundColor: AppColor.background,
+        appBar: AppBar(),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 53),
@@ -36,131 +37,94 @@ class ImagePickerChoices extends ViewModelBuilderWidget<ImagePickerViewModel> {
                     width: 200,
                   ),
                   VerticalSpacing.custom(value: 35),
-                  Container(
-                    alignment: Alignment.center,
-                    width: 269,
-                    height: 110,
-                    child: GestureDetector(
-                      onTapDown: (dradDetails) {
-                        print("on tap down called");
-                        viewModel.captureContainerWidth = 259;
-                        viewModel.captureContainerHeight = 100;
-                        viewModel.captureIconSize=23;
-                        viewModel.isCaptureTextAnimated=true;
-                        viewModel.notifyListeners();
-                      },
-                      onTapUp: (dragDetails) {
-                        viewModel.resetValues(1);
-                        viewModel.pickImageFromCamera();
+                  GestureDetector(
+                   onTap: viewModel.buttonLoading ? null :(){
+                   if(viewModel.buttonLoading)
+                     {
+                       return ;
+                     }
+                   viewModel.controlButtonLoading(true);
+                   viewModel.pickImageFromCamera();
 
-                      },
-                      child: AnimatedContainer(
-                        duration: const Duration(seconds: 5),
-                        // curve: Curves.,
-                        child: Container(
-                          width: viewModel.captureContainerWidth,
-                          height: viewModel.captureContainerHeight,
-                          alignment: Alignment.center,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              AnimatedContainer(
-                                  alignment: Alignment.center,
-                                  width: viewModel.captureIconSize,
-                                  height: viewModel.captureIconSize,
-                                  duration:const Duration(seconds: 5),
-                                  child: Image(
-                                      image: AssetImage(Images.ic_camera),
-                                    width: viewModel.captureContainerWidth,
-                                    height: viewModel.captureContainerHeight,
-                                  )),
-                              VerticalSpacing.custom(value: 6),
+                   },
 
-                              AnimatedDefaultTextStyle(
-                                child: Text('CAPTURE'),
-                                style : viewModel.isCaptureTextAnimated ? AppTextStyle.subtitle1.copyWith(
-                                    color: AppColor.background,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16) : AppTextStyle.subtitle1.copyWith(
-                                    color: AppColor.background,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 18),
-                                duration: Duration(milliseconds: 2),
-                              ),
+                    child: Container(
+                      
+                      width: 269,
+                      height:110,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: AppColor.primary,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                              alignment: Alignment.center,
+                              width: 30,
+                              height: 24,
+                              child: Image(
+                                image: AssetImage(Images.ic_camera),
+                                width: 30,
+                                height: 24,
+                              )),
+                          VerticalSpacing.custom(value: 6),
 
-                            ],
-                          ),
-                          decoration: BoxDecoration(
-                            color: AppColor.primary,
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                        ),
+                         Text("CAPTURE",style: AppTextStyle.subText.copyWith(
+                             color: AppColor.background,
+                             fontWeight: FontWeight.w600,
+                             fontSize: 18),)
+
+                        ],
                       ),
                     ),
                   ),
                   VerticalSpacing.custom(value: 20),
-                  Container(
-                    alignment: Alignment.center,
-                    width: 269,
-                    height: 110,
-                    child: GestureDetector(
-                      onTapDown: (dradDetails) {
-                        print("on tap down called");
-                        viewModel.uploadContainerWidth = 259;
-                        viewModel.uploadContainerHeight = 100;
-                        viewModel.uploadiconSize=23;
-                        viewModel.isUploadTextAnimated=true;
-                        viewModel.notifyListeners();
-                      },
-                      onTapUp: (dragDetails) {
-                        viewModel.resetValues(0);
-                        viewModel.pickImageFromGallary();
-                      },
-                      child: AnimatedContainer(
-                        duration: const Duration(seconds: 5),
-                        // curve: Curves.,
-                        child: Container(
-                          width: viewModel.uploadContainerWidth,
-                          height: viewModel.uploadContainerHeight,
-                          alignment: Alignment.center,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              AnimatedContainer(
-                                  alignment: Alignment.center,
-                                  width: viewModel.uploadiconSize,
-                                  height: viewModel.uploadiconSize,
-                                  duration:const Duration(seconds: 5),
-                                  child: Image(
-                                    image: AssetImage(Images.ic_upload),
-                                    width: viewModel.uploadiconSize,
-                                    height: viewModel.uploadiconSize,
-                                  )),
-                              VerticalSpacing.custom(value: 6),
+                  GestureDetector(
+                    onTap: viewModel.buttonLoading ? null :(){
+                      if(viewModel.buttonLoading)
+                      {
+                        return ;
+                      }
+                      viewModel.controlButtonLoading(true);
+                      viewModel.pickImageFromGallary();
+                    },
+                    child: Container(
 
-                              AnimatedDefaultTextStyle(
-                                child: Text('UPLOAD'),
-                                style : viewModel.isUploadTextAnimated ? AppTextStyle.subtitle1.copyWith(
-                                    color: AppColor.background,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16) : AppTextStyle.subtitle1.copyWith(
-                                    color: AppColor.background,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 18),
-                                duration: Duration(milliseconds: 2),
+                      width: 269,
+                      height:110,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: AppColor.primary,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                         Container(
+                              alignment: Alignment.center,
+                              width: 39,
+                              height: 24,
+                              child: Image(
+
+                                image: AssetImage(Images.ic_upload),
+                                width: 39,
+                                height: 24,
                               ),
+                         ),
+                          VerticalSpacing.custom(value: 6),
 
-                            ],
-                          ),
-                          decoration: BoxDecoration(
-                            color: AppColor.primary,
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                        ),
+                          Text("UPLOAD",style: AppTextStyle.subText.copyWith(
+                              color: AppColor.background,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18),)
+
+                        ],
                       ),
                     ),
                   ),

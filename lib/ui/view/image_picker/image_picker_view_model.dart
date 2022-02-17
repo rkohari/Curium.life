@@ -57,7 +57,9 @@ class ImagePickerViewModel extends VGTSBaseViewModel with TensorFlowService
   }
 
   pickImageFromCamera () async{
-    final XFile? photo = await picker.pickImage(source: ImageSource.camera);
+    controlButtonLoading(false);
+
+    final XFile? photo = await picker.pickImage(source: ImageSource.camera,);
     File file =File(photo!.path);
     Map<String,dynamic>  params={
       "source" : CameraType.CAMERA,
@@ -67,6 +69,8 @@ class ImagePickerViewModel extends VGTSBaseViewModel with TensorFlowService
   }
 
   pickImageFromGallary () async {
+    controlButtonLoading(false);
+
     final XFile? photo = await picker.pickImage(source: ImageSource.gallery);
     File file =File(photo!.path);
     Map<String,dynamic>  params={
@@ -93,9 +97,10 @@ class ImagePickerViewModel extends VGTSBaseViewModel with TensorFlowService
 
 
 
-    Future.delayed(Duration(seconds: 3),(){
-
-     final imageObject = CuriumLife().listOFImageInfo[0];
+    Future.delayed(Duration(seconds: 1),(){
+      CuriumLife curiumLife =  CuriumLife();
+      print("image object called 1");
+     final imageObject =curiumLife.getImageInfo(predictiedImage);
       print("image object called");
       int totalscore = imageObject.c1Score + imageObject.c2Score +imageObject.c3Score;
       print("c1 score ${totalscore}  ${CuriumLife().c1[imageObject.c1Score]}");
@@ -122,10 +127,21 @@ class ImagePickerViewModel extends VGTSBaseViewModel with TensorFlowService
    gotoPatientInfoScreen(data)
    {
 
-     navigationService.pushNamed(Routes.patientInfo,arguments: data);
+     navigationService.pushNamed(Routes.patientInfo,arguments: data).then((value)  {
+       controlButtonLoading(false);
 
+     });
 
    }
 
+
+
+  bool buttonLoading =false;
+
+  controlButtonLoading(bool value)
+  {
+    buttonLoading = value;
+    notifyListeners();
+  }
 
 }

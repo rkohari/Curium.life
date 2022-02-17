@@ -23,20 +23,36 @@ class ImageInfoScreen extends ViewModelBuilderWidget<ImagePickerViewModel> {
   @override
   Widget builder(
       BuildContext context, ImagePickerViewModel viewModel, Widget? child) {
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: () async {
+        navigationService.popUntil(Routes.dashboard);
+
+        return true;
+      },
+      child: Scaffold(
         backgroundColor: AppColor.background,
         appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              navigationService.popUntil(Routes.imagePicker);
+          leading: GestureDetector(
+            onTap: (){
+              navigationService.popUntil(Routes.dashboard);
             },
-            color: AppColor.textOnPrimary,
+            child: Container(
+              width: 28,
+              height: 28,
+              alignment: Alignment.center,
+              child: Image(
+                width: 28,
+                height: 28,
+                fit: BoxFit.cover,
+                image: AssetImage(Images.ic_back),
+              ),
+            ),
           ),
+          titleSpacing: 0,
           centerTitle: false,
           title: Text(
             "Captured Image Information",
-            style: AppTextStyle.subtitle1.copyWith(
+            style: AppTextStyle.subText.copyWith(
               color: AppColor.textOnBackground,
               fontWeight: FontWeight.w500,
               fontSize: 18,
@@ -49,7 +65,6 @@ class ImageInfoScreen extends ViewModelBuilderWidget<ImagePickerViewModel> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   VerticalSpacing.custom(value: 23),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
@@ -59,6 +74,7 @@ class ImageInfoScreen extends ViewModelBuilderWidget<ImagePickerViewModel> {
                       alignment: Alignment.center,
                       child: Image(
                         width: double.infinity,
+
                         image: FileImage(data["file"]),
                         fit: BoxFit.contain,
                       ),
@@ -69,18 +85,18 @@ class ImageInfoScreen extends ViewModelBuilderWidget<ImagePickerViewModel> {
                       text: TextSpan(children: <TextSpan>[
                     TextSpan(
                         text: 'CVSC SCORE :',
-                        style: AppTextStyle.headline5.copyWith(
-                            fontSize: 26, fontWeight: FontWeight.bold)),
+                        style: AppTextStyle.headLine2.copyWith(
+                            fontSize: 30, fontWeight: FontWeight.bold)),
                     TextSpan(
                         text: " ${data["total"].toString()}",
-                        style: AppTextStyle.headline5.copyWith(
-                            fontSize: 26,
+                        style: AppTextStyle.headLine2.copyWith(
+                            fontSize: 30,
                             fontWeight: FontWeight.bold,
                             color: AppColor.primary)),
                   ])),
-                  VerticalSpacing.custom(value: 18),
+                  VerticalSpacing.custom(value: 13),
                   Text("C1",
-                      style: AppTextStyle.headline5.copyWith(
+                      style: AppTextStyle.headLine2.copyWith(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF6B779A))),
@@ -91,7 +107,6 @@ class ImageInfoScreen extends ViewModelBuilderWidget<ImagePickerViewModel> {
                           fontStyle: FontStyle.italic,
                           color: Color(0xFF6B779A))),
                   VerticalSpacing.custom(value: 12),
-
                   Container(
                     height: .6,
                     width: double.infinity,
@@ -99,7 +114,7 @@ class ImageInfoScreen extends ViewModelBuilderWidget<ImagePickerViewModel> {
                   ),
                   VerticalSpacing.custom(value: 12),
                   Text("C2",
-                      style: AppTextStyle.headline5.copyWith(
+                      style: AppTextStyle.headLine2.copyWith(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF6B779A))),
@@ -116,9 +131,8 @@ class ImageInfoScreen extends ViewModelBuilderWidget<ImagePickerViewModel> {
                     color: Color(0xFFDDDDDD),
                   ),
                   VerticalSpacing.custom(value: 12),
-
                   Text("C3",
-                      style: AppTextStyle.headline5.copyWith(
+                      style: AppTextStyle.headLine2.copyWith(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF6B779A))),
@@ -129,57 +143,72 @@ class ImageInfoScreen extends ViewModelBuilderWidget<ImagePickerViewModel> {
                           fontStyle: FontStyle.italic,
                           color: Color(0xFF6B779A))),
                   VerticalSpacing.custom(value: 12),
-
                 ],
               ),
             )),
-
-      bottomNavigationBar: Container(
-        height: 100,
-
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            GestureDetector(
-              onTap: (){
-
-
-
-
-              },
-              child: Container(
-                width: 140,
-                height: 50,
-                decoration: BoxDecoration(
+        bottomNavigationBar: Container(
+          height: 100,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  navigationService.popUntil(Routes.imagePicker);
+                },
+                child: Container(
+                  width: 140,
+                  height: 50,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: AppColor.primary, width: 1)),
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Cancel",
+                    style: AppTextStyle.headLine2.copyWith(
+                        fontSize: 16,
+                        color: AppColor.textOnPrimary,
+                        fontWeight: FontWeight.w400),
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: viewModel.buttonLoading
+                    ? null
+                    : () {
+                        viewModel.controlButtonLoading(true);
+                        viewModel.gotoPatientInfoScreen(data);
+                      },
+                child: Container(
+                  width: 180,
+                  height: 50,
+                  decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color:AppColor.primary,width: 1)
-
+                    color: AppColor.primary,
+                    // border: Border.all(color:AppColor.background,width: 1)
+                  ),
+                  alignment: Alignment.center,
+                  child: viewModel.buttonLoading
+                      ? SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ))
+                      : Text(
+                          "Next",
+                          style: AppTextStyle.subText.copyWith(
+                              fontSize: 16,
+                              color: AppColor.background,
+                              fontWeight: FontWeight.w400),
+                        ),
                 ),
-                alignment: Alignment.center,
-                child: Text("Cancel",style: AppTextStyle.bodyText2.copyWith(fontSize: 16,color: AppColor.textOnPrimary,fontWeight: FontWeight.w400),),
-              ),
-            ),
-            GestureDetector(
-              onTap: (){
-                viewModel.gotoPatientInfoScreen(data);
-              },
-              child: Container(
-                width: 180,
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: AppColor.primary,
-                  // border: Border.all(color:AppColor.background,width: 1)
-                ),
-                alignment: Alignment.center,
-                child: Text("Next",style: AppTextStyle.bodyText2.copyWith(fontSize: 16,color: AppColor.background,fontWeight: FontWeight.w400),),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
-
   }
 
   ImageInfoScreen(this.data);

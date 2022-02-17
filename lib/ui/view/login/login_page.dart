@@ -8,10 +8,17 @@ import 'package:curiumlife/ui/widgets/tap_outside_unfocus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:stacked/stacked.dart';
-
+import 'package:email_validator/email_validator.dart';
 import 'login_viewmodel.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class LogInPage extends ViewModelBuilderWidget<LogInViewModel>{
+
+  @override
+  void onViewModelReady(LogInViewModel viewModel) {
+    super.onViewModelReady(viewModel);
+    viewModel.checkCameraPermission();
+  }
 
   @override
   Widget builder(BuildContext context, LogInViewModel viewModel, Widget? child) {
@@ -34,9 +41,9 @@ class LogInPage extends ViewModelBuilderWidget<LogInViewModel>{
                       Image.asset(Images.appLogo, width: MediaQuery.of(context).size.width,),
 
                       EditTextField(
-                        "Login Id",
+                        "Enter e-mail",
                         viewModel.loginIdController,
-                        placeholder: "Enter your Login Id",
+                        placeholder: "Enter your e-mail",
                         onChanged: (value){},
                         onSubmitted: (val){
                           viewModel.passwordController.focusNode.requestFocus();
@@ -57,18 +64,31 @@ class LogInPage extends ViewModelBuilderWidget<LogInViewModel>{
                       VerticalSpacing.custom(value: 20.0),
 
                       Button(
-                          "LOGIN",
+                          "Login",
                           key: const ValueKey("btnLogin"),
                           width: double.infinity,
+
                           isLoading: viewModel.state == ViewState.Busy,
                           onPressed: (){
                             if(viewModel.logInFormKey.currentState!.validate()){
-                             viewModel.login();
+
+                              if(!EmailValidator.validate(viewModel.loginIdController.text))
+                                {
+                                  viewModel.showDialogBox(
+                                      "Enter valid e-mail");
+                                  return ;
+                                }
+                              viewModel.login();
+                              // if entered string is name
+                              // code
+                              // else return;
+
+
                             }
                           }
                       ),
 
-
+                      VerticalSpacing.custom(value: 25.0),
                     ],
                   ),
                 ),

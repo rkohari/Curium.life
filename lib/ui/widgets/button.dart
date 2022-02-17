@@ -5,7 +5,7 @@ import 'package:curiumlife/core/res/styles.dart';
 import 'package:flutter/material.dart';
 
 
-TextStyle _buttonTextStyle = AppTextStyle.button;
+TextStyle _buttonTextStyle = AppTextStyle.button.copyWith(color: Colors.white);
 TextStyle _outlineTextStyle = const TextStyle(fontSize: 15, fontFamily: AppStyle.fontFamily, fontWeight: FontWeight.w500, color: AppColor.primary, letterSpacing: 1.5);
 
 class Button extends StatelessWidget {
@@ -52,7 +52,7 @@ class Button extends StatelessWidget {
       child: isLoading ? const SizedBox(
         width: 15,
         height: 15,
-        child: CircularProgressIndicator(strokeWidth:2,  valueColor: AlwaysStoppedAnimation(AppColor.textOnPrimary),),
+        child: CircularProgressIndicator(strokeWidth:2,  valueColor: AlwaysStoppedAnimation(Colors.white),),
       ) :
       Row(
         crossAxisAlignment: CrossAxisAlignment.center,

@@ -4,6 +4,7 @@ import 'package:curiumlife/core/model/user_model.dart';
 import 'package:curiumlife/db/logins.dart';
 import 'package:curiumlife/locator.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:permission_handler/permission_handler.dart' as cam;
 import 'package:vgts_plugin/form/utils/form_field_controller.dart';
 
 import '../../../router.dart';
@@ -24,10 +25,19 @@ class LogInViewModel extends VGTSBaseViewModel {
       required: true);
   LoginDatabase _loginDatabase = LoginDatabase();
 
+  checkCameraPermission() async {
+    debugPrint("checkCameraPermission called");
+    var status = await cam.Permission.camera.status;
+    debugPrint("$status");
+    if (status.isDenied || status.isPermanentlyDenied || status.isRestricted) {
+      await cam.Permission.camera.request();
+    }
+  }
+
   login() async {
     // try {
     setState(ViewState.Busy);
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(Duration(seconds: 1), () {
       ResponseData data = _loginDatabase.validateLoginDetails(
           loginIdController.text.toLowerCase().trim(),
           passwordController.text.trim());
@@ -40,10 +50,14 @@ class LogInViewModel extends VGTSBaseViewModel {
           Routes.dashboard,
         );
       } else {
-        print("login failure");
+        dialogService.showDialog(description: "Enter Correct Login Details");
       }
     });
 
     notifyListeners();
+  }
+
+  showDialogBox(String text) {
+    dialogService.showDialog(title: "Alert Message", description: "$text");
   }
 }
