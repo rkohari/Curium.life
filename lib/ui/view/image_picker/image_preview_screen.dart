@@ -27,7 +27,7 @@ class ImagePreviewScreen extends ViewModelBuilderWidget<ImagePickerViewModel> {
   Widget builder(BuildContext context, ImagePickerViewModel viewModel, Widget? child) {
     return WillPopScope(
       onWillPop: () async{
-        navigationService.popUntil(Routes.dashboard);
+        navigationService.pushReplacementNamed(Routes.dashboard);
 
         return true;
       },
@@ -37,7 +37,7 @@ class ImagePreviewScreen extends ViewModelBuilderWidget<ImagePickerViewModel> {
             backgroundColor:Colors.black ,
             leading: IconButton(icon: Icon(Icons.arrow_back),onPressed: (){
 
-            navigationService.popUntil(Routes.dashboard);
+              navigationService.pushReplacementNamed(Routes.dashboard);
             },),
           ),
           body: Stack(
@@ -62,17 +62,6 @@ class ImagePreviewScreen extends ViewModelBuilderWidget<ImagePickerViewModel> {
               GestureDetector(
                 onTap: (){
 
-
-                  if(data["source"]==CameraType.GALLARY)
-                  {
-                    viewModel.pickImageFromGallary();
-
-                  }else
-                  {
-
-                    viewModel.pickImageFromCamera();
-
-                  }
 
                 },
                 child: Container(

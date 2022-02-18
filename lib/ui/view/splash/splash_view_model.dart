@@ -1,4 +1,5 @@
 import 'package:curiumlife/db/master_database_service.dart';
+import 'package:curiumlife/ui/view/camera_screen/camera_view_model.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../locator.dart';
@@ -10,8 +11,11 @@ class SplashViewModel extends VGTSBaseViewModel {
 
   @override
   Future onInit() async {
-   await locator<MasterDatabaseService>().initialise();
 
+
+
+   await locator<MasterDatabaseService>().initialise();
+ //  await locator<CameraViewModel>().initialise();
 
 
 
@@ -24,19 +28,14 @@ class SplashViewModel extends VGTSBaseViewModel {
 
         if(preferenceService.getPassCode() != null || preferenceService.getPassCode() == ""){
 
-          navigationService.popAllAndPushNamed(Routes.dashboard);
+          navigationService.popAllAndPushNamed(Routes.camera);
 
         }
         else
           {
             navigationService.popAllAndPushNamed(Routes.login);
-
           }
-        // if (preferenceService.getBearerToken().isNotEmpty) {
-        //   navigationService.popAllAndPushNamed(Routes.dashboard);
-        // } else {
-        //   navigationService.popAllAndPushNamed(Routes.login);
-        // }
+
       });
 
     } catch (ex) {

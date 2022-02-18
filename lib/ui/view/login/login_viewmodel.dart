@@ -46,9 +46,7 @@ class LogInViewModel extends VGTSBaseViewModel {
       if (data.status == ResponceStatus.COMPLETED) {
         preferenceService.setPassCode(data.data!.token);
         updateUserModel(data.data as UserModel);
-        navigationService.popAllAndPushNamed(
-          Routes.dashboard,
-        );
+        navigationService.pushNamed(Routes.camera);
       } else {
         dialogService.showDialog(description: "Enter Correct Login Details");
       }

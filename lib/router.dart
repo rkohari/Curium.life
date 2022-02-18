@@ -1,7 +1,7 @@
 
+import 'package:curiumlife/ui/view/camera_screen/camera_screen.dart';
 import 'package:curiumlife/ui/view/dashboard/dashboard_page.dart';
 import 'package:curiumlife/ui/view/image_picker/image_info_screen.dart';
-import 'package:curiumlife/ui/view/image_picker/image_picker_option_screen.dart';
 import 'package:curiumlife/ui/view/image_picker/image_preview_screen.dart';
 import 'package:curiumlife/ui/view/image_picker/image_process.dart';
 import 'package:curiumlife/ui/view/login/login_page.dart';
@@ -28,6 +28,7 @@ class Routes {
   static const String success = "/success";
   static const String failure = "/failure";
   static const String patientDetails = "/patientDetails";
+  static const String camera = "/camera";
 
   //ErrorScreen
 
@@ -56,11 +57,7 @@ class AppRouter {
         settings: RouteSettings(name: settings.name),
       );
 
-      case Routes.imagePicker:
-        return MaterialPageRoute(
-          builder: (_) => ImagePickerChoices(),//settings.arguments to pass arguments
-          settings: RouteSettings(name: settings.name),
-        );
+
       case Routes.imagePreview:
         return MaterialPageRoute(
           builder: (_) => ImagePreviewScreen(settings.arguments),//settings.arguments to pass arguments
@@ -98,6 +95,12 @@ class AppRouter {
       case Routes.patientDetails:
         return MaterialPageRoute(
           builder: (_) => PatientDetails(settings.arguments as PatientModel),//settings.arguments to pass arguments
+          settings: RouteSettings(name: settings.name),
+        );
+
+      case Routes.camera:
+        return MaterialPageRoute(
+          builder: (_) => CameraScreen(),//settings.arguments to pass arguments
           settings: RouteSettings(name: settings.name),
         );
 

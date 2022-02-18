@@ -32,54 +32,9 @@ class ImagePickerViewModel extends VGTSBaseViewModel with TensorFlowService
   // ML score
   late double CVCPOINTS;
 
-  resetValues (int value)
-  {
-
-    if(value == 1)
-      {
-        captureContainerWidth = containerWidth;
-        captureContainerHeight = containerHeight;
-        isCaptureTextAnimated = isAnimated;
-        captureIconSize = iconSize;
-      }else
-        {
-          uploadContainerWidth = containerWidth;
-          uploadContainerHeight = containerHeight;
-          isUploadTextAnimated = isAnimated;
-          uploadiconSize =iconSize;
-        }
 
 
 
-    notifyListeners();
-
-
-  }
-
-  pickImageFromCamera () async{
-    controlButtonLoading(false);
-
-    final XFile? photo = await picker.pickImage(source: ImageSource.camera,);
-    File file =File(photo!.path);
-    Map<String,dynamic>  params={
-      "source" : CameraType.CAMERA,
-      "file" : file,
-    };
-    navigationService.pushNamed(Routes.imagePreview,arguments: params);
-  }
-
-  pickImageFromGallary () async {
-    controlButtonLoading(false);
-
-    final XFile? photo = await picker.pickImage(source: ImageSource.gallery);
-    File file =File(photo!.path);
-    Map<String,dynamic>  params={
-      "source" : CameraType.GALLARY,
-      "file" : file,
-    };
-    navigationService.pushNamed(Routes.imagePreview,arguments: params);
-
-  }
 
 
   gotoImageProcessScreen (var data)
@@ -88,6 +43,8 @@ class ImagePickerViewModel extends VGTSBaseViewModel with TensorFlowService
 
   }
 
+
+  // image process screen funtions added here
 
   processImageWithTensorFlow(mapData)
  async {
@@ -123,8 +80,7 @@ class ImagePickerViewModel extends VGTSBaseViewModel with TensorFlowService
 
   }
 
-
-   gotoPatientInfoScreen(data)
+  gotoPatientInfoScreen(data)
    {
 
      navigationService.pushNamed(Routes.patientInfo,arguments: data).then((value)  {

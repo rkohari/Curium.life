@@ -6,7 +6,6 @@ import 'package:curiumlife/services/navigation_service.dart';
 import 'package:curiumlife/services/preference_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:provider/provider.dart';
 import 'package:tflite/tflite.dart';
 import 'core/res/styles.dart';
