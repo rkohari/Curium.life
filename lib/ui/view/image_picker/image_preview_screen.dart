@@ -62,6 +62,7 @@ class ImagePreviewScreen extends ViewModelBuilderWidget<ImagePickerViewModel> {
               GestureDetector(
                 onTap: (){
 
+                  navigationService.pushReplacementNamed(Routes.camera);
 
                 },
                 child: Container(

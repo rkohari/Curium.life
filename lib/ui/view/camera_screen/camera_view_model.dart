@@ -5,9 +5,10 @@ import 'package:curiumlife/locator.dart';
 import 'package:curiumlife/router.dart';
 import 'package:curiumlife/ui/view/vgts_base_view_model.dart';
 import 'package:camera/camera.dart' as CustomCamera;
+import 'package:flutter/material.dart';
 
 class CameraViewModel extends VGTSBaseViewModel {
-  late final cameras;
+   late List<CameraDescription> cameras;
 
   late CameraController _controller;
 
@@ -22,7 +23,7 @@ class CameraViewModel extends VGTSBaseViewModel {
 
     cameras = await CustomCamera.availableCameras();
     _controller = CameraController(
-      cameras.first,
+      cameras[0],
       ResolutionPreset.ultraHigh,
     );
     _initializeControllerFuture = _controller.initialize();
@@ -49,6 +50,26 @@ class CameraViewModel extends VGTSBaseViewModel {
   {
     navigationService.pushReplacementNamed(Routes.dashboard);
 
+  }
+
+  int i=0;
+  switchCamera()
+  {
+
+    if(i==0)
+      {
+        i==1;
+      }else
+        {
+          i==0;
+        }
+
+    _controller = CameraController(
+      cameras[i],
+      ResolutionPreset.ultraHigh,
+    );
+    _initializeControllerFuture = _controller.initialize();
+ notifyListeners();
   }
 
 

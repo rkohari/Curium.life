@@ -17,7 +17,7 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
   @override
   void onViewModelReady(PatientInfoViewModel viewModel) {
     super.onViewModelReady(viewModel);
-    viewModel.onInIt();
+    viewModel.onInIt(data);
   }
 
   @override
@@ -76,31 +76,31 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Container(
-                          width: 90,
-                          height: 90,
-                          padding: EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                  color: Color(0xFF979797), width: 1)),
-                          child: CircleAvatar(
-                            backgroundImage: FileImage(data["file"]),
-                          ),
-                        ),
+                        // Container(
+                        //   width: 90,
+                        //   height: 90,
+                        //   padding: EdgeInsets.all(5),
+                        //   decoration: BoxDecoration(
+                        //       shape: BoxShape.circle,
+                        //       border: Border.all(
+                        //           color: Color(0xFF979797), width: 1)),
+                        //   child: CircleAvatar(
+                        //     backgroundImage: FileImage(data["file"]),
+                        //   ),
+                        // ),
                         VerticalSpacing.custom(value: 11),
                         RichText(
                             text: TextSpan(children: <TextSpan>[
                           TextSpan(
-                              text: 'CVSC Score :',
+                              text: 'CVS Score :',
                               style: AppTextStyle.headLine2.copyWith(
                                   fontSize: 18, fontWeight: FontWeight.bold)),
-                          TextSpan(
-                              text: " ${data["total"].toString()}",
-                              style: AppTextStyle.headLine2.copyWith(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColor.primary)),
+                          // TextSpan(
+                          //     text: " ${data["total"].toString()}",
+                          //     style: AppTextStyle.headLine2.copyWith(
+                          //         fontSize: 18,
+                          //         fontWeight: FontWeight.bold,
+                          //         color: AppColor.primary)),
                         ])),
                       ],
                     ),

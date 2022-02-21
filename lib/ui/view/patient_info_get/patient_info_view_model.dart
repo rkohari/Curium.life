@@ -84,9 +84,25 @@ inputFormatter: InputFormatter.nameFormatter,
   late GenderType sexType ;
 
 
-
-  onInIt() {
+  late String patientUniqId;
+  onInIt(params) async{
     genderTypeController.list = sexTypeList;
+
+    patientUniqId = params["patientUniqId"];
+    List<PatientModel> a = await BaseTable<PatientModel>().getAll();
+    List<PatientModel>   patientsList = a
+        .where((element) =>
+    element.userUnique_id ==
+        LoginDatabase()
+            .getListOfUsers
+            .firstWhere((element) =>
+        element.token == preferenceService.getPassCode())
+            .uniqID)
+        .toList();
+
+    PatientModel model = patientsList.firstWhere((element) => element.patientUniqID == params["patientUniqId"]);
+    print("model found ${model.picture}");
+
     notifyListeners();
   }
 
@@ -98,27 +114,21 @@ inputFormatter: InputFormatter.nameFormatter,
   storeIntoDB(data) async {
 
     try {
-     // Uint8List image = await convertFileToUint8List(data["file"]);
-      Uint8List ? image = await testCompressFile(data["file"]);
 
-      await BaseTable<PatientModel>().insert(PatientModel(
+        print("the uniq id is ${patientUniqId}");
+      await BaseTable<PatientModel>().update(patientUniqId, PatientModel(
 
-          userUnique_id: LoginDatabase().getListOfUsers.firstWhere((element) => element.token == preferenceService.getPassCode()).uniqID,
-          patientUniqID: Uuid().v1(),
-          patientName: patientNameController.text,
-          patientAge: int.parse(patientAgeController.text.trim()),
-          cvscScore: data["total"],
-          sexType: genderTypeController.value!.sexType,
-          diagoonsis: patientDiagonisisController.text,
-          surgeryDetails: surgeryDetailsController.text,
-          additionalNotes: additionalNotesController.textEditingController.text,
-          picture: image,
-          c1Score: data["c1Score"],
-          c2Score: data["c2Score"],
-          c3Score: data["c3Score"],
-          c1Description: data["c1_des"],
-          c2Description: data["c2_des"],
-          c3Description: data["c3_des"]
+
+
+        patientName: patientNameController.text,
+        patientAge: int.parse(patientAgeController.text.trim()),
+
+        sexType: genderTypeController.value!.sexType,
+        diagoonsis: patientDiagonisisController.text,
+        surgeryDetails: surgeryDetailsController.text,
+        additionalNotes: additionalNotesController.textEditingController.text,
+
+
       ));
       //
       controlButtonLoading(false);
@@ -134,26 +144,11 @@ inputFormatter: InputFormatter.nameFormatter,
     }
   }
 
-  Future<Uint8List> convertFileToUint8List(File picture) async {
-    List<int> imageBase64 = picture.readAsBytesSync();
-    String imageAsString = base64Encode(imageBase64);
-    Uint8List uint8list = base64.decode(imageAsString);
-    return uint8list;
-  }
 
 
 
-  Future<Uint8List?> testCompressFile(File file) async {
-    var result = await FlutterImageCompress.compressWithFile(
-      file.absolute.path,
-      minWidth: 2300,
-      minHeight: 1500,
-      quality: 40,
-      rotate: 90,
-    );
 
-    return result;
-  }
+
 
  showDialogBox(String text)
  {

@@ -49,9 +49,9 @@ class ImageInfoScreen extends ViewModelBuilderWidget<ImagePickerViewModel> {
             ),
           ),
           titleSpacing: 0,
-          centerTitle: false,
+          centerTitle: true,
           title: Text(
-            "Captured Image Information",
+            "Image Information",
             style: AppTextStyle.subText.copyWith(
               color: AppColor.textOnBackground,
               fontWeight: FontWeight.w500,
@@ -72,11 +72,22 @@ class ImageInfoScreen extends ViewModelBuilderWidget<ImagePickerViewModel> {
                       height: 230,
                       width: double.infinity,
                       alignment: Alignment.center,
-                      child: Image(
-                        width: double.infinity,
+                      child: Stack(
+                        children: [
+                          Image(
+                            width: double.infinity,
 
-                        image: FileImage(data["file"]),
-                        fit: BoxFit.contain,
+                            image: FileImage(data["file"]),
+                            fit: BoxFit.contain,
+                          ),
+                          Align(
+                              alignment: Alignment.bottomRight,
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0,right: 10),
+                                child: Text(data["date"],style: AppTextStyle.subText2,),
+                              )),
+                        ],
+
                       ),
                     ),
                   ),
@@ -84,7 +95,7 @@ class ImageInfoScreen extends ViewModelBuilderWidget<ImagePickerViewModel> {
                   RichText(
                       text: TextSpan(children: <TextSpan>[
                     TextSpan(
-                        text: 'CVSC SCORE :',
+                        text: 'CVS SCORE :',
                         style: AppTextStyle.headLine2.copyWith(
                             fontSize: 30, fontWeight: FontWeight.bold)),
                     TextSpan(
