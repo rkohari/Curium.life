@@ -63,7 +63,7 @@ class PatientInfoWidget extends StatelessWidget {
                   ),
                   VerticalSpacing.custom(value: 6),
                   Text(
-                    "${patientModel!.patientAge ?? ""} / ${patientModel!.sexType ?? ""}",
+                    patientModel!.patientName == null ||  patientModel!.patientName == "" ? "UnAssociated Data": "${patientModel!.patientAge ?? ""} / ${patientModel!.sexType ?? ""}",
                     maxLines: 1,
                     style: AppTextStyle.subText.copyWith(
                         color: Color(0xFF6B779A),

@@ -81,13 +81,13 @@ import 'master_database_service.dart';
   }
 
 
-  Future<int> update(String id, T data, ) async {
-
+  Future<int> update(String id, T data,) async {
     print(id);
-
-    Database database = _masterDatabase  ;
-
-    int result = await database.update(object.tableName, data.toDatabaseMap(), where: "${object.primaryKey}");
+    Database database = _masterDatabase;
+    var params = data.toDatabaseMap();
+    // params.remove(object.primaryKey);
+    print("the printing db form update method ${params}");
+    int result = await database.update(object.tableName, params, where: "${object.primaryKey} = ?", whereArgs: [ id ]);
     return result;
   }
 

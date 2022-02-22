@@ -83,6 +83,7 @@ class ImagePickerViewModel extends VGTSBaseViewModel with TensorFlowService
         "date" :DateFormat('yyyy-mm-dd h:m a').format(timeStamp).toString()
 
       };
+
       navigationService.pushNamed(Routes.imageInfo,arguments: data);
 
       });
@@ -95,32 +96,39 @@ class ImagePickerViewModel extends VGTSBaseViewModel with TensorFlowService
   gotoPatientInfoScreen(data)
    async{
 
-     // store the record here
-     // and pass the table id to patient info get screen
+    Map params = await storeInsideTheDB(data);
+
+     navigationService.pushNamed(Routes.patientInfo,arguments:params).then((value)  {
+       controlButtonLoading(false);
+     });
+
+   }
+
+  Future<Map> storeInsideTheDB(data)
+   async{
+
      Uint8List ? image = await testCompressFile(data["file"]);
      String uniqId = Uuid().v1();
+
      await BaseTable<PatientModel>().insert(PatientModel(
 
    userUnique_id: LoginDatabase().getListOfUsers.firstWhere((element) => element.token == preferenceService.getPassCode()).uniqID,
    patientUniqID: uniqId,
 
    cvscScore: data["total"],
-     c1Score: data["c1Score"],
+   c1Score: data["c1Score"],
    c2Score: data["c2Score"],
    c3Score: data["c3Score"],
    picture: image,
    c1Description: data["c1_des"],
-     c2Description: data["c2_des"],
-     c3Description: data["c3_des"]
+   c2Description: data["c2_des"],
+   c3Description: data["c3_des"],
+   date:  (DateFormat('yyyy-MM-dd h:m a').format(DateTime.now())).toString()
    ));
 
-     Map params ={"patientUniqId" : uniqId};
+   Map params ={"patientUniqId" : uniqId};
 
-     navigationService.pushNamed(Routes.patientInfo,arguments:params).then((value)  {
-       controlButtonLoading(false);
-
-     });
-
+   return  params;
    }
 
 
@@ -130,7 +138,7 @@ class ImagePickerViewModel extends VGTSBaseViewModel with TensorFlowService
       minWidth: 2300,
       minHeight: 1500,
       quality: 40,
-      rotate: 90,
+      rotate: 0,
     );
 
     return result;

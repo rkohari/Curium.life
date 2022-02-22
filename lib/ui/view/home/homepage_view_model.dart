@@ -30,9 +30,12 @@ class HomePageViewModel extends VGTSBaseViewModel {
 
   fetchData() async {
     patientsList.clear();
+
+    // getting all patients data
     List<PatientModel> a = await BaseTable<PatientModel>().getAll();
 
-    patientsList = a
+    // filter all patients data using particuar logined uniq id
+    List<PatientModel> b = a
         .where((element) =>
     element.userUnique_id ==
         LoginDatabase()
@@ -41,6 +44,12 @@ class HomePageViewModel extends VGTSBaseViewModel {
         element.token == preferenceService.getPassCode())
             .uniqID)
         .toList();
+
+
+    // sorting here
+     patientsList.addAll(b.where((element) => element.patientName !="" && element.patientName != null ).toList());
+     patientsList.addAll(b.where((element) => element.patientName == "" || element.patientName == null).toList());
+
 
     oneCVCPercentage = getPercentage(a, 1);
     secondCVCPercentage = getPercentage(a, 2);

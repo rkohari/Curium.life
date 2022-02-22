@@ -25,6 +25,7 @@ class ImageInfoScreen extends ViewModelBuilderWidget<ImagePickerViewModel> {
       BuildContext context, ImagePickerViewModel viewModel, Widget? child) {
     return WillPopScope(
       onWillPop: () async {
+        await viewModel.storeInsideTheDB(data);
         navigationService.popUntil(Routes.dashboard);
 
         return true;
@@ -33,7 +34,8 @@ class ImageInfoScreen extends ViewModelBuilderWidget<ImagePickerViewModel> {
         backgroundColor: AppColor.background,
         appBar: AppBar(
           leading: GestureDetector(
-            onTap: (){
+            onTap: () async {
+              await viewModel.storeInsideTheDB(data);
               navigationService.popUntil(Routes.dashboard);
             },
             child: Container(
@@ -163,9 +165,11 @@ class ImageInfoScreen extends ViewModelBuilderWidget<ImagePickerViewModel> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               GestureDetector(
-                onTap: () {
-                  navigationService.popUntil(Routes.imagePicker);
-                },
+                onTap: () async{
+                 // await viewModel.storeInsideTheDB(data);
+                  navigationService.popAllAndPushNamed(Routes.camera);
+
+                  },
                 child: Container(
                   width: 140,
                   height: 50,
@@ -174,7 +178,7 @@ class ImageInfoScreen extends ViewModelBuilderWidget<ImagePickerViewModel> {
                       border: Border.all(color: AppColor.primary, width: 1)),
                   alignment: Alignment.center,
                   child: Text(
-                    "Cancel",
+                    "Retry",
                     style: AppTextStyle.headLine2.copyWith(
                         fontSize: 16,
                         color: AppColor.textOnPrimary,

@@ -98,65 +98,36 @@ class CameraScreen extends ViewModelBuilderWidget<CameraViewModel> {
                 width: MediaQuery.of(context).size.width,
                 color: AppColor.textOnPrimary,
                 alignment: Alignment.center,
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      onTap: (){
-                        //
-                        viewModel.switchCamera();
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width *
-                                .15),
-                        height: 44.77,
-                        width: 44.77,
-                        decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color.fromRGBO(196, 196, 196, .2)),
-                        alignment: Alignment.center,
-                        child: const Image(
-                          image: AssetImage(Images.ic_switch_cam),
-                          width: 24,
-                          height: 22,
+                child:  GestureDetector(
+                  onTap: () {
+                    viewModel.moveToImagePreviewScreen();
+                  },
+                  child: Container(
+
+                    height: 80,
+                    width: 80,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            color: AppColor.borderColor,
+                            width: 2),
+                        color: Colors.white,
+                        shape: BoxShape.circle),
+                    padding: EdgeInsets.all(1),
+                    child: Container(
+                      decoration: const BoxDecoration(
+                          color: AppColor.secondary,
+                          shape: BoxShape.circle),
+                      alignment: Alignment.center,
+                      child: Image(
+                        image: AssetImage(
+                          Images.ic_camera,
                         ),
+                        color: Colors.white,
+                        width: 25,
+                        height: 25,
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        viewModel.moveToImagePreviewScreen();
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(
-                            left:
-                            MediaQuery.of(context).size.width *
-                                .15),
-                        height: 80,
-                        width: 80,
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: AppColor.borderColor,
-                                width: 2),
-                            color: Colors.white,
-                            shape: BoxShape.circle),
-                        padding: EdgeInsets.all(1),
-                        child: Container(
-                          decoration: const BoxDecoration(
-                              color: AppColor.secondary,
-                              shape: BoxShape.circle),
-                          alignment: Alignment.center,
-                          child: Image(
-                            image: AssetImage(
-                              Images.ic_camera,
-                            ),
-                            color: Colors.white,
-                            width: 25,
-                            height: 25,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ],

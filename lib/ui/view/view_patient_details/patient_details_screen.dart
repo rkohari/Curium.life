@@ -30,13 +30,7 @@ class PatientDetails extends ViewModelBuilderWidget<PatientDetailsViewModel> {
       child: Scaffold(
         backgroundColor: AppColor.background,
         appBar: AppBar(
-          // leading: IconButton(
-          //   icon: Icon(Icons.arrow_back),
-          //   onPressed: () {
-          //     navigationService.pop();
-          //   },
-          //   color: AppColor.textOnPrimary,
-          // ),
+
           leading: GestureDetector(
             onTap: (){
               navigationService.pop();
@@ -61,7 +55,7 @@ class PatientDetails extends ViewModelBuilderWidget<PatientDetailsViewModel> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  patientModel.patientName == "" || patientModel.patientName == null ? Container() :Text(
                     patientModel.patientName ?? "",
                     style: AppTextStyle.headLine2.copyWith(
                         fontSize: 26,
@@ -69,8 +63,8 @@ class PatientDetails extends ViewModelBuilderWidget<PatientDetailsViewModel> {
                         fontWeight: FontWeight.bold,
                         color: AppColor.textOnBackground),
                   ),
-                  VerticalSpacing.custom(value: 10),
-                  Text(
+                  patientModel.patientName == "" || patientModel.patientName == null ? Container() :   VerticalSpacing.custom(value: 10),
+                  patientModel.patientName == "" || patientModel.patientName == null ? Container() : Text(
                     "${patientModel.patientAge.toString()} / ${patientModel.sexType}",
                     style: AppTextStyle.headLine2.copyWith(
                         fontSize: 16,
@@ -78,8 +72,8 @@ class PatientDetails extends ViewModelBuilderWidget<PatientDetailsViewModel> {
                         color: Color(0xFF6B779A)),
 
                   ),
-                  VerticalSpacing.custom(value: 10),
-                  Text(
+                  patientModel.patientName == "" || patientModel.patientName == null ? Container() :    VerticalSpacing.custom(value: 10),
+                  patientModel.patientName == "" || patientModel.patientName == null ? Container() :  Text(
                     "${patientModel.diagoonsis}",
                     style: AppTextStyle.headLine2.copyWith(
                         fontSize: 16,
@@ -93,11 +87,26 @@ class PatientDetails extends ViewModelBuilderWidget<PatientDetailsViewModel> {
                       height: 230,
                       width: double.infinity,
                       alignment: Alignment.center,
-                      child: Image(
-                        width: double.infinity,
-                        height: 230,
-                        image: MemoryImage(patientModel!.picture!),
-                        fit: BoxFit.cover,
+                      child: Stack(
+                        children: [
+                          Image(
+                            width: double.infinity,
+                            height: 230,
+                            image: MemoryImage(patientModel!.picture!),
+                            fit: BoxFit.cover,
+                          ),
+                          Align(
+                            alignment: Alignment.bottomRight,
+
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 5,right: 5),
+                              child: Text("${patientModel.date}",   style: AppTextStyle.overline.copyWith(
+                                  fontSize: 12,
+                                  color: Colors.red),),
+                            ),
+                          ),
+                        ],
+
                       ),
                     ),
                   ),
@@ -122,7 +131,7 @@ class PatientDetails extends ViewModelBuilderWidget<PatientDetailsViewModel> {
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF6B779A))),
                   VerticalSpacing.custom(value: 10),
-                  Text(patientModel.surgeryDetails ?? "",
+                  Text(patientModel.surgeryDetails ?? "NA",
                       style: AppTextStyle.overline.copyWith(
                           fontSize: 12,
                           fontStyle: FontStyle.italic,
@@ -134,7 +143,7 @@ class PatientDetails extends ViewModelBuilderWidget<PatientDetailsViewModel> {
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF6B779A))),
                   VerticalSpacing.custom(value: 10),
-                  Text(patientModel.additionalNotes ?? "",
+                  Text(patientModel.additionalNotes ?? "NA",
                       style: AppTextStyle.overline.copyWith(
                           fontSize: 12,
                           fontStyle: FontStyle.italic,

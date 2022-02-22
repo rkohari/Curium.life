@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:curiumlife/core/enum/view_state.dart';
 import 'package:curiumlife/core/model/base_model.dart';
 import 'package:curiumlife/core/model/table_model/patient_info_model.dart';
 import 'package:curiumlife/db/base_table.dart';
@@ -24,14 +25,12 @@ class PatientInfoViewModel extends VGTSBaseViewModel {
       DropdownFieldController<GenderType>(ValueKey("dIndustry"),
           keyId: "id", valueId: "sexType", required: true);
 
-
   FormFieldController patientNameController = FormFieldController(
       const ValueKey("PatientName"),
       required: true,
       maxLength:50,
     inputFormatter: InputFormatter.nameFormatter,
   );
-
 
   FormFieldController patientAgeController = FormFieldController(
       const ValueKey("Age"),
@@ -43,7 +42,6 @@ class PatientInfoViewModel extends VGTSBaseViewModel {
 
   );
 
-
   FormFieldController patientDiagonisisController = FormFieldController(
       const ValueKey("diagonisis"),
       required: true,
@@ -51,7 +49,6 @@ class PatientInfoViewModel extends VGTSBaseViewModel {
 inputFormatter: InputFormatter.nameFormatter,
 
   );
-
 
   FormFieldController surgeryDetailsController = FormFieldController(
       ValueKey("surgeryDetails"),
@@ -62,6 +59,7 @@ inputFormatter: InputFormatter.nameFormatter,
       minLines: 5,
 
   );
+
   FormFieldController additionalNotesController = FormFieldController(
       ValueKey("additionalNotes"),
       required: true,
@@ -75,20 +73,18 @@ inputFormatter: InputFormatter.nameFormatter,
 
   bool buttonLoading =false;
 
-  controlButtonLoading(bool value)
-  {
-    buttonLoading = value;
-    notifyListeners();
-  }
+
 
   late GenderType sexType ;
 
-
-  late String patientUniqId;
+ PatientModel ? model;
   onInIt(params) async{
+
+    setState(ViewState.Busy);
     genderTypeController.list = sexTypeList;
 
-    patientUniqId = params["patientUniqId"];
+
+     print("the passed uniq id is ${params["patientUniqId"]}");
     List<PatientModel> a = await BaseTable<PatientModel>().getAll();
     List<PatientModel>   patientsList = a
         .where((element) =>
@@ -100,9 +96,10 @@ inputFormatter: InputFormatter.nameFormatter,
             .uniqID)
         .toList();
 
-    PatientModel model = patientsList.firstWhere((element) => element.patientUniqID == params["patientUniqId"]);
-    print("model found ${model.picture}");
+     model = patientsList.firstWhere((element) => element.patientUniqID == params["patientUniqId"]);
 
+     print("model uniq id is ${model!.patientUniqID}");
+    setState(ViewState.Idle);
     notifyListeners();
   }
 
@@ -115,31 +112,27 @@ inputFormatter: InputFormatter.nameFormatter,
 
     try {
 
-        print("the uniq id is ${patientUniqId}");
-      await BaseTable<PatientModel>().update(patientUniqId, PatientModel(
+        print("the uniq id is storeIntoDB${model!.patientUniqID}");
 
+        model!.patientName = patientNameController.text;
+        model!.patientAge = int.parse(patientAgeController.text.trim());
+        model!.sexType = genderTypeController.value!.sexType;
+        model!.diagoonsis = patientDiagonisisController.text;
+        model!.surgeryDetails = surgeryDetailsController.text;
+        model!.additionalNotes = additionalNotesController.textEditingController.text;
 
+        print(model!.toDatabaseMap());
+        // print("the base table is oging to upate");
+         await BaseTable<PatientModel>().update(model!.patientUniqID.toString(),model! );
+        // print("the base table is oging to upate1 ");
+        controlButtonLoading(false);
 
-        patientName: patientNameController.text,
-        patientAge: int.parse(patientAgeController.text.trim()),
-
-        sexType: genderTypeController.value!.sexType,
-        diagoonsis: patientDiagonisisController.text,
-        surgeryDetails: surgeryDetailsController.text,
-        additionalNotes: additionalNotesController.textEditingController.text,
-
-
-      ));
-      //
-      controlButtonLoading(false);
-
-      navigationService.pushNamed(Routes.success);
+        navigationService.popAllAndPushNamed(Routes.dashboard);
     }
     catch (e) {
-      // failure screen
-      print("************");
+      controlButtonLoading(false);
       print(e.toString());
-  //    navigationService.pushNamed(Routes.failure);
+
 
     }
   }
@@ -148,7 +141,11 @@ inputFormatter: InputFormatter.nameFormatter,
 
 
 
-
+  controlButtonLoading(bool value)
+  {
+    buttonLoading = value;
+    notifyListeners();
+  }
 
  showDialogBox(String text)
  {

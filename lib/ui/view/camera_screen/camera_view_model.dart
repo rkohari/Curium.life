@@ -55,6 +55,7 @@ class CameraViewModel extends VGTSBaseViewModel {
   int i=0;
   switchCamera()
   {
+    print("called");
 
     if(i==0)
       {
@@ -64,6 +65,7 @@ class CameraViewModel extends VGTSBaseViewModel {
           i==0;
         }
 
+    print(i);
     _controller = CameraController(
       cameras[i],
       ResolutionPreset.ultraHigh,
