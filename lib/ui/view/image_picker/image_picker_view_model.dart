@@ -63,13 +63,14 @@ class ImagePickerViewModel extends VGTSBaseViewModel with TensorFlowService
 
 
 
-    Future.delayed(Duration(seconds: 1),(){
+    Future.delayed(Duration(seconds: 5),(){
       CuriumLife curiumLife =  CuriumLife();
 
      final imageObject =curiumLife.getImageInfo(predictiedImage);
 
       int totalscore = imageObject.c1Score + imageObject.c2Score +imageObject.c3Score;
-      DateTime timeStamp= DateTime.now();
+     String tempDate =(DateFormat('dd-MM-yyyy hh:mm a').format(DateTime.now())).toString();
+     print("the temp data is $tempDate");
       Map data = {
         "file" : mapData["file"],
         "imageName":predictiedImage,
@@ -80,7 +81,7 @@ class ImagePickerViewModel extends VGTSBaseViewModel with TensorFlowService
         "c1Score" : imageObject.c1Score,
         "c2Score" : imageObject.c2Score,
         "c3Score" : imageObject.c3Score,
-        "date" :DateFormat('yyyy-mm-dd h:m a').format(timeStamp).toString()
+        "date" :tempDate
 
       };
 
@@ -123,7 +124,7 @@ class ImagePickerViewModel extends VGTSBaseViewModel with TensorFlowService
    c1Description: data["c1_des"],
    c2Description: data["c2_des"],
    c3Description: data["c3_des"],
-   date:  (DateFormat('yyyy-MM-dd h:m a').format(DateTime.now())).toString()
+   date:  data["date"].toString(),
    ));
 
    Map params ={"patientUniqId" : uniqId};

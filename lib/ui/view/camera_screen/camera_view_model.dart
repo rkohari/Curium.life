@@ -32,18 +32,23 @@ class CameraViewModel extends VGTSBaseViewModel {
   }
 
   moveToImagePreviewScreen() async {
+    try {
+      print("moveToImagePreviewScreen funtion called");
 
-    print("moveToImagePreviewScreen funtion called");
+     final XFile xFile = await _controller.takePicture();
 
-    XFile xFile = await _controller.takePicture();
+      File file = File(xFile!.path);
+      Map<String, dynamic> params = {
+        "source": "Camera",
+        "file": file,
+      };
 
-    File file = File(xFile!.path);
-    Map<String, dynamic> params = {
-      "source": "Camera",
-      "file": file,
-    };
-
-    navigationService.pushNamed(Routes.imagePreview, arguments: params);
+      navigationService.pushNamed(Routes.imagePreview, arguments: params);
+    }
+    catch (e)
+    {
+      print("${e.toString()}");
+    }
   }
 
   closeCameraScreen()

@@ -30,6 +30,8 @@ class PatientInfoViewModel extends VGTSBaseViewModel {
       required: true,
       maxLength:50,
     inputFormatter: InputFormatter.nameFormatter,
+    textCapitalization: TextCapitalization.words,
+
   );
 
   FormFieldController patientAgeController = FormFieldController(
@@ -47,6 +49,7 @@ class PatientInfoViewModel extends VGTSBaseViewModel {
       required: true,
       maxLength:150,
 inputFormatter: InputFormatter.nameFormatter,
+    textCapitalization: TextCapitalization.sentences,
 
   );
 
@@ -56,7 +59,8 @@ inputFormatter: InputFormatter.nameFormatter,
     maxLength:250,
     inputFormatter: InputFormatter.nameFormatter,
 
-      minLines: 5,
+      minLines: 5,    textCapitalization: TextCapitalization.sentences,
+
 
   );
 
@@ -67,6 +71,7 @@ inputFormatter: InputFormatter.nameFormatter,
     inputFormatter: InputFormatter.nameFormatter,
 
     minLines: 5,
+    textCapitalization: TextCapitalization.sentences,
 
   );
 
@@ -98,7 +103,8 @@ inputFormatter: InputFormatter.nameFormatter,
 
      model = patientsList.firstWhere((element) => element.patientUniqID == params["patientUniqId"]);
 
-     print("model uniq id is ${model!.patientUniqID}");
+
+     print("model uniq id is ${model!.date}");
     setState(ViewState.Idle);
     notifyListeners();
   }

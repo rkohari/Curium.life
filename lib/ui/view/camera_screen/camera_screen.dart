@@ -4,6 +4,7 @@ import 'package:curiumlife/core/res/images.dart';
 import 'package:curiumlife/core/res/spacing.dart';
 import 'package:curiumlife/core/res/styles.dart';
 import 'package:curiumlife/ui/view/camera_screen/camera_view_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -22,7 +23,8 @@ class CameraScreen extends ViewModelBuilderWidget<CameraViewModel> {
       BuildContext context, CameraViewModel viewModel, Widget? child) {
     return WillPopScope(
       onWillPop: () async {
-        return false;
+        viewModel.closeCameraScreen();
+        return true;
       },
       child: Scaffold(
         backgroundColor: Colors.black,
@@ -34,7 +36,7 @@ class CameraScreen extends ViewModelBuilderWidget<CameraViewModel> {
                   width: MediaQuery.of(context).size.width,
                   color: AppColor.textOnPrimary,
                   alignment: Alignment.center,
-                  padding: EdgeInsets.only(right: 20, top: 25, left: 20),
+                  padding: EdgeInsets.only( top: 25, left: 20),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -45,27 +47,19 @@ class CameraScreen extends ViewModelBuilderWidget<CameraViewModel> {
                       Expanded(
                           flex: 2,
                           child: Text(
-                            "Identify the image",
+                            "Identify the Image",
                             style: AppTextStyle.subText.copyWith(
                                 color: Colors.white,
-                                fontSize: 14,
+                                fontSize: 16,
+
                                 fontWeight: FontWeight.normal),
                           )),
-                      GestureDetector(
-                        onTap: (){
-                          viewModel.closeCameraScreen();
-                        },
-                        child: Container(
-                          width: 33.58,
-                          height: 33.58,
-                          alignment: Alignment.center,
-                          child: const Image(
-                            fit: BoxFit.cover,
-                            width: 33.58,
-                            height: 33.58,
-                            image: AssetImage(Images.ic_cross),
-                          ),
-                        ),
+                      IconButton(onPressed: () {
+
+                        viewModel.closeCameraScreen();
+                      }, icon: Icon(CupertinoIcons.clear),
+                      color: Colors.white,
+                        iconSize: 24,
                       ),
                       // HorizontalSpacing.custom(value: 16),
                     ],
@@ -99,8 +93,8 @@ class CameraScreen extends ViewModelBuilderWidget<CameraViewModel> {
                 color: AppColor.textOnPrimary,
                 alignment: Alignment.center,
                 child:  GestureDetector(
-                  onTap: () {
-                    viewModel.moveToImagePreviewScreen();
+                  onTap: () async{
+                    await viewModel.moveToImagePreviewScreen();
                   },
                   child: Container(
 

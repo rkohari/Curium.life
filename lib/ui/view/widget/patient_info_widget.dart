@@ -54,14 +54,17 @@ class PatientInfoWidget extends StatelessWidget {
                 children: [
                   VerticalSpacing.custom(value: 10),
                   Text(
-                    patientModel!.patientName ?? "",
+                    patientModel!.patientName ?? "${patientModel.date}",
                     maxLines: 1,
-                    style: AppTextStyle.button.copyWith(
+                    style: patientModel.patientName == "" ||  patientModel.patientName == null ? AppTextStyle.button.copyWith(
+                        color: Color(0xFF222B45),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13) : AppTextStyle.button.copyWith(
                         color: Color(0xFF222B45),
                         fontWeight: FontWeight.bold,
                         fontSize: 16),
                   ),
-                  VerticalSpacing.custom(value: 6),
+                  VerticalSpacing.custom(value: 2),
                   Text(
                     patientModel!.patientName == null ||  patientModel!.patientName == "" ? "UnAssociated Data": "${patientModel!.patientAge ?? ""} / ${patientModel!.sexType ?? ""}",
                     maxLines: 1,
@@ -72,7 +75,7 @@ class PatientInfoWidget extends StatelessWidget {
                   ),
                   VerticalSpacing.custom(value: 6),
                   Text(
-                    patientModel.diagoonsis ?? "",
+                    patientModel.diagoonsis ?? "---",
                     maxLines: 1,
                     style: AppTextStyle.subText.copyWith(
                         color: Color(0xFF6B779A),

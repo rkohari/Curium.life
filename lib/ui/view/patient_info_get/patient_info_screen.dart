@@ -8,6 +8,7 @@ import 'package:curiumlife/ui/view/patient_info_get/patient_info_view_model.dart
 import 'package:curiumlife/ui/widgets/dropdown.dart';
 import 'package:curiumlife/ui/widgets/edit_text_field.dart';
 import 'package:curiumlife/ui/widgets/tap_outside_unfocus.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -31,28 +32,33 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
       BuildContext context, PatientInfoViewModel viewModel, Widget? child) {
     return WillPopScope(
       onWillPop: () async{
-        navigationService.pushNamed(Routes.dashboard);
-
+        navigationService.popAllAndPushNamed(Routes.dashboard);
         return true;
       },
       child: Scaffold(
         backgroundColor: AppColor.background,
         appBar: AppBar(
-          leading: GestureDetector(
-            onTap: () {
-              navigationService.pushNamed(Routes.dashboard);
-            },
-            child: Container(
-              width: 28,
-              height: 28,
-              alignment: Alignment.center,
-              child: Image(
-                width: 28,
-                height: 28,
-                fit: BoxFit.cover,
-                image: AssetImage(Images.ic_back),
-              ),
-            ),
+          // leading: GestureDetector(
+          //   onTap: () {
+          //     navigationService.popAllAndPushNamed(Routes.dashboard);            },
+          //   child: Container(
+          //     width: 28,
+          //     height: 28,
+          //     alignment: Alignment.center,
+          //     child: Image(
+          //       width: 28,
+          //       height: 28,
+          //       fit: BoxFit.cover,
+          //       image: AssetImage(Images.ic_back),
+          //     ),
+          //   ),
+          // ),
+
+          leading: IconButton(icon: Icon(CupertinoIcons.chevron_back), onPressed: () async{
+
+            navigationService.popAllAndPushNamed(Routes.dashboard);
+          },
+            color: Colors.black,iconSize: 25,
           ),
           centerTitle: false,
           titleSpacing: 0,
@@ -66,11 +72,11 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
           ),
         ),
         body: SingleChildScrollView(
-          child: TapOutsideUnFocus(
-            child: Form(
-              key: viewModel.patientInfoKey,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Form(
+            key: viewModel.patientInfoKey,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: TapOutsideUnFocus(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -206,17 +212,17 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
         bottomNavigationBar: Container(
           height: 70,
           color: Colors.white,
+          padding: EdgeInsets.symmetric(horizontal: 16),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             mainAxisSize: MainAxisSize.min,
             children: [
-              HorizontalSpacing.custom(value: 20),
+
               Expanded(
                 flex: 2,
                 child: GestureDetector(
                   onTap: () {
-                    navigationService.pushNamed(Routes.dashboard);
-                  },
+                    navigationService.popAllAndPushNamed(Routes.dashboard);                  },
                   child: Container(
                     height: 50,
                     decoration: BoxDecoration(
@@ -233,7 +239,7 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
                   ),
                 ),
               ),
-              HorizontalSpacing.custom(value: 20),
+              HorizontalSpacing.custom(value: 16),
               Expanded(
                 flex: 2,
                 child: GestureDetector(
@@ -302,7 +308,7 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
                   ),
                 ),
               ),
-              HorizontalSpacing.custom(value: 20),
+
             ],
           ),
         ),

@@ -46,7 +46,7 @@ import 'master_database_service.dart';
     Database database =  _masterDatabase;
 
     list = await database.query(object.tableName,);
-    print("the list is ${list}");
+
 
     List<T> dataList = await Future.wait(list.map((e) => BaseDBModel.createFromMap<T>(e)).toList());
     print("the dataList is ${dataList.length}");

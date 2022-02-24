@@ -20,7 +20,7 @@ class AppStyle {
     appBarTheme: const AppBarTheme(
       color: AppColor.background,
       elevation: 0,
-      iconTheme: IconThemeData(color: AppColor.primary, size: 17),
+      iconTheme: IconThemeData(color: AppColor.primary, size: 24),
       centerTitle: true,
       titleTextStyle: TextStyle(
           fontSize: 16,
@@ -187,7 +187,7 @@ class AppTextStyle {
       fontSize: 12,
       fontWeight: FontWeight.w500,
       color: AppColor.background,
-      letterSpacing: 1.25
+
   );
 
   static TextStyle subText2 = const TextStyle(
@@ -201,7 +201,7 @@ class AppTextStyle {
       fontSize: 8,
       fontWeight: FontWeight.w400,
       color: AppColor.textOnPrimary,
-      letterSpacing: 1.5
+     // letterSpacing: 1.5
   );
 
 }
