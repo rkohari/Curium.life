@@ -53,6 +53,7 @@ dependencies:
   flutter_image_compress: ^1.1.0
   email_validator: ^2.0.1
   permission_handler: ^9.0.1
+  camera: ^0.9.4+12
 
   vgts_plugin:
     git:

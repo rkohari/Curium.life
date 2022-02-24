@@ -27,18 +27,28 @@ class SearchViewModel extends VGTSBaseViewModel {
                     element.token == preferenceService.getPassCode())
                 .uniqID)
         .toList();
+    print("the search result length is b ${b!.length}");
+    b.forEach((element) {
+      print(element.patientName);
+    });
 
-    searchResults = b
+    List<PatientModel> removedNullObjects =b.where((element) => element.patientName != null  ).toList();
+    print('***');
+    removedNullObjects.forEach((element) {
+      print(element.patientName);
+    });
+
+    searchResults = removedNullObjects
         .where((element) =>
             element.patientName!
                 .toLowerCase()
-                .contains(searchController.text.toLowerCase()) ||
+                .contains(searchController.text.toLowerCase().trim()) ||
             element.diagoonsis!
                 .toLowerCase()
-                .contains(searchController.text.toLowerCase()))
+                .contains(searchController.text.toLowerCase().trim()))
         .toList();
 
-    print(searchResults!.length);
+    print("the search result length is ${searchResults!.length}");
     notifyListeners();
   }
 

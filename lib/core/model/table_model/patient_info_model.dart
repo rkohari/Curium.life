@@ -13,6 +13,7 @@ class PatientModel extends CVCConstant {
   String  ? surgeryDetails;
   String ? additionalNotes;
   Uint8List ? picture;
+  String ? date;
 
   // need to add these properties
   int ? c1Score;
@@ -33,8 +34,8 @@ class PatientModel extends CVCConstant {
       this.surgeryDetails,
       this.additionalNotes,
       this.picture,
-      this. c1Score, this.c2Score,this.c3Score,this.c1Description,this.c2Description,this.c3Description
-
+      this. c1Score, this.c2Score,this.c3Score,this.c1Description,this.c2Description,this.c3Description,
+      this.date,
 
   });
 
@@ -59,6 +60,7 @@ class PatientModel extends CVCConstant {
     c1Description = data[col_c1Description];
     c2Description = data[col_c2Description];
     c3Description = data[col_c3Description];
+    date = data[col_date];
 
 
     return this;
@@ -84,6 +86,7 @@ class PatientModel extends CVCConstant {
     data[col_c1Description] = this.c1Description;
     data[col_c2Description] = this.c2Description;
     data[col_c3Description] = this.c3Description;
+    data[col_date] = this.date;
 
 
     print(data);

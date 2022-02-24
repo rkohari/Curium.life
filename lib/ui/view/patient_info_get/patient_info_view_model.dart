@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:curiumlife/core/enum/view_state.dart';
 import 'package:curiumlife/core/model/base_model.dart';
 import 'package:curiumlife/core/model/table_model/patient_info_model.dart';
 import 'package:curiumlife/db/base_table.dart';
@@ -24,14 +25,14 @@ class PatientInfoViewModel extends VGTSBaseViewModel {
       DropdownFieldController<GenderType>(ValueKey("dIndustry"),
           keyId: "id", valueId: "sexType", required: true);
 
-
   FormFieldController patientNameController = FormFieldController(
       const ValueKey("PatientName"),
       required: true,
       maxLength:50,
     inputFormatter: InputFormatter.nameFormatter,
-  );
+    textCapitalization: TextCapitalization.words,
 
+  );
 
   FormFieldController patientAgeController = FormFieldController(
       const ValueKey("Age"),
@@ -43,15 +44,14 @@ class PatientInfoViewModel extends VGTSBaseViewModel {
 
   );
 
-
   FormFieldController patientDiagonisisController = FormFieldController(
       const ValueKey("diagonisis"),
       required: true,
       maxLength:150,
 inputFormatter: InputFormatter.nameFormatter,
+    textCapitalization: TextCapitalization.sentences,
 
   );
-
 
   FormFieldController surgeryDetailsController = FormFieldController(
       ValueKey("surgeryDetails"),
@@ -59,9 +59,11 @@ inputFormatter: InputFormatter.nameFormatter,
     maxLength:250,
     inputFormatter: InputFormatter.nameFormatter,
 
-      minLines: 5,
+      minLines: 5,    textCapitalization: TextCapitalization.sentences,
+
 
   );
+
   FormFieldController additionalNotesController = FormFieldController(
       ValueKey("additionalNotes"),
       required: true,
@@ -69,24 +71,41 @@ inputFormatter: InputFormatter.nameFormatter,
     inputFormatter: InputFormatter.nameFormatter,
 
     minLines: 5,
+    textCapitalization: TextCapitalization.sentences,
 
   );
 
 
   bool buttonLoading =false;
 
-  controlButtonLoading(bool value)
-  {
-    buttonLoading = value;
-    notifyListeners();
-  }
+
 
   late GenderType sexType ;
 
+ PatientModel ? model;
+  onInIt(params) async{
 
-
-  onInIt() {
+    setState(ViewState.Busy);
     genderTypeController.list = sexTypeList;
+
+
+     print("the passed uniq id is ${params["patientUniqId"]}");
+    List<PatientModel> a = await BaseTable<PatientModel>().getAll();
+    List<PatientModel>   patientsList = a
+        .where((element) =>
+    element.userUnique_id ==
+        LoginDatabase()
+            .getListOfUsers
+            .firstWhere((element) =>
+        element.token == preferenceService.getPassCode())
+            .uniqID)
+        .toList();
+
+     model = patientsList.firstWhere((element) => element.patientUniqID == params["patientUniqId"]);
+
+
+     print("model uniq id is ${model!.date}");
+    setState(ViewState.Idle);
     notifyListeners();
   }
 
@@ -98,61 +117,40 @@ inputFormatter: InputFormatter.nameFormatter,
   storeIntoDB(data) async {
 
     try {
-     // Uint8List image = await convertFileToUint8List(data["file"]);
-      Uint8List ? image = await testCompressFile(data["file"]);
 
-      await BaseTable<PatientModel>().insert(PatientModel(
+        print("the uniq id is storeIntoDB${model!.patientUniqID}");
 
-          userUnique_id: LoginDatabase().getListOfUsers.firstWhere((element) => element.token == preferenceService.getPassCode()).uniqID,
-          patientUniqID: Uuid().v1(),
-          patientName: patientNameController.text,
-          patientAge: int.parse(patientAgeController.text.trim()),
-          cvscScore: data["total"],
-          sexType: genderTypeController.value!.sexType,
-          diagoonsis: patientDiagonisisController.text,
-          surgeryDetails: surgeryDetailsController.text,
-          additionalNotes: additionalNotesController.textEditingController.text,
-          picture: image,
-          c1Score: data["c1Score"],
-          c2Score: data["c2Score"],
-          c3Score: data["c3Score"],
-          c1Description: data["c1_des"],
-          c2Description: data["c2_des"],
-          c3Description: data["c3_des"]
-      ));
-      //
-      controlButtonLoading(false);
+        model!.patientName = patientNameController.text;
+        model!.patientAge = int.parse(patientAgeController.text.trim());
+        model!.sexType = genderTypeController.value!.sexType;
+        model!.diagoonsis = patientDiagonisisController.text;
+        model!.surgeryDetails = surgeryDetailsController.text;
+        model!.additionalNotes = additionalNotesController.textEditingController.text;
 
-      navigationService.pushNamed(Routes.success);
+        print(model!.toDatabaseMap());
+        // print("the base table is oging to upate");
+         await BaseTable<PatientModel>().update(model!.patientUniqID.toString(),model! );
+        // print("the base table is oging to upate1 ");
+        controlButtonLoading(false);
+
+        navigationService.popAllAndPushNamed(Routes.dashboard);
     }
     catch (e) {
-      // failure screen
-      print("************");
+      controlButtonLoading(false);
       print(e.toString());
-  //    navigationService.pushNamed(Routes.failure);
+
 
     }
   }
 
-  Future<Uint8List> convertFileToUint8List(File picture) async {
-    List<int> imageBase64 = picture.readAsBytesSync();
-    String imageAsString = base64Encode(imageBase64);
-    Uint8List uint8list = base64.decode(imageAsString);
-    return uint8list;
-  }
 
 
 
-  Future<Uint8List?> testCompressFile(File file) async {
-    var result = await FlutterImageCompress.compressWithFile(
-      file.absolute.path,
-      minWidth: 2300,
-      minHeight: 1500,
-      quality: 40,
-      rotate: 90,
-    );
 
-    return result;
+  controlButtonLoading(bool value)
+  {
+    buttonLoading = value;
+    notifyListeners();
   }
 
  showDialogBox(String text)

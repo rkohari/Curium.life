@@ -79,13 +79,8 @@ class DashboardViewModel extends VGTSBaseViewModel {
   pickImageFromCamera () async{
     controlButtonLoading(false);
 
-    final XFile? photo = await picker.pickImage(source: ImageSource.camera,);
-    File file =File(photo!.path);
-    Map<String,dynamic>  params={
-      "source" : CameraType.CAMERA,
-      "file" : file,
-    };
-    navigationService.pushNamed(Routes.imagePreview,arguments: params);
+
+    navigationService.pushNamed(Routes.camera);
   }
 
 

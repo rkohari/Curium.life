@@ -46,7 +46,7 @@ import 'master_database_service.dart';
     Database database =  _masterDatabase;
 
     list = await database.query(object.tableName,);
-    print("the list is ${list}");
+
 
     List<T> dataList = await Future.wait(list.map((e) => BaseDBModel.createFromMap<T>(e)).toList());
     print("the dataList is ${dataList.length}");
@@ -81,13 +81,13 @@ import 'master_database_service.dart';
   }
 
 
-  Future<int> update(int id, T data, ) async {
-
+  Future<int> update(String id, T data,) async {
     print(id);
-
-    Database database = _masterDatabase  ;
-
-    int result = await database.update(object.tableName, data.toDatabaseMap(), where: "${object.primaryKey} = ?", whereArgs: [ id ],);
+    Database database = _masterDatabase;
+    var params = data.toDatabaseMap();
+    // params.remove(object.primaryKey);
+    print("the printing db form update method ${params}");
+    int result = await database.update(object.tableName, params, where: "${object.primaryKey} = ?", whereArgs: [ id ]);
     return result;
   }
 

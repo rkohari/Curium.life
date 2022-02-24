@@ -2,6 +2,8 @@ import 'package:curiumlife/core/enum/view_state.dart';
 import 'package:curiumlife/core/res/colors.dart';
 import 'package:curiumlife/core/res/images.dart';
 import 'package:curiumlife/core/res/spacing.dart';
+import 'package:curiumlife/locator.dart';
+import 'package:curiumlife/router.dart';
 import 'package:curiumlife/ui/widgets/button.dart';
 import 'package:curiumlife/ui/widgets/edit_text_field.dart';
 import 'package:curiumlife/ui/widgets/tap_outside_unfocus.dart';
@@ -41,9 +43,9 @@ class LogInPage extends ViewModelBuilderWidget<LogInViewModel>{
                       Image.asset(Images.appLogo, width: MediaQuery.of(context).size.width,),
 
                       EditTextField(
-                        "Enter e-mail",
+                        "Enter Email",
                         viewModel.loginIdController,
-                        placeholder: "Enter your e-mail",
+                        placeholder: "Enter your Email",
                         onChanged: (value){},
                         onSubmitted: (val){
                           viewModel.passwordController.focusNode.requestFocus();
@@ -70,6 +72,10 @@ class LogInPage extends ViewModelBuilderWidget<LogInViewModel>{
 
                           isLoading: viewModel.state == ViewState.Busy,
                           onPressed: (){
+
+
+
+
                             if(viewModel.logInFormKey.currentState!.validate()){
 
                               if(!EmailValidator.validate(viewModel.loginIdController.text))
@@ -79,9 +85,6 @@ class LogInPage extends ViewModelBuilderWidget<LogInViewModel>{
                                   return ;
                                 }
                               viewModel.login();
-                              // if entered string is name
-                              // code
-                              // else return;
 
 
                             }

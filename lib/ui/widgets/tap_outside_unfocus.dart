@@ -17,7 +17,7 @@ class TapOutsideUnFocus extends StatelessWidget {
               onTap!();
             }
             // Clear focus of our fields when tapped in this empty space
-            FocusScope.of(context).unfocus();
+            FocusManager.instance.primaryFocus?.unfocus();
           },
           child: this.child
       );

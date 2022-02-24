@@ -39,6 +39,8 @@ class CVCConstant extends BaseConstant
   String  col_c1Description = "c1Description";
   String  col_c2Description = "c2Description";
   String  col_c3Description = "c3Description";
+  String  col_date = "date";
+
 
 
 
@@ -59,7 +61,8 @@ class CVCConstant extends BaseConstant
         "$col_c3Score INTEGER,"
         "$col_c1Description STRING,"
         "$col_c2Description STRING,"
-        "$col_c3Description STRING"
+        "$col_c3Description STRING,"
+        "$col_date"
         ")";
   }
 

@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:curiumlife/core/enum/view_state.dart';
 import 'package:curiumlife/core/model/user_model.dart';
 import 'package:curiumlife/services/preference_service.dart';
+import 'package:curiumlife/ui/view/camera_screen/camera_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:stacked/stacked.dart';
 
@@ -16,7 +17,6 @@ abstract class VGTSBaseViewModel extends BaseViewModel {
   ViewState get state => _state;
 
   final PreferenceService preferenceService = locator<PreferenceService>();
-
 
   // default values
   final containerWidth = 269.0;

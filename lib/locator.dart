@@ -2,6 +2,7 @@
 import 'package:curiumlife/services/dialog_service.dart';
 import 'package:curiumlife/services/navigation_service.dart';
 import 'package:curiumlife/services/preference_service.dart';
+import 'package:curiumlife/ui/view/camera_screen/camera_view_model.dart';
 import 'package:curiumlife/ui/view/image_picker/image_picker_view_model.dart';
 import 'package:curiumlife/ui/view/patient_info_get/patient_info_view_model.dart';
 import 'package:curiumlife/ui/view/search/search_screen_view_model.dart';
@@ -27,6 +28,9 @@ void setupLocator() {
 
   locator.registerLazySingleton(() => DialogService());
   locator.registerLazySingleton(() => PreferenceService());
+  locator.registerLazySingleton(() => CameraViewModel());
+
+
   locator.registerLazySingleton(() => NavigationService());
 
   locator.registerLazySingleton(() => DatabaseService());
