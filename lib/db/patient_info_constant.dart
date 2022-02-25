@@ -40,7 +40,7 @@ class CVCConstant extends BaseConstant
   String  col_c2Description = "c2Description";
   String  col_c3Description = "c3Description";
   String  col_date = "date";
-
+  String col_isDelete = "isDelete";
 
 
 
@@ -62,7 +62,8 @@ class CVCConstant extends BaseConstant
         "$col_c1Description STRING,"
         "$col_c2Description STRING,"
         "$col_c3Description STRING,"
-        "$col_date"
+        "$col_date,"
+        "$col_isDelete BOOLEAN"
         ")";
   }
 

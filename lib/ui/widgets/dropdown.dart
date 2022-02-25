@@ -94,12 +94,12 @@ class _DropdownFieldState<T extends BaseModel> extends State<DropdownField<T>> {
           initialValue: widget.controller.value,
           validator: (value) {
             return widget.controller.validator(value);
-            // if (!widget.controller.required && widget.controller.text.isEmpty) {
+            // if (!card_widget.controller.required && card_widget.controller.text.isEmpty) {
             //   return null;
             // }
             //
-            // if (widget.controller.required || widget.controller.text.isNotEmpty) {
-            //   return widget.controller.validator(value);
+            // if (card_widget.controller.required || card_widget.controller.text.isNotEmpty) {
+            //   return card_widget.controller.validator(value);
             // }
             //
             // return null;

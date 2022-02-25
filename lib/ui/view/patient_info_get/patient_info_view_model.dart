@@ -74,10 +74,7 @@ inputFormatter: InputFormatter.nameFormatter,
 
   );
 
-
   bool buttonLoading =false;
-
-
 
   late GenderType sexType ;
 

@@ -270,12 +270,21 @@ class PatientInfo extends ViewModelBuilderWidget<PatientInfoViewModel> {
                                     .trim()
                                     .isEmpty ||
                                 viewModel.surgeryDetailsController.text.length <
-                                    3) {
+                                    3  ) {
                               viewModel.showDialogBox(
                                   "Enter Atleast 3 letters in surgery field");
 
                               return;
                             }
+
+                            else if(viewModel.surgeryDetailsController.text
+                                .trim().length <3)
+                              {
+                                viewModel.showDialogBox(
+                                    "Remove Space in in surgery field");
+
+                                return;
+                              }
 
                             viewModel.storeIntoDB(data);
                           } else {

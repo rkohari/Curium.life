@@ -2,8 +2,8 @@ import 'package:curiumlife/core/enum/view_state.dart';
 import 'package:curiumlife/core/res/colors.dart';
 import 'package:curiumlife/core/res/images.dart';
 import 'package:curiumlife/core/res/styles.dart';
+import 'package:curiumlife/ui/view/card_widget/patient_info_widget.dart';
 import 'package:curiumlife/ui/view/search/search_screen_view_model.dart';
-import 'package:curiumlife/ui/view/widget/patient_info_widget.dart';
 import 'package:curiumlife/ui/widgets/edit_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -43,9 +43,7 @@ class SearchScreen extends ViewModelBuilderWidget<SearchViewModel> {
           ),
           autoFocus: true,
           onChanged: (value) {
-
             viewModel.getSearchResults();
-
           },
           onSubmitted: (val) {
             viewModel.getSearchResults();
@@ -55,7 +53,10 @@ class SearchScreen extends ViewModelBuilderWidget<SearchViewModel> {
           InkWell(
             onTap: () {
               FocusManager.instance.primaryFocus?.unfocus();
+              viewModel.searchResults.clear();
               viewModel.searchController.clear();
+             // viewModel.getSearchResults();
+              viewModel.notifyListeners();
             },
             child: Container(
                 alignment: Alignment.center,
@@ -74,53 +75,62 @@ class SearchScreen extends ViewModelBuilderWidget<SearchViewModel> {
       ),
       body: viewModel.state == ViewState.Busy
           ? Container()
-          : viewModel.searchController.text.isEmpty && viewModel.searchResults!.isEmpty? Container()
-              : viewModel.searchController.text.isNotEmpty && viewModel.searchResults!.isEmpty ?Center(
-                  child: Padding(
-                  padding: const EdgeInsets.only(bottom: 100),
-                  child: Container(
-                    width: 200,
-                    height: 220,
-                    alignment: Alignment.center,
-                    child: Image(
-                      image: AssetImage(Images.no_search_data_found),
-                      width: 200,
-                      height: 200,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ))
-              : Padding(
-                  padding: const EdgeInsets.only(left: 15,right: 15,top: 10,bottom: 15),
-                  child: AnimationLimiter(
-                    child: GridView.count(
-                      crossAxisSpacing: 12,
-                      mainAxisSpacing: 12,
-                      childAspectRatio: .85,
-                      primary: false,
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.all(8.0),
-                      crossAxisCount: 2,
-                      children: List.generate(
-                        viewModel.searchResults!.length,
-                        (int index) {
-                          return AnimationConfiguration.staggeredGrid(
-                            columnCount: 2,
-                            position: index,
-                            duration: const Duration(milliseconds: 500),
-                            child: ScaleAnimation(
-                              scale: 0.5,
-                              child: FadeInAnimation(
-                                child: PatientInfoWidget(
-                                    viewModel.searchResults![index]),
-                              ),
-                            ),
-                          );
-                        },
+          : viewModel.searchController.text.isEmpty &&
+          viewModel.searchResults!.isEmpty ? Container()
+          : viewModel.searchController.text.isNotEmpty &&
+          viewModel.searchResults!.isEmpty ? Center(
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 100),
+            child: Container(
+              width: 200,
+              height: 220,
+              alignment: Alignment.center,
+              child: Image(
+                image: AssetImage(Images.no_search_data_found),
+                width: 200,
+                height: 200,
+                fit: BoxFit.contain,
+              ),
+            ),
+          ))
+          : Padding(
+        padding: const EdgeInsets.only(
+            left: 15, right: 15, top: 10, bottom: 15),
+        child: AnimationLimiter(
+          child: GridView.count(
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            childAspectRatio: .85,
+            primary: false,
+            shrinkWrap: true,
+            padding: const EdgeInsets.all(8.0),
+            crossAxisCount: 2,
+            children: List.generate(
+              viewModel.searchResults!.length,
+                  (int index) {
+                return AnimationConfiguration.staggeredGrid(
+                  columnCount: 2,
+                  position: index,
+                  duration: const Duration(milliseconds: 500),
+                  child: ScaleAnimation(
+                    scale: 0.5,
+                    child: FadeInAnimation(
+                      child: PatientInfoWidget(
+                          viewModel.searchResults![index]
+                         // ,callback(viewModel,viewModel.searchResults[index])
                       ),
                     ),
                   ),
-                ),
+                );
+              },
+            ),
+          ),
+        ),
+      ),
     );
   }
+    callback(viewModel,data)
+    {
+
+    }
 }
