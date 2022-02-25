@@ -50,11 +50,11 @@ class PatientDetails extends ViewModelBuilderWidget<PatientDetailsViewModel> {
           //   ),
           // ),
           leading: IconButton(icon: Icon(CupertinoIcons.chevron_back), onPressed: () async{
-
-            navigationService.pop();
+           navigationService.pop();
           },
             color: Colors.black,iconSize: 25,
           ),
+
           centerTitle: false,
         ),
         body: Padding(

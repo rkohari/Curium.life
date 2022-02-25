@@ -6,6 +6,7 @@ import 'package:curiumlife/db/logins.dart';
 import 'package:curiumlife/locator.dart';
 import 'package:curiumlife/router.dart';
 import 'package:curiumlife/ui/view/vgts_base_view_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 
 class HomePageViewModel extends VGTSBaseViewModel {
@@ -29,12 +30,12 @@ class HomePageViewModel extends VGTSBaseViewModel {
   }
 
   fetchData() async {
+    debugPrint("fetch data funtion falled");
     patientsList.clear();
+    debugPrint("the patientsList length is ${patientsList.length}");
 
-    // getting all patients data
     List<PatientModel> a = await BaseTable<PatientModel>().getAll();
 
-    // filter all patients data using particuar logined uniq id
     List<PatientModel> b = a
         .where((element) =>
     element.userUnique_id ==
@@ -46,7 +47,6 @@ class HomePageViewModel extends VGTSBaseViewModel {
         .toList();
 
 
-    // sorting here
      patientsList.addAll(b.where((element) => element.patientName !="" && element.patientName != null ).toList());
      patientsList.addAll(b.where((element) => element.patientName == "" || element.patientName == null).toList());
 
@@ -86,7 +86,6 @@ class HomePageViewModel extends VGTSBaseViewModel {
 
   logout() async{
     AlertResponse ? alertResponse =  await dialogService.showConfirmationAlertDialog(primaryButton: "YES",secondaryButton: "NO",title: "Logout",subtitle: "Do you want to leave this account ");
-
     if(alertResponse!.status)
     {
       print("logout called");
@@ -95,9 +94,24 @@ class HomePageViewModel extends VGTSBaseViewModel {
       notifyListeners();
     }
 
-
   }
 
+  deleteFuntion(model)
+  async{
+    AlertResponse ? alertResponse =  await dialogService.showConfirmationAlertDialog(primaryButton: "YES",secondaryButton: "NO",title: "Alert",subtitle: "Do you want to Delete this Surgery details ");
+
+    if(alertResponse!.status)
+    {
+      // remove particular model in db
+      await BaseTable<PatientModel>().delete(model.patientUniqID!,model);
+
+      fetchData();
+      // call init funtion
+    }
+
+    notifyListeners();
+
+  }
 
 
 

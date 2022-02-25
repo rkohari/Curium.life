@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "514414649029",
+    "project_id": "curium-life",
+    "storage_bucket": "curium-life.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:514414649029:android:c8b7bf212192b571129aac",
+        "android_client_info": {
+          "package_name": "vgts.tech.curiumlife"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "514414649029-gqbiq7mtbi99titqjdirmpua4ciisukt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUqKf46_gJX6PE1M7UhVDH4MaBgke4Dbs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "514414649029-gqbiq7mtbi99titqjdirmpua4ciisukt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

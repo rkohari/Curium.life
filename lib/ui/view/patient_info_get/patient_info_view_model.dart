@@ -61,12 +61,11 @@ inputFormatter: InputFormatter.nameFormatter,
 
       minLines: 5,    textCapitalization: TextCapitalization.sentences,
 
-
   );
 
   FormFieldController additionalNotesController = FormFieldController(
       ValueKey("additionalNotes"),
-      required: true,
+      required: false,
     maxLength:250,
     inputFormatter: InputFormatter.nameFormatter,
 
@@ -75,10 +74,7 @@ inputFormatter: InputFormatter.nameFormatter,
 
   );
 
-
   bool buttonLoading =false;
-
-
 
   late GenderType sexType ;
 

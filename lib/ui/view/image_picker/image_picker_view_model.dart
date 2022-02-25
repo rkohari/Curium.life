@@ -125,6 +125,7 @@ class ImagePickerViewModel extends VGTSBaseViewModel with TensorFlowService
    c2Description: data["c2_des"],
    c3Description: data["c3_des"],
    date:  data["date"].toString(),
+   isDelete: true,
    ));
 
    Map params ={"patientUniqId" : uniqId};

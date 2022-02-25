@@ -28,6 +28,7 @@ class CameraViewModel extends VGTSBaseViewModel {
     );
     _initializeControllerFuture = _controller.initialize();
 
+
     notifyListeners();
   }
 
@@ -43,7 +44,7 @@ class CameraViewModel extends VGTSBaseViewModel {
         "file": file,
       };
 
-      navigationService.pushNamed(Routes.imagePreview, arguments: params);
+      navigationService.pushReplacementNamed(Routes.imagePreview, arguments: params);
     }
     catch (e)
     {
@@ -80,5 +81,12 @@ class CameraViewModel extends VGTSBaseViewModel {
   }
 
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    print("dispose method called");
+    _controller.dispose();
+  }
 
 }

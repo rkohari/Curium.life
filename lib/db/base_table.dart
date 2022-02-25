@@ -55,18 +55,18 @@ import 'master_database_service.dart';
   }
 
   Future<T?> getById(int id ,) async {
-    if(id == null) {
-      return null;}
-    else {
-
-      Database database =  _masterDatabase  ;
-     // List<Map> data = await database.query(object.tableName, where: "${whereQuery} ${whereQuery.isNotEmpty ? "AND" : " "}  ${object.primaryKey} = ? ", whereArgs: [ ...whereArgsList, id]);
-     //  if (data.length <= 0) {
-     //    return null;
-     //  }
-     //  print("data.length${data.length}");
-
-    }
+  //   if(id == null) {
+  //     return null;}
+  //   else {
+  //
+  //     Database database =  _masterDatabase  ;
+  // //   List<Map> data = await database.query(object.tableName, where: "${whereQuery} ${whereQuery.isNotEmpty ? "AND" : " "}  ${object.primaryKey} = ? ", whereArgs: [ ...whereArgsList, id]);
+  //     if (data.length <= 0) {
+  //       return null;
+  //     }
+  //     print("data.length${data.length}");
+  //
+  //   }
   }
 
   Future<int> insert(T data, ) async {
@@ -91,14 +91,9 @@ import 'master_database_service.dart';
     return result;
   }
 
-  Future<int> delete(int id , T data ,{bool fromMasterTable = false}) async {
-
-
+  Future<int> delete(String id , T data) async {
     Database database =  _masterDatabase  ;
-
-    // Map param = data.toDatabaseMap();
-    // param[BaseConstant().col_deleted] = true;
-    // int result = await database.update(object.tableName, param, where: "${object.primaryKey} = ?", whereArgs: [id],);
+     int result = await database.delete(object.tableName, where: "${object.primaryKey} = ?", whereArgs: [id],);
      return 1;
   }
 

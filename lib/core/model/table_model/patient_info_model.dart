@@ -15,6 +15,7 @@ class PatientModel extends CVCConstant {
   Uint8List ? picture;
   String ? date;
 
+
   // need to add these properties
   int ? c1Score;
   int ? c2Score;
@@ -22,6 +23,7 @@ class PatientModel extends CVCConstant {
   String ? c1Description;
   String ? c2Description;
   String ? c3Description;
+  bool ? isDelete;
 
   PatientModel({
       this.userUnique_id,
@@ -36,6 +38,7 @@ class PatientModel extends CVCConstant {
       this.picture,
       this. c1Score, this.c2Score,this.c3Score,this.c1Description,this.c2Description,this.c3Description,
       this.date,
+      this.isDelete
 
   });
 
@@ -61,6 +64,7 @@ class PatientModel extends CVCConstant {
     c2Description = data[col_c2Description];
     c3Description = data[col_c3Description];
     date = data[col_date];
+    isDelete = data[col_isDelete];
 
 
     return this;
@@ -87,7 +91,7 @@ class PatientModel extends CVCConstant {
     data[col_c2Description] = this.c2Description;
     data[col_c3Description] = this.c3Description;
     data[col_date] = this.date;
-
+    data[col_isDelete] = data[isDelete];
 
     print(data);
 
