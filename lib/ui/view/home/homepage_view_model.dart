@@ -35,6 +35,7 @@ class HomePageViewModel extends VGTSBaseViewModel {
     debugPrint("the patientsList length is ${patientsList.length}");
 
     List<PatientModel> a = await BaseTable<PatientModel>().getAll();
+    print("all data list lenth is ${a.length}");
 
     List<PatientModel> b = a
         .where((element) =>

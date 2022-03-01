@@ -39,8 +39,8 @@ dependencies:
   stacked: any
   provider: any
   sqflite: ^2.0.2
-  path: any
-  path_provider: ^2.0.8
+  path: ^1.8.0
+  path_provider: ^2.0.9
   cached_network_image: ^3.2.0
   image_picker:
   flutter_styled_toast: ^2.0.0
@@ -59,6 +59,7 @@ dependencies:
     git:
       url: https://github.com/santhoshvgts/vgts_plugin.git
       ref: form-field-update
+  mock_data: ^2.0.0
 
 dev_dependencies:
   flutter_test:
