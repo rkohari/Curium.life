@@ -1,8 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
-import 'package:path_provider/path_provider.dart' as pathh;
 import 'package:permission_handler/permission_handler.dart' as ph;
 import 'package:permission_handler/permission_handler.dart';
 
@@ -41,10 +39,8 @@ mixin FileReaderCustomFolder {
     return temp.path;
   }
 
-  Future<String> createFolder() async =>
-      (await Directory(customPath).create(recursive: true)).path;
 
-   browingCuriumFolder() async {
+   collectAllFilesInsideCuriumFolder() async {
     List<FileSystemEntity> listOfImageUrls = [];
     List<FileSystemEntity> listOfTextFiles = [];
     Directory director = await Directory(customPath);
@@ -70,5 +66,50 @@ mixin FileReaderCustomFolder {
 
 
 
+  Future<PermissionStatus>  checkManageExternalStoragePermissionStatus() async=>await  ph.Permission.manageExternalStorage.status;
+  Future<PermissionStatus>  checkManageStoragePermissionStatus () async=> await ph.Permission.storage.status;
 
+  requestManageExternalStorageAccess () async=> await ph.Permission.manageExternalStorage.request();
+
+  requestStorageAccess () async => await ph.Permission.storage.request();
+
+
+  folderHandling()
+  async {
+    if (!await Directory(customPath).exists()) return await createFolder();
+    else
+      return  await Directory(customPath)..create(recursive: true)..path;
+
+  }
+
+  Future<String> createFolder() async => (await Directory(customPath).create(recursive: true)).path;
+
+
+  Future<bool> isFolderExists()
+ async {
+  return   await Directory(customPath).exists();
+  }
+
+  deleteAllFIlesInsideTheFolder()
+  async {
+    print("Delete Funtion Called");
+    List<List<
+        FileSystemEntity>> temp = await collectAllFilesInsideCuriumFolder();
+
+    List<FileSystemEntity> temp1 = List.from(temp[0]);
+    List<FileSystemEntity> temp2 = List.from(temp[1]);
+
+    if (temp1.isNotEmpty) {
+      temp1.forEach((element) async {
+        File file = await File(element.path);
+        file.delete(recursive: true);
+      });
+    }
+    if (temp2.isNotEmpty) {
+      temp2.forEach((element) async {
+        File file = await File(element.path);
+        file.delete(recursive: true);
+      });
+    }
+  }
 }

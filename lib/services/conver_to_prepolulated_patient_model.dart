@@ -20,14 +20,14 @@ class ConvertToPrePopulatedPatientModel
 
   Future<PatientModel> convertToClassObject({required FileSystemEntity imgeFile,required FileSystemEntity textFile})
   async{
-    File file = File(imgeFile.path);
+    File file = await File(imgeFile.path);
     String uniqId = getUuid;
     String tempDate =dateFormatedData;
 
     List<String> ? tempType =  ["Male","Female"];
     tempType.shuffle();
 
-    String content =await extractContentFromTxtFile(textFile);
+    String content = await extractContentFromTxtFile(textFile);
 
     Uint8List ? image = await ImageConverter.testCompressFile(file);
 
@@ -67,7 +67,7 @@ class ConvertToPrePopulatedPatientModel
   Future<String> extractContentFromTxtFile(FileSystemEntity textFile)
    async{
      final _myFile = File(textFile.path);
-     String content =await  _myFile.readAsString();
+     String content = await  _myFile.readAsString();
      content.trim();
      return content;
    }
