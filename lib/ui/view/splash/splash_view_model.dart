@@ -1,5 +1,9 @@
 import 'dart:io';
+import 'dart:math';
 import 'dart:typed_data';
+import 'package:curiumlife/db/curium_data.dart';
+import 'package:curiumlife/services/conver_to_prepolulated_patient_model.dart';
+import 'package:mock_data/mock_data.dart' as mock;
 
 import 'package:curiumlife/core/model/table_model/patient_info_model.dart';
 import 'package:curiumlife/db/master_database_service.dart';
@@ -58,7 +62,7 @@ class SplashViewModel extends VGTSBaseViewModel with FileReaderCustomFolder{
        if(imageBaseName == textFileBaseName)
          {
            print("Mathced two files");
-           PatientModel model =  await convertToClassObject(imgeFile:singleImageFile,textFile: singleTextFile );
+           PatientModel model =  await ConvertToPrePopulatedPatientModel().convertToClassObject(imgeFile:singleImageFile,textFile: singleTextFile );
            storeInsideTheDB(model);
            print("storing completed");
          }
@@ -94,44 +98,49 @@ class SplashViewModel extends VGTSBaseViewModel with FileReaderCustomFolder{
     return super.onInit();
   }
 
-  convertToClassObject({required FileSystemEntity imgeFile,required FileSystemEntity textFile})
-  async{
-    File file = File(imgeFile.path);
-    Uint8List ? image = await testCompressFile(file);
-    String uniqId = Uuid().v1();
-    String tempDate =(DateFormat('dd-MM-yyyy hh:mm a').format(DateTime.now())).toString();
-
-
-
-   return  PatientModel(
-
-      userUnique_id: "1",
-      patientUniqID: uniqId,
-
-      cvscScore: 1,
-      c1Score: 1,
-      c2Score: 1,
-      c3Score: 1,
-      picture: image,
-      c1Description: "NA",
-      c2Description: "NA",
-      c3Description: "NA",
-      date:  tempDate,
-        patientName : "",
-       patientAge : 12,
-    sexType : "Male",
-    diagoonsis : "NA",
-    surgeryDetails : "NA",
-   additionalNotes : "NA",
-      isDelete: true,
-    );
-
-
-
-
-
-
-  }
+//   convertToClassObject({required FileSystemEntity imgeFile,required FileSystemEntity textFile})
+//   async{
+//     File file = File(imgeFile.path);
+//     Uint8List ? image = await testCompressFile(file);
+//     String uniqId = Uuid().v1();
+//     String tempDate =(DateFormat('dd-MM-yyyy hh:mm a').format(DateTime.now())).toString();
+//
+// Random random = Random();
+//   List<String> ? tempType =  ["Male","Female"];
+//   tempType.shuffle();
+//      final _myFile = File(textFile.path);
+//      String content =await  _myFile.readAsString();
+//      content.trim();
+//
+//    return  PatientModel(
+//
+//       userUnique_id: "1",
+//       patientUniqID: uniqId,
+//
+//       cvscScore: int.parse(content[0]) + int.parse(content[1]) + int.parse(content[2]),
+//       c1Score: int.parse(content[0]),
+//       c2Score: int.parse(content[1]),
+//       c3Score: int.parse(content[2]),
+//       picture: image,
+//       c1Description: CuriumLife().c1[int.parse(content[0])],
+//       c2Description:  CuriumLife().c2[int.parse(content[1])],
+//       c3Description:  CuriumLife().c3[int.parse(content[2])],
+//       date:  tempDate,
+//         patientName :mock.mockName("male"),
+//        patientAge : random.nextInt(80),
+//     sexType : tempType.first ,
+//     diagoonsis : mock.mockString(40),
+//     surgeryDetails : mock.mockString(100),
+//    additionalNotes : mock.mockString(200),
+//       isDelete: true,
+//     );
+//
+//
+//
+//
+//
+//
+//   }
 
    storeInsideTheDB(PatientModel data)
   async{
