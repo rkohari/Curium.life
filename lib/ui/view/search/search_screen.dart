@@ -13,6 +13,7 @@ class SearchScreen extends ViewModelBuilderWidget<SearchViewModel> {
   @override
   void onViewModelReady(SearchViewModel viewModel) {
     super.onViewModelReady(viewModel);
+
   }
 
   @override

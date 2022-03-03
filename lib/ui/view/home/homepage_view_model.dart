@@ -5,6 +5,7 @@ import 'package:curiumlife/db/base_table.dart';
 import 'package:curiumlife/db/logins.dart';
 import 'package:curiumlife/locator.dart';
 import 'package:curiumlife/router.dart';
+import 'package:curiumlife/services/sync_service.dart';
 import 'package:curiumlife/ui/view/vgts_base_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
@@ -21,11 +22,12 @@ class HomePageViewModel extends VGTSBaseViewModel {
    List<int> listofCounts = [];
 
 
-
+SyncService syncService = SyncService();
 
   init() async{
     setState(ViewState.Busy);
    await  fetchData();
+   await syncService.deleteAllFIlesInsideTheFolder();
     setState(ViewState.Idle);
   }
 
@@ -35,6 +37,7 @@ class HomePageViewModel extends VGTSBaseViewModel {
     debugPrint("the patientsList length is ${patientsList.length}");
 
     List<PatientModel> a = await BaseTable<PatientModel>().getAll();
+    print("all data list lenth is ${a.length}");
 
     List<PatientModel> b = a
         .where((element) =>

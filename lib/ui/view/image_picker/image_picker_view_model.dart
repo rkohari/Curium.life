@@ -110,6 +110,8 @@ class ImagePickerViewModel extends VGTSBaseViewModel with TensorFlowService
 
      Uint8List ? image = await testCompressFile(data["file"]);
      String uniqId = Uuid().v1();
+     print("Hakunama tata");
+     print(LoginDatabase().getListOfUsers.firstWhere((element) => element.token == preferenceService.getPassCode()).uniqID);
 
      await BaseTable<PatientModel>().insert(PatientModel(
 

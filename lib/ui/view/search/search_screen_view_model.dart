@@ -16,39 +16,46 @@ class SearchViewModel extends VGTSBaseViewModel {
   getSearchResults() async {
     print("called get results");
     searchResults!.clear();
-    List<PatientModel> a = await BaseTable<PatientModel>().getAll();
+    if(searchController.text.isEmpty)
+      {
+        searchResults!.clear();
+      }else
+        {
+          List<PatientModel> a = await BaseTable<PatientModel>().getAll();
 
-    List<PatientModel> b = a
-        .where((element) =>
-            element.userUnique_id ==
-            LoginDatabase()
-                .getListOfUsers
-                .firstWhere((element) =>
-                    element.token == preferenceService.getPassCode())
-                .uniqID)
-        .toList();
-    print("the search result length is b ${b!.length}");
-    b.forEach((element) {
-      print(element.patientName);
-    });
+          List<PatientModel> b = a
+              .where((element) =>
+          element.userUnique_id ==
+              LoginDatabase()
+                  .getListOfUsers
+                  .firstWhere((element) =>
+              element.token == preferenceService.getPassCode())
+                  .uniqID)
+              .toList();
+          print("the search result length is b ${b!.length}");
+          b.forEach((element) {
+            print(element.patientName);
+          });
 
-    List<PatientModel> removedNullObjects =b.where((element) => element.patientName != null  ).toList();
-    print('***');
-    removedNullObjects.forEach((element) {
-      print(element.patientName);
-    });
+          List<PatientModel> removedNullObjects =b.where((element) => element.patientName != null  ).toList();
+          print('***');
+          removedNullObjects.forEach((element) {
+            print(element.patientName);
+          });
 
-    searchResults = removedNullObjects
-        .where((element) =>
-            element.patientName!
-                .toLowerCase()
-                .contains(searchController.text.toLowerCase().trim()) ||
-            element.diagoonsis!
-                .toLowerCase()
-                .contains(searchController.text.toLowerCase().trim()))
-        .toList();
+          searchResults = removedNullObjects
+              .where((element) =>
+          element.patientName!
+              .toLowerCase()
+              .contains(searchController.text.toLowerCase().trim()) ||
+              element.diagoonsis!
+                  .toLowerCase()
+                  .contains(searchController.text.toLowerCase().trim())
+          ).toList();
 
-    print("the search result length is ${searchResults!.length}");
+          print("the search result length is ${searchResults!.length}");
+        }
+
     notifyListeners();
   }
 

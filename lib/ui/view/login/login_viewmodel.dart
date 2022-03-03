@@ -3,6 +3,7 @@ import 'package:curiumlife/core/model/responce_wrapper.dart';
 import 'package:curiumlife/core/model/user_model.dart';
 import 'package:curiumlife/db/logins.dart';
 import 'package:curiumlife/locator.dart';
+import 'package:curiumlife/services/sync_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:permission_handler/permission_handler.dart' as cam;
 import 'package:vgts_plugin/form/utils/form_field_controller.dart';
@@ -10,7 +11,7 @@ import 'package:vgts_plugin/form/utils/form_field_controller.dart';
 import '../../../router.dart';
 import '../vgts_base_view_model.dart';
 
-class LogInViewModel extends VGTSBaseViewModel {
+class LogInViewModel extends VGTSBaseViewModel  {
   final GlobalKey<FormState> logInFormKey = GlobalKey<FormState>();
 
   ScrollController scrollController = ScrollController();
@@ -24,7 +25,13 @@ class LogInViewModel extends VGTSBaseViewModel {
       requiredText: "Please enter Password",
       required: true);
   LoginDatabase _loginDatabase = LoginDatabase();
+  SyncService syncService = SyncService();
 
+  init()
+  async{
+    await checkCameraPermission();
+    await syncService.initiateRequestAccessPermissions();
+  }
   checkCameraPermission() async {
     debugPrint("checkCameraPermission called");
     var status = await cam.Permission.camera.status;
@@ -36,8 +43,24 @@ class LogInViewModel extends VGTSBaseViewModel {
 
   login() async {
     // try {
+
+    // store that funtion
+    // and login
+
+
+
     setState(ViewState.Busy);
-    Future.delayed(Duration(seconds: 1), () {
+
+    // check the permission
+    // and store the data
+    if(await syncService.isRequriedPermissionsGranded())
+      {
+        await syncService.createCuriumFolder();
+        await syncService.initiateSyncProcess();
+      }
+
+
+    await Future.delayed(Duration(seconds: 1), () {
       ResponseData data = _loginDatabase.validateLoginDetails(
           loginIdController.text.toLowerCase().trim(),
           passwordController.text.trim());

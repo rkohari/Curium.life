@@ -19,7 +19,7 @@ class LogInPage extends ViewModelBuilderWidget<LogInViewModel>{
   @override
   void onViewModelReady(LogInViewModel viewModel) {
     super.onViewModelReady(viewModel);
-    viewModel.checkCameraPermission();
+    viewModel.init();
   }
 
   @override
